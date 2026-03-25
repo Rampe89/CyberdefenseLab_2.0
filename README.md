@@ -29,10 +29,3 @@ Du kannst den Inhalt aus `site/` auch direkt mit einem einfachen Static Server t
 ## Hinweis
 
 Die Demo bleibt bewusst statisch. Serverfunktionen aus dem alten Node-Setup wurden nicht übernommen, weil das Projekt inhaltlich als statische Lern- und Demo-Seite funktioniert.
-
-## Struktur-Update (Polish v2)
-
-- Gemeinsame Styles in `site/assets/css/shared.css`
-- Gemeinsame UI-Logik in `site/assets/js/app.js`
-- Statisches Hosting über Netlify
-- Sanfter visueller Polish ohne die Labs funktional umzubauen
