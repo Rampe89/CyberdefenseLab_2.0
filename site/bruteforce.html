@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brute-Force-Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #2c3e50, #4ca1af);
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    h1, h2 {
+      color: #333;
+      text-align: center;
+    }
+    p {
+      color: #555;
+      line-height: 1.6;
+    }
+    .shell {
+      background: #000;
+      color: #0f0;
+      padding: 15px;
+      border-radius: 5px;
+      font-family: "Courier New", Courier, monospace;
+      margin: 20px 0;
+      height: 300px;
+      overflow-y: scroll;
+      white-space: pre-wrap;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      box-sizing: border-box;
+    }
+    button {
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .flag {
+      background: #007bff;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+      border-radius: 5px;
+      display: none;
+      margin-top: 15px;
+    }
+    .learn {
+      background: #e7f3ff;
+      border: 1px solid #cce5ff;
+      color: #31708f;
+      padding: 15px;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+    /* Neuer Button im grünen Stil */
+    .back-button {
+      background-color: #28a745;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+      width: auto;
+    }
+    .back-button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Brute-Force-Demo</h1>
+    <p>
+      Ein <strong>Brute-Force-Angriff</strong> versucht, durch das automatische Ausprobieren vieler Passwörter den richtigen Zugang zu finden. Dabei werden oft <strong>Passwortlisten</strong> verwendet – Sammlungen, die häufig genutzte oder geleakte Passwörter enthalten.
+    </p>
+    <p>
+      Ein bekanntes Beispiel ist die <strong>RockYou.txt</strong>-Liste. Ursprünglich aus einem Datenleck stammend, enthält sie Millionen von Passwörtern. In dieser Demo verwenden wir eine verkürzte Version mit 70 Einträgen.
+    </p>
+    <p>
+      <strong>Hinweis:</strong> Verwende als Ziel-Benutzernamen entweder <em>admin</em> oder <em>user</em>.
+    </p>
+    
+    <h2>Simulation starten</h2>
+    <input type="text" id="targetUsername" placeholder="Gib admin oder user ein">
+    <button onclick="startSimulation()">Simulation starten</button>
+    <div class="shell" id="simulation"></div>
+    
+    <h2>Login</h2>
+    <p>
+      Versuche, dich einzuloggen, indem du einen der beiden Benutzernamen (admin oder user) und das dazugehörige Passwort eingibst.
+    </p>
+    <form onsubmit="handleLogin(event)">
+      <input type="text" id="loginUsername" placeholder="Benutzername" required>
+      <input type="password" id="loginPassword" placeholder="Passwort" required>
+      <button type="submit">Einloggen</button>
+    </form>
+    <!-- Zurück zur Startseite Button direkt unter dem Einloggen-Button -->
+    <div style="text-align: center;">
+      <button class="back-button" onclick="location.href='/index.html'">Zurück zur Startseite</button>
+    </div>
+
+    <div id="flag" class="flag"></div>
+
+    <div class="learn">
+      <h2>Was wir daraus lernen können</h2>
+      <p>
+        Diese Demo zeigt, wie schnell schwache Passwörter durch automatisierte Angriffe kompromittiert werden können. Verwende starke, einzigartige Passwörter und zusätzliche Sicherheitsmaßnahmen wie Zwei-Faktor-Authentifizierung, um deine Daten zu schützen. Außerdem kann das Wissen über solche Angriffe helfen, Schwachstellen in eigenen Systemen frühzeitig zu erkennen und zu beheben.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const correctPasswords = { admin: "admin123", user: "user123" };
+    const rockyouSample = [
+      "123456", "passwort", "password", "Passwort", "P4ssw0rt", "qwertz", "12345", "12345678", "123456789",
+      "1234567", "iloveyou", "111111", "abc123",
+      "password1", "123123", "admin", "monkey", "shadow", "123321", "654321", "123qwe", "michael", "superman",
+      "sunshine", "letmein", "football", "hunter", "baseball", "soccer", "dragon", "starwars", "hello", "freedom",
+      "passw0rd", "master", "killer", "welcome", "trustno1", "whatever", "testing", "secure", "summer2023",
+      "spring2023", "fall2023", "winter2023", "zxcvbn", "batman", "matrix", "pokemon", "kingkong", "rockyou",
+      "guessme", "default", "mypass", "mustang", "password123", "secureme", "simplepass", "hardpass", "mypassword",
+      "dragon123", "hackme", "password2023", "mysecurepass", "letmein1", "admin123", "user123", "rockyou123"
+    ];
+
+    function startSimulation() {
+      const targetUsername = document.getElementById("targetUsername").value.trim();
+      const simulation = document.getElementById("simulation");
+      const isKnownUser = correctPasswords.hasOwnProperty(targetUsername);
+
+      simulation.textContent = `Hydra v9.4-dev (c) 2023 by THC & Maciejak
+Dieses Tool dient zu Demonstrationszwecken.
+
+[DATA] Ziel: www.example.com http-post-form "/login:username=^USER^&password=^PASS^:F=Login fehlgeschlagen"
+[DATA] Wordlist: rockyou.txt (70 Einträge)
+[DATA] Benutzer: ${targetUsername}
+[STATUS] Starte Brute-Force-Angriff...\n\n`;
+
+      let index = 0, attemptCount = 0, passwordFound = false;
+      const delay = 150;
+      const interval = setInterval(() => {
+        if (index < rockyouSample.length) {
+          const pass = rockyouSample[index];
+          simulation.textContent += `[ATTEMPT] Versuche Passwort: ${pass}\n`;
+          attemptCount++;
+
+          if (isKnownUser && pass === correctPasswords[targetUsername]) {
+            passwordFound = true;
+            simulation.textContent += `
+✅ [SUCCESS] Login erfolgreich für ${targetUsername} mit Passwort: ${pass}
+[INFO] Angriff nach ${attemptCount} Versuchen abgeschlossen.
+[STATS] Dauer: ${(attemptCount * delay) / 1000}s\n`;
+            clearInterval(interval);
+          }
+          simulation.scrollTop = simulation.scrollHeight;
+          index++;
+        } else {
+          clearInterval(interval);
+          if (!passwordFound) {
+            simulation.textContent += `
+❌ [FAILURE] Kein gültiges Passwort für ${targetUsername} gefunden.
+[STATS] ${attemptCount} Versuche.
+[STATUS] Angriff fehlgeschlagen.\n`;
+          }
+        }
+      }, delay);
+    }
+
+    function handleLogin(event) {
+      event.preventDefault();
+      const username = document.getElementById("loginUsername").value.trim();
+      const password = document.getElementById("loginPassword").value.trim();
+      const flag = document.getElementById("flag");
+
+      if (correctPasswords[username] && correctPasswords[username] === password) {
+        if (username === "admin") {
+          flag.style.display = "block";
+          flag.textContent = "{BRUTE_FORCE_ADMIN_SUCCESS}";
+        } else if (username === "user") {
+          flag.style.display = "block";
+          flag.textContent = "Hinweis: Diese Zugangsdaten könnten für einen anderen Teil des Labs benötigt werden.";
+        }
+      } else {
+        alert("Ungültiger Benutzername oder Passwort!");
+      }
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
+

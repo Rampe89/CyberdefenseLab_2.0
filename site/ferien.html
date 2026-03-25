@@ -1,0 +1,881 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ferien-Countdown (Niedersachsen) & Vorfallzähler</title>
+  <style>
+    :root{
+      --bg1:#f7fbff;
+      --bg2:#f3fff7;
+
+      --card:#ffffffd8;
+      --stroke:#e7eef7;
+      --text:#0f172a;
+      --muted:#526173;
+
+      --accent:#2563eb;
+      --accent2:#16a34a;
+      --accent3:#f59e0b;
+
+      --shadow: 0 14px 34px rgba(15,23,42,.10);
+      --radius: 18px;
+
+      --panelBg:#0b1220;
+      --panelStroke:#1f2a44;
+      --panelText:#e5e7eb;
+      --panelNeon:#a3ff4f;
+
+      --softGlow:
+        radial-gradient(900px 260px at 18% 0%, rgba(37,99,235,.12), transparent 60%),
+        radial-gradient(850px 260px at 88% 10%, rgba(22,163,74,.10), transparent 62%);
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 12% 10%, rgba(37,99,235,.12), transparent 55%),
+        radial-gradient(900px 600px at 86% 18%, rgba(22,163,74,.10), transparent 55%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      min-height:100vh;
+      position: relative;
+      overflow-x:hidden;
+    }
+
+    /* Subtiles Pixel-Pattern (hell) */
+    body::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      pointer-events:none;
+      opacity:.35;
+      background-image:
+        linear-gradient(to right, rgba(15,23,42,.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15,23,42,.06) 1px, transparent 1px);
+      background-size: 18px 18px;
+      mask-image: radial-gradient(900px 420px at 50% 0%, black 35%, transparent 75%);
+    }
+
+    header{
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 26px 18px 10px;
+    }
+    h1{
+      margin:0 0 8px;
+      font-size: clamp(22px, 2.6vw, 32px);
+      letter-spacing:.2px;
+      font-weight: 1000;
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .sub{
+      margin:0;
+      color:var(--muted);
+      line-height:1.55;
+      font-size: 14px;
+      max-width: 78ch;
+    }
+
+    main{
+      max-width:1040px;
+      margin:0 auto;
+      padding: 14px 18px 36px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+
+    .card{
+      grid-column: span 6;
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: var(--softGlow);
+      pointer-events:none;
+      opacity:.95;
+    }
+
+    @media (max-width: 880px){
+      .card{ grid-column: span 12; }
+    }
+
+    .rowTop{
+      position:relative;
+      z-index:1;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      margin-bottom: 10px;
+    }
+
+    h2{
+      margin:0;
+      font-size: 16px;
+      font-weight: 1000;
+      letter-spacing:.2px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+
+    .badge{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.85);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .kpi{
+      position:relative;
+      z-index:1;
+      display:flex;
+      gap:10px;
+      align-items: baseline;
+      margin: 8px 0 2px;
+    }
+    .big{
+      font-size: clamp(30px, 4.2vw, 52px);
+      font-weight: 1100;
+      letter-spacing: .2px;
+    }
+    .unit{
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .tiles{
+      position:relative;
+      z-index:1;
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .tile{
+      min-width: 120px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.90);
+      border: 1px solid var(--stroke);
+      box-shadow: 0 10px 18px rgba(15,23,42,.06);
+    }
+    .tile .n{
+      font-size: 22px;
+      font-weight: 1100;
+      line-height: 1.1;
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .tile .l{
+      margin-top: 4px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 900;
+      letter-spacing: .2px;
+    }
+
+    .meta{
+      position:relative;
+      z-index:1;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      display:flex;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      align-items:center;
+    }
+
+    .mono{ font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace; }
+
+    .wide{ grid-column: span 12; }
+
+    .incidentWrap{
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      position: relative;
+      overflow:hidden;
+      backdrop-filter: blur(10px);
+    }
+    .incidentWrap::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(900px 220px at 20% 0%, rgba(245,158,11,.12), transparent 60%),
+        radial-gradient(850px 240px at 80% 10%, rgba(22,163,74,.10), transparent 62%);
+      pointer-events:none;
+    }
+
+    .incidentHeader{
+      position:relative;
+      z-index:1;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom: 10px;
+    }
+    .incidentHeader h2{
+      font-size: 16px;
+      margin:0;
+    }
+    .hint{
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .panel{
+      position:relative;
+      z-index:1;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(11,18,32,.98), rgba(11,18,32,.92));
+      border: 1px solid var(--panelStroke);
+      padding: 18px 16px 16px;
+      overflow:hidden;
+    }
+    .panel::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,.06) 0px,
+          rgba(255,255,255,.06) 1px,
+          transparent 2px,
+          transparent 8px
+        );
+      opacity:.22;
+      pointer-events:none;
+    }
+
+    .panelTopline{
+      position:relative;
+      z-index:1;
+      color: var(--panelText);
+      text-transform: uppercase;
+      letter-spacing: 1.6px;
+      font-weight: 1000;
+      font-size: clamp(16px, 2.0vw, 20px);
+      margin: 0 0 10px;
+      font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+
+    .panelNumber{
+      position:relative;
+      z-index:1;
+      margin: 0;
+      line-height: .95;
+      font-weight: 1100;
+      letter-spacing: .8px;
+      font-size: clamp(72px, 10.5vw, 130px);
+      color: var(--panelNeon);
+      text-shadow: 0 0 26px rgba(163,255,79,.18);
+      font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+    }
+
+    .panelDesc{
+      position:relative;
+      z-index:1;
+      margin: 10px 0 0;
+      color: rgba(229,231,235,.92);
+      font-weight: 1000;
+      font-size: clamp(15px, 1.8vw, 20px);
+    }
+
+    .panelMeta{
+      position:relative;
+      z-index:1;
+      margin-top: 10px;
+      display:flex;
+      gap: 10px 14px;
+      flex-wrap:wrap;
+      align-items:center;
+      color: rgba(229,231,235,.72);
+      font-size: 13px;
+    }
+
+    .pill{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      color: rgba(229,231,235,.86);
+      font-weight: 900;
+    }
+
+    .btnRow{
+      position:relative;
+      z-index:1;
+      margin-top: 14px;
+      display:flex;
+      gap: 10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    button{
+      appearance:none;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.94);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-weight: 1000;
+      cursor:pointer;
+      transition: transform .05s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
+      box-shadow: 0 10px 16px rgba(15,23,42,.06);
+    }
+    button:hover{
+      background: rgba(255,255,255,.99);
+      border-color: #dbe7f5;
+    }
+    button:active{ transform: translateY(1px); }
+
+    .primary{
+      border-color: rgba(37,99,235,.25);
+      background: rgba(37,99,235,.10);
+    }
+    .primary:hover{
+      background: rgba(37,99,235,.14);
+      border-color: rgba(37,99,235,.32);
+    }
+
+    .danger{
+      border-color: rgba(255,107,107,.35);
+      background: rgba(255,107,107,.12);
+    }
+    .danger:hover{
+      background: rgba(255,107,107,.16);
+      border-color: rgba(255,107,107,.44);
+    }
+
+    footer{
+      max-width:1040px;
+      margin:0 auto;
+      padding: 0 18px 26px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    /* Pixel-Icons (inline SVG via data-uri) */
+    .px{
+      width:18px; height:18px;
+      display:inline-block;
+      image-rendering: pixelated;
+      background-size: 18px 18px;
+      background-repeat:no-repeat;
+      filter: drop-shadow(0 6px 10px rgba(15,23,42,.12));
+      flex: 0 0 auto;
+    }
+    .px.sun{
+      background-image:url('data:image/svg+xml;utf8,\
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" shape-rendering="crispEdges">\
+<rect width="18" height="18" fill="none"/>\
+<rect x="7" y="1" width="4" height="2" fill="%23f59e0b"/>\
+<rect x="7" y="15" width="4" height="2" fill="%23f59e0b"/>\
+<rect x="1" y="7" width="2" height="4" fill="%23f59e0b"/>\
+<rect x="15" y="7" width="2" height="4" fill="%23f59e0b"/>\
+<rect x="5" y="5" width="8" height="8" fill="%23fbbf24"/>\
+<rect x="6" y="6" width="6" height="6" fill="%23f59e0b"/>\
+</svg>');
+    }
+    .px.egg{
+      background-image:url('data:image/svg+xml;utf8,\
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" shape-rendering="crispEdges">\
+<rect width="18" height="18" fill="none"/>\
+<rect x="7" y="2" width="4" height="2" fill="%232563eb"/>\
+<rect x="6" y="4" width="6" height="2" fill="%232563eb"/>\
+<rect x="5" y="6" width="8" height="2" fill="%233b82f6"/>\
+<rect x="5" y="8" width="8" height="4" fill="%2360a5fa"/>\
+<rect x="6" y="12" width="6" height="2" fill="%2393c5fd"/>\
+<rect x="7" y="14" width="4" height="2" fill="%23bfdbfe"/>\
+</svg>');
+    }
+    .px.badge{
+      background-image:url('data:image/svg+xml;utf8,\
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" shape-rendering="crispEdges">\
+<rect width="18" height="18" fill="none"/>\
+<rect x="6" y="1" width="6" height="2" fill="%23a3ff4f"/>\
+<rect x="4" y="3" width="10" height="2" fill="%2385ff2d"/>\
+<rect x="3" y="5" width="12" height="8" fill="%23a3ff4f"/>\
+<rect x="4" y="13" width="10" height="2" fill="%2385ff2d"/>\
+<rect x="6" y="15" width="6" height="2" fill="%23a3ff4f"/>\
+<rect x="8" y="6" width="2" height="6" fill="%230b1220"/>\
+<rect x="6" y="8" width="6" height="2" fill="%230b1220"/>\
+</svg>');
+    }
+    .px.trophy{
+      background-image:url('data:image/svg+xml;utf8,\
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" shape-rendering="crispEdges">\
+<rect width="18" height="18" fill="none"/>\
+<rect x="6" y="2" width="6" height="2" fill="%23fbbf24"/>\
+<rect x="5" y="4" width="8" height="4" fill="%23f59e0b"/>\
+<rect x="6" y="8" width="6" height="2" fill="%23fbbf24"/>\
+<rect x="7" y="10" width="4" height="3" fill="%23f59e0b"/>\
+<rect x="6" y="13" width="6" height="2" fill="%23fbbf24"/>\
+<rect x="5" y="15" width="8" height="2" fill="%23f59e0b"/>\
+</svg>');
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1><span class="px badge" aria-hidden="true"></span> HSK Ferien-Countdown</h1>
+    <p class="sub">Countdown bis zum <b>letzten Schultag</b> vor den Ferien (Tag “springt” um <span class="mono">06:00</span>). Plus: Vorfallzähler inkl. Highscore.</p>
+  </header>
+
+  <main>
+    <section class="grid">
+      <!-- Osterferien -->
+      <article class="card" id="card-ostern">
+        <div class="rowTop">
+          <h2><span class="px egg" aria-hidden="true"></span> Osterferien (NI)</h2>
+          <span class="badge mono" id="ostern-range">—</span>
+        </div>
+
+        <div class="kpi">
+          <div class="big mono" id="ostern-days">—</div>
+          <div class="unit">Tage bis letzter Schultag</div>
+        </div>
+
+        <div class="tiles" aria-label="Countdown & Aufteilung bis letzter Schultag vor den Osterferien">
+          <div class="tile"><div class="n mono" id="ostern-d">—</div><div class="l">Tage</div></div>
+          <div class="tile"><div class="n mono" id="ostern-h">—</div><div class="l">Stunden</div></div>
+          <div class="tile"><div class="n mono" id="ostern-m">—</div><div class="l">Minuten</div></div>
+          <div class="tile"><div class="n mono" id="ostern-s">—</div><div class="l">Sekunden</div></div>
+
+          <div class="tile"><div class="n mono" id="ostern-free">—</div><div class="l">davon WE/Feiertage</div></div>
+          <div class="tile"><div class="n mono" id="ostern-school">—</div><div class="l">davon Schultage</div></div>
+        </div>
+
+        <div class="meta">
+          <span id="ostern-status">—</span>
+          <span class="mono" id="ostern-target">—</span>
+        </div>
+      </article>
+
+      <!-- Sommerferien -->
+      <article class="card" id="card-sommer">
+        <div class="rowTop">
+          <h2><span class="px sun" aria-hidden="true"></span> Sommerferien (NI)</h2>
+          <span class="badge mono" id="sommer-range">—</span>
+        </div>
+
+        <div class="kpi">
+          <div class="big mono" id="sommer-days">—</div>
+          <div class="unit">Tage bis letzter Schultag</div>
+        </div>
+
+        <div class="tiles" aria-label="Countdown & Aufteilung bis letzter Schultag vor den Sommerferien">
+          <div class="tile"><div class="n mono" id="sommer-d">—</div><div class="l">Tage</div></div>
+          <div class="tile"><div class="n mono" id="sommer-h">—</div><div class="l">Stunden</div></div>
+          <div class="tile"><div class="n mono" id="sommer-m">—</div><div class="l">Minuten</div></div>
+          <div class="tile"><div class="n mono" id="sommer-s">—</div><div class="l">Sekunden</div></div>
+
+          <div class="tile"><div class="n mono" id="sommer-free">—</div><div class="l">davon WE/Feiertage</div></div>
+          <div class="tile"><div class="n mono" id="sommer-school">—</div><div class="l">davon Schultage</div></div>
+        </div>
+
+        <div class="meta">
+          <span id="sommer-status">—</span>
+          <span class="mono" id="sommer-target">—</span>
+        </div>
+      </article>
+
+      <!-- Vorfallzähler -->
+      <article class="incidentWrap wide" id="card-incident">
+        <div class="incidentHeader">
+          <h2><span class="px badge" aria-hidden="true"></span> Vorfallzähler</h2>
+          <div class="hint mono">Reset setzt das Datum auf heute</div>
+        </div>
+
+        <div class="panel" role="region" aria-label="Tage seit letztem Vorfall">
+          <p class="panelTopline"><span class="px badge" aria-hidden="true"></span> Tage ohne Polizeivorfall</p>
+          <p class="panelNumber" id="incident-days">—</p>
+          <p class="panelDesc">Tage seit dem letzten Vorfall mit Polizei</p>
+
+          <div class="panelMeta">
+            <span class="pill mono" id="incident-date">Letztes Datum: —</span>
+            <span class="pill mono" id="incident-highscore"><span class="px trophy" aria-hidden="true"></span> Highscore: —</span>
+            <span class="pill mono" id="incident-highscore-date">Bestmarke am: —</span>
+          </div>
+        </div>
+
+        <div class="btnRow">
+          <button class="danger" id="incident-reset" type="button">Reset (Vorfall heute)</button>
+          <button class="primary" id="incident-set-yesterday" type="button">Setze auf „gestern“</button>
+          <span class="hint mono">Speicherung: nur dieser Browser</span>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    Tipp: Wenn du weitere Jahre ergänzen willst, erweitere im Script einfach die Tabelle <span class="mono">FERIENTERMINE_NI</span>.
+  </footer>
+
+  <script>
+    // =========================
+    // Einstellungen
+    // =========================
+    // Motivation: Tag springt um 06:00
+    const LAST_SCHOOLDAY_TARGET_HOUR = 6;
+    const LAST_SCHOOLDAY_TARGET_MIN  = 0;
+
+    // =========================
+    // Ferien-Daten (Niedersachsen) - Start/Ende der Ferien
+    // =========================
+    // Format: ISO-Strings (YYYY-MM-DD). Enddatum ist inkl. letzter Ferientag.
+    // Enthält: Ostern + Sommer (bis 2030)
+    const FERIENTERMINE_NI = [
+      { year: 2025, ostern: ["2025-04-07","2025-04-19"], sommer: ["2025-07-03","2025-08-13"] },
+      { year: 2026, ostern: ["2026-03-23","2026-04-07"], sommer: ["2026-07-02","2026-08-12"] },
+      { year: 2027, ostern: ["2027-03-22","2027-04-03"], sommer: ["2027-07-08","2027-08-18"] },
+      { year: 2028, ostern: ["2028-04-10","2028-04-22"], sommer: ["2028-07-20","2028-08-30"] },
+      { year: 2029, ostern: ["2029-03-19","2029-04-03"], sommer: ["2029-07-19","2029-08-29"] },
+      { year: 2030, ostern: ["2030-04-08","2030-04-23"], sommer: ["2030-07-11","2030-08-21"] }
+    ];
+
+    // ========= Helpers =========
+    function pad2(n){ return String(n).padStart(2, "0"); }
+
+    function formatDE(isoDate){
+      const [y,m,d] = isoDate.split("-").map(Number);
+      return `${pad2(d)}.${pad2(m)}.${y}`;
+    }
+
+    function startOfDay(date){
+      return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0,0,0,0);
+    }
+
+    function endOfDay(date){
+      return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23,59,59,999);
+    }
+
+    function parseISOToLocalDate(iso){
+      const [y,m,d] = iso.split("-").map(Number);
+      return new Date(y, m-1, d, 0,0,0,0);
+    }
+
+    function dateToISO(date){
+      return `${date.getFullYear()}-${pad2(date.getMonth()+1)}-${pad2(date.getDate())}`;
+    }
+
+    function addDays(date, n){
+      const d = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0,0,0,0);
+      d.setDate(d.getDate() + n);
+      return d;
+    }
+
+    function lastSchoolDayBefore(holidayStartDate){
+      const d = new Date(holidayStartDate.getFullYear(), holidayStartDate.getMonth(), holidayStartDate.getDate(), 0,0,0,0);
+      d.setDate(d.getDate() - 1);
+
+      while (d.getDay() === 0 || d.getDay() === 6){
+        d.setDate(d.getDate() - 1);
+      }
+
+      d.setHours(LAST_SCHOOLDAY_TARGET_HOUR, LAST_SCHOOLDAY_TARGET_MIN, 0, 0);
+      return d;
+    }
+
+    function pickNextHoliday(kind, now){
+      const today = startOfDay(now);
+
+      for(const row of FERIENTERMINE_NI){
+        const [startISO, endISO] = row[kind];
+        const start = parseISOToLocalDate(startISO);
+        const end = endOfDay(parseISOToLocalDate(endISO));
+
+        if (today <= end){
+          const lastSchoolTarget = lastSchoolDayBefore(start);
+
+          let status = "Countdown läuft";
+          if (today >= startOfDay(start) && today <= end){
+            status = "Ferien laufen gerade";
+          } else if (now > lastSchoolTarget && now < start) {
+            status = "Letzter Schultag ist bereits vorbei";
+          }
+
+          return { startISO, endISO, startDate: start, endDate: end, lastSchoolTarget, status };
+        }
+      }
+      return null;
+    }
+
+    function diffParts(targetDateTime, now){
+      let ms = targetDateTime.getTime() - now.getTime();
+      if (ms < 0) ms = 0;
+
+      const s = Math.floor(ms / 1000);
+      const days = Math.floor(s / 86400);
+      const hours = Math.floor((s % 86400) / 3600);
+      const mins = Math.floor((s % 3600) / 60);
+      const secs = s % 60;
+
+      return { days, hours, mins, secs };
+    }
+
+    // =========================
+    // Feiertage (Niedersachsen) - Basis (bundesweit + NI)
+    // =========================
+    function easterSunday(year){
+      const a = year % 19;
+      const b = Math.floor(year / 100);
+      const c = year % 100;
+      const d = Math.floor(b / 4);
+      const e = b % 4;
+      const f = Math.floor((b + 8) / 25);
+      const g = Math.floor((b - f + 1) / 3);
+      const h = (19*a + b - d - g + 15) % 30;
+      const i = Math.floor(c / 4);
+      const k = c % 4;
+      const l = (32 + 2*e + 2*i - h - k) % 7;
+      const m = Math.floor((a + 11*h + 22*l) / 451);
+      const month = Math.floor((h + l - 7*m + 114) / 31);
+      const day = ((h + l - 7*m + 114) % 31) + 1;
+      return new Date(year, month - 1, day, 0,0,0,0);
+    }
+
+    function niedersachsenHolidaysISO(year){
+      const set = new Set();
+
+      set.add(`${year}-01-01`); // Neujahr
+      set.add(`${year}-05-01`); // Tag der Arbeit
+      set.add(`${year}-10-03`); // Tag der Deutschen Einheit
+      set.add(`${year}-10-31`); // Reformationstag (NI)
+      set.add(`${year}-12-25`); // 1. Weihnachtstag
+      set.add(`${year}-12-26`); // 2. Weihnachtstag
+
+      const easter = easterSunday(year);
+      const iso = (d) => dateToISO(d);
+
+      set.add(iso(addDays(easter, -2))); // Karfreitag
+      set.add(iso(addDays(easter,  1))); // Ostermontag
+      set.add(iso(addDays(easter, 39))); // Christi Himmelfahrt
+      set.add(iso(addDays(easter, 50))); // Pfingstmontag
+
+      return set;
+    }
+
+    function isWeekend(date){
+      const dow = date.getDay();
+      return dow === 0 || dow === 6;
+    }
+
+    function effectiveDayStart(now){
+      // Tag-Logik springt um 06:00
+      const d = startOfDay(now);
+      if (
+        now.getHours() < LAST_SCHOOLDAY_TARGET_HOUR ||
+        (now.getHours() === LAST_SCHOOLDAY_TARGET_HOUR && now.getMinutes() < LAST_SCHOOLDAY_TARGET_MIN)
+      ){
+        d.setDate(d.getDate() - 1);
+      }
+      return d;
+    }
+
+    // Zählt "volle verbleibende Tage": angebrochener Tag ist abgezogen.
+    // Intervall: (baseDay + 1) ... (targetDay - 1)
+    function breakdownFreeDaysFull(baseDayStart, targetDayStart){
+      const dayDiff = Math.max(0, Math.round((targetDayStart.getTime() - baseDayStart.getTime()) / 86400000));
+      const fullDays = Math.max(0, dayDiff - 1);
+
+      let free = 0;
+      let school = 0;
+
+      for(let i = 1; i <= fullDays; i++){
+        const d = addDays(baseDayStart, i);
+        const holidaySet = niedersachsenHolidaysISO(d.getFullYear());
+        const iso = dateToISO(d);
+
+        const isFree = isWeekend(d) || holidaySet.has(iso);
+        if (isFree) free++;
+        else school++;
+      }
+      return { fullDays, free, school };
+    }
+
+    function renderCountdown(kind, ids){
+      const now = new Date();
+      const picked = pickNextHoliday(kind, now);
+
+      if(!picked){
+        document.getElementById(ids.range).textContent = "keine Daten";
+        document.getElementById(ids.status).textContent = "Kein Ferientermin in der Tabelle gefunden.";
+        return;
+      }
+
+      const { startISO, endISO, lastSchoolTarget, status } = picked;
+      const lastSchoolISO = dateToISO(lastSchoolTarget);
+
+      document.getElementById(ids.range).textContent = `${formatDE(startISO)} – ${formatDE(endISO)}`;
+      document.getElementById(ids.status).textContent = status;
+      document.getElementById(ids.target).textContent =
+        `Letzter Schultag: ${formatDE(lastSchoolISO)} ${pad2(LAST_SCHOOLDAY_TARGET_HOUR)}:${pad2(LAST_SCHOOLDAY_TARGET_MIN)}`;
+
+      // Countdown (h/m/s) bis zur Zielzeit bleibt "real-time"
+      const parts = diffParts(lastSchoolTarget, now);
+
+      // "Tage" = volle verbleibende Tage (angeb. Tag abgezogen) mit 06:00-Umsprung
+      const baseDay = effectiveDayStart(now);
+      const targetDay = startOfDay(lastSchoolTarget);
+
+      const split = breakdownFreeDaysFull(baseDay, targetDay);
+
+      document.getElementById(ids.bigDays).textContent = String(split.fullDays);
+
+      document.getElementById(ids.d).textContent = String(split.fullDays);
+      document.getElementById(ids.h).textContent = pad2(parts.hours);
+      document.getElementById(ids.m).textContent = pad2(parts.mins);
+      document.getElementById(ids.s).textContent = pad2(parts.secs);
+
+      document.getElementById(ids.free).textContent = String(split.free);
+      document.getElementById(ids.school).textContent = String(split.school);
+    }
+
+    // ========= Vorfallzähler =========
+    const INCIDENT_KEY = "last_police_incident_date_iso";
+    const INCIDENT_HS_KEY = "incident_highscore_days";
+    const INCIDENT_HS_DATE_KEY = "incident_highscore_date_iso";
+
+    function getIncidentISO(){
+      const v = localStorage.getItem(INCIDENT_KEY);
+      if (v && /^\d{4}-\d{2}-\d{2}$/.test(v)) return v;
+
+      const iso = dateToISO(new Date());
+      localStorage.setItem(INCIDENT_KEY, iso);
+      return iso;
+    }
+
+    function setIncidentISO(iso){
+      localStorage.setItem(INCIDENT_KEY, iso);
+      renderIncident();
+    }
+
+    function daysSince(iso){
+      const last = parseISOToLocalDate(iso);
+      const today = startOfDay(new Date());
+      const diff = today.getTime() - startOfDay(last).getTime();
+      return Math.max(0, Math.floor(diff / 86400000));
+    }
+
+    function getHighscore(){
+      const v = localStorage.getItem(INCIDENT_HS_KEY);
+      const n = v ? Number(v) : 0;
+      return Number.isFinite(n) ? n : 0;
+    }
+
+    function setHighscore(n){
+      localStorage.setItem(INCIDENT_HS_KEY, String(n));
+      localStorage.setItem(INCIDENT_HS_DATE_KEY, dateToISO(new Date()));
+    }
+
+    function getHighscoreDateISO(){
+      const v = localStorage.getItem(INCIDENT_HS_DATE_KEY);
+      if (v && /^\d{4}-\d{2}-\d{2}$/.test(v)) return v;
+      return null;
+    }
+
+    function renderIncident(){
+      const iso = getIncidentISO();
+      const n = daysSince(iso);
+
+      // Highscore updaten
+      const hs = getHighscore();
+      if (n > hs){
+        setHighscore(n);
+      }
+
+      const hsNow = getHighscore();
+      const hsDate = getHighscoreDateISO();
+
+      document.getElementById("incident-days").textContent = String(n);
+      document.getElementById("incident-date").textContent = `Letztes Datum: ${formatDE(iso)}`;
+      document.getElementById("incident-highscore").innerHTML =
+        `<span class="px trophy" aria-hidden="true"></span> Highscore: ${hsNow} Tage`;
+      document.getElementById("incident-highscore-date").textContent =
+        `Bestmarke am: ${hsDate ? formatDE(hsDate) : "—"}`;
+    }
+
+    // ========= Tick =========
+    function tick(){
+      renderCountdown("ostern", {
+        range: "ostern-range",
+        status: "ostern-status",
+        target: "ostern-target",
+        bigDays: "ostern-days",
+        d: "ostern-d", h: "ostern-h", m: "ostern-m", s: "ostern-s",
+        free: "ostern-free", school: "ostern-school"
+      });
+
+      renderCountdown("sommer", {
+        range: "sommer-range",
+        status: "sommer-status",
+        target: "sommer-target",
+        bigDays: "sommer-days",
+        d: "sommer-d", h: "sommer-h", m: "sommer-m", s: "sommer-s",
+        free: "sommer-free", school: "sommer-school"
+      });
+
+      renderIncident();
+    }
+
+    document.getElementById("incident-reset").addEventListener("click", () => {
+      setIncidentISO(dateToISO(new Date()));
+    });
+
+    document.getElementById("incident-set-yesterday").addEventListener("click", () => {
+      const d = new Date();
+      d.setDate(d.getDate() - 1);
+      setIncidentISO(dateToISO(d));
+    });
+
+    tick();
+    setInterval(tick, 1000);
+  </script>
+</body>
+</html>
