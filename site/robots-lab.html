@@ -9,23 +9,22 @@
     body { margin:0; padding:24px; }
     .container { max-width: 900px; margin: 0 auto; padding: 28px; }
     .actions { display:flex; gap:12px; flex-wrap:wrap; margin:18px 0 24px; }
-    .code { background:#091521; color:#a8f5a8; padding:16px; border-radius:14px; font-family:"Courier New", monospace; white-space:pre-wrap; }
-    .hint { margin-top:20px; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>robots.txt Recon</h1>
+
     <p><strong>Wozu ist robots.txt normalerweise da?</strong></p>
     <p>
       Die Datei <code>robots.txt</code> liegt im Web-Root einer Website und gibt Suchmaschinen Hinweise,
       welche Bereiche sie crawlen oder indexieren sollen. Wichtig: Das ist <strong>kein Zugriffsschutz</strong>.
-      Wer die Datei liest, sieht oft direkt, welche Pfade der Betreiber lieber aus Suchergebnissen heraushalten möchte.
+      Wer die Datei liest, bekommt oft Hinweise auf Pfade, die zwar nicht prominent sichtbar sind, aber trotzdem existieren.
     </p>
 
     <div class="info">
-      <strong>Lab-Idee:</strong> Prüfe die <code>robots.txt</code>, finde einen dort erwähnten Pfad
-      und rufe ihn direkt auf. Genau so lernt man, warum „nicht indexieren“ nicht dasselbe ist wie „geschützt“.
+      <strong>Deine Aufgabe:</strong> Schau dir die <code>robots.txt</code> an, finde einen interessanten Pfad
+      und rufe ihn direkt auf.
     </div>
 
     <div class="actions">
@@ -33,36 +32,15 @@
       <a class="btn" href="index.html">Zurück zur Startseite</a>
     </div>
 
-    <h2>Worauf solltest du achten?</h2>
-    <div class="code">User-agent: *
-Disallow: /admin.html
-Disallow: /quiet-archive-x9k2v7.html</div>
-
-    <p class="hint">
-      <strong>Hinweis:</strong> Ein Standard-Directory-Scan findet oft nur typische Namen aus einer Wordlist.
-      Ein ungewöhnlicher Pfad kann dadurch leicht übersehen werden – auch wenn die Datei natürlich trotzdem existiert.
+    <h2>Warum ist das relevant?</h2>
+    <p>
+      Viele Betreiber denken bei <code>Disallow</code> automatisch an „versteckt“ oder sogar „geschützt“.
+      Tatsächlich ist es aber nur eine Bitte an Suchmaschinen. Wer den Pfad kennt, kann ihn oft direkt aufrufen.
     </p>
 
-    <h2>Flag einreichen</h2>
-    <p>Wenn du die versteckte Seite gefunden hast, trage die Flag hier ein:</p>
-    <input type="text" id="flag-input" placeholder="{Flag eingeben}">
-    <button class="btn" onclick="checkFlag()">Prüfen</button>
-    <p id="msg"></p>
+    <div class="warning">
+      <strong>Wichtig:</strong> Die Flag reichst du ganz normal auf der Startseite ein.
+    </div>
   </div>
-
-  <script>
-    function checkFlag() {
-      const input = document.getElementById('flag-input').value.trim();
-      const correct = atob('e1JPQk9UU19BUkVfSElOVFNfTk9UX1NISUVMRFN9');
-      const msg = document.getElementById('msg');
-      if (input === correct) {
-        msg.textContent = 'Richtig. Trag die Flag jetzt auf der Startseite im passenden Feld ein.';
-        msg.style.color = '#1faa63';
-      } else {
-        msg.textContent = 'Noch nicht korrekt.';
-        msg.style.color = '#d9534f';
-      }
-    }
-  </script>
 </body>
 </html>

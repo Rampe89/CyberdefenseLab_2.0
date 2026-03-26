@@ -226,3 +226,58 @@ table th, table td{
     padding:16px !important;
   }
 }
+
+
+/* --- visibility fixes for revealed flags / terminal outputs --- */
+#result,
+#resultBox,
+#output,
+#flag-output,
+#secret-output,
+#bruteforce-result,
+#phishing-result,
+#hash-result,
+#sql-result,
+.reveal,
+.reveal-box,
+.flag-output,
+.flag-box,
+.result,
+.result-box,
+.output-box,
+.success-box,
+.code,
+pre,
+.console,
+.shell,
+.terminal{
+  background: linear-gradient(180deg, #091521, #0c1c2a) !important;
+  color: #a8f5a8 !important;
+  border: 1px solid rgba(124,227,255,.16) !important;
+}
+
+.flag,
+.achievement{
+  color: var(--text) !important;
+}
+
+.hidden-flag,
+.secret-flag{
+  background: linear-gradient(180deg, #091521, #0c1c2a) !important;
+  color: #a8f5a8 !important;
+  border-radius: 14px !important;
+  padding: 14px 16px !important;
+  border: 1px solid rgba(124,227,255,.16) !important;
+  font-family: "Courier New", monospace !important;
+  display: inline-block;
+}
+
+/* ensure generic text inside dynamically injected result areas is readable */
+.result-box *,
+.output-box *,
+.flag-box *,
+.console *,
+.shell *,
+.terminal *{
+  color: inherit !important;
+}
