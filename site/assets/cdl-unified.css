@@ -281,3 +281,99 @@ pre,
 .terminal *{
   color: inherit !important;
 }
+
+
+/* --- v3 polish fixes --- */
+
+/* keep page titles in dark headers readable */
+body > h1,
+header h1,
+header .logo,
+header .brand,
+header .site-title,
+.hero h1,
+.hero-title{
+  color:#eef6ff !important;
+  text-shadow:0 2px 12px rgba(0,0,0,.28);
+}
+
+/* only dark text INSIDE light content areas */
+.container h1,
+.container h2,
+.container h3,
+.quiz-container h1,
+.quiz-container h2,
+.quiz-container h3,
+.task h1,
+.task h2,
+.task h3,
+.info h1,
+.info h2,
+.info h3,
+.panel h1,
+.panel h2,
+.panel h3,
+.card h1,
+.card h2,
+.card h3{
+  color:#0f2c47 !important;
+  text-shadow:none !important;
+}
+
+/* buttons less toy-like */
+.btn,
+button,
+.back-button,
+input[type="submit"],
+input[type="button"]{
+  background:linear-gradient(180deg, #2f8ef3, #1f74d6) !important;
+  color:#ffffff !important;
+  border:1px solid rgba(255,255,255,.12) !important;
+  border-radius:10px !important;
+  box-shadow:0 6px 14px rgba(16,72,138,.22) !important;
+  text-decoration:none !important;
+  font-weight:600 !important;
+  padding:10px 14px !important;
+}
+
+.btn:hover,
+button:hover,
+.back-button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover{
+  background:linear-gradient(180deg, #3796fa, #277fe2) !important;
+  box-shadow:0 8px 18px rgba(16,72,138,.26) !important;
+  transform:translateY(-1px);
+}
+
+.btn:active,
+button:active,
+.back-button:active,
+input[type="submit"]:active,
+input[type="button"]:active{
+  transform:translateY(0);
+  box-shadow:0 4px 10px rgba(16,72,138,.2) !important;
+}
+
+/* keep inline action groups tidy */
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+/* warning/info boxes should not look like empty white pills */
+.warning,
+.notice,
+.info{
+  padding:16px 18px !important;
+  line-height:1.55;
+}
+
+/* links in content stay normal and readable */
+.container a:not(.btn),
+.quiz-container a:not(.btn),
+.task a:not(.btn){
+  color:#176fd6 !important;
+  text-decoration:underline;
+}
