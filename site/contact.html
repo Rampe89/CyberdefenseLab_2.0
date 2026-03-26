@@ -4,84 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kontaktformular - CyberDefense Lab</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #2c3e50, #4ca1af);
-            color: #fff;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
-        }
-        .container {
-            max-width: 450px;
-            background: #fff;
-            color: #333;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            text-align: center;
-        }
-        h2 {
-            color: #007bff;
-            margin-bottom: 15px;
-        }
-        input, textarea {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-        button {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .message {
-            color: green;
-            font-weight: bold;
-            margin-top: 10px;
-            display: none;
-        }
-        .hint-container {
-            margin-top: 15px;
-            text-align: left;
-        }
-        .hint-button {
-            background: none;
-            border: none;
-            color: #007bff;
-            cursor: pointer;
-            font-size: 14px;
-            text-decoration: underline;
-        }
-        .hint-button:hover {
-            color: #0056b3;
-        }
-        .hint-content {
-            display: none;
-            background: #f9f9f9;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-            margin-top: 5px;
-        }
-    </style>
+    
+<link rel="stylesheet" href="/assets/css/shared.css">
 </head>
 <body>
     <div class="container">
@@ -138,6 +62,7 @@
             hint.style.display = hint.style.display === "none" || hint.style.display === "" ? "block" : "none";
         }
     </script>
+<script src="/assets/js/app.js"></script>
 </body>
 </html>
 
