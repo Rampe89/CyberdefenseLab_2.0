@@ -1,4 +1,6 @@
-Safe repair build:
-- Restored original layout/styling structure
-- Restored frontend password-protected area behavior
-- Fixed inconsistent achievement mapping in site/404.html
+Unified styling pass + robots.txt lab added.
+- robot.html kept unchanged
+- common stylesheet injected into all other HTML pages
+- new robots.txt lab: robots-lab.html
+- hidden page: quiet-archive-x9k2v7.html
+- new flag #14 added on index.html

@@ -198,6 +198,8 @@
       color: #007bff;
     }
   </style>
+
+  <link rel="stylesheet" href="assets/cdl-unified.css">
 </head>
 <body>
   <!-- Header & Navigation -->
@@ -216,7 +218,7 @@
     </p>
 
     <!-- Fortschrittsanzeige & Fortschrittsbalken -->
-    <div id="progress">Fortschritt: 0/13 Flags gesammelt</div>
+    <div id="progress">Fortschritt: 0/14 Flags gesammelt</div>
     <div id="progress-bar">
       <div id="progress-fill"></div>
     </div>
@@ -298,6 +300,18 @@
               Prüfen
             </button>
           </div>
+
+          <!-- robots.txt Recon -->
+          <div class="task">
+            <h3>robots.txt Recon</h3>
+            <p>Prüfe die robots.txt, finde einen nicht gelisteten Pfad und zeige, warum „Disallow“ kein echter Schutz ist.</p>
+            <a href="robots-lab.html" class="btn">Aufgabe öffnen</a>
+            <input type="text" id="flag14" placeholder="{Flag eingeben}"/>
+            <button class="btn" onclick="checkFlag(14, 'e1JPQk9UU19BUkVfSElOVFNfTk9UX1NISUVMRFN9', '🤖 robots.txt Scout')">
+              Prüfen
+            </button>
+          </div>
+
           <!-- SQL Injection Lab -->
           <div class="task">
             <h3>SQL Injection Lab</h3>
@@ -401,14 +415,14 @@
     /***********************************
      * Globale Variablen & Konfiguration
      ***********************************/
-    // Insgesamt 13 Flags (Index 0-12)
+    // Insgesamt 14 Flags (Index 0-13)
     let collectedFlags = JSON.parse(localStorage.getItem("collectedFlags")) || 
-      [false, false, false, false, false, false, false, false, false, false, false, false, false];
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false];
     // Base64-String für das Cookie {COOKIES_REVEAL_SECRETS}
     const cookieEncoded = "e0NPT0tJRVNfUkVWRUFMX1NFQ1JFVFN9";
     // Konfetti soll nur einmal ausgelöst werden
     let confettiShown = false;
-    // Mapping: Flag-Index (1-13) → Achievement-Titel
+    // Mapping: Flag-Index (1-14) → Achievement-Titel
     const ACHIEVEMENTS = {
   1: '🔓 Passwortknacker',
   2: '🎣 Phishing-Profi',
@@ -423,6 +437,7 @@
   11: '🐭 Mäusejäger',
   12: '💬 Console Leak',
   13: '💉 SQL Injector',
+  14: '🤖 robots.txt Scout',
 };
 
     /*****************************
@@ -573,10 +588,10 @@
      ****************************/
     function updateProgress() {
       const count = collectedFlags.filter(Boolean).length;
-      document.getElementById("progress").textContent = `Fortschritt: ${count}/13 Flags gesammelt`;
-      const percentage = (count / 13) * 100;
+      document.getElementById("progress").textContent = `Fortschritt: ${count}/14 Flags gesammelt`;
+      const percentage = (count / 14) * 100;
       document.getElementById("progress-fill").style.width = percentage + '%';
-      if (count === 13 && !confettiShown) {
+      if (count === 14 && !confettiShown) {
         confetti();
         confettiShown = true;
         alert("Flag: {Mission_accomplished}");
@@ -587,7 +602,7 @@
       renderAchievementsFromStorage();
     }
     function updateUI() {
-      for (let i = 1; i <= 13; i++) {
+      for (let i = 1; i <= 14; i++) {
         const el = document.getElementById(`flag${i}`);
         if (el && collectedFlags[i - 1]) {
           el.disabled = true;

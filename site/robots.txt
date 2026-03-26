@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /admin.html
+Disallow: /quiet-archive-x9k2v7.html
+
+# Hinweis für Suchmaschinen:
+# Diese Bereiche sollen nicht indexiert werden.
