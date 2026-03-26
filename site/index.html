@@ -6,8 +6,198 @@
   <title>CyberDefense Lab 🧪</title>
   <!-- Einbindung von canvas-confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-  
-<link rel="stylesheet" href="/assets/css/shared.css">
+  <style>
+    /* Allgemeine Styles */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #2c3e50, #4ca1af);
+      color: #fff;
+    }
+    .hidden {
+      display: none;
+    }
+    header {
+      background: rgba(31, 44, 56, 0.8); /* halbtransparenter Hintergrund */
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+    header h1 {
+      margin: 0;
+      color: #f0f0f0;
+    }
+
+    nav {
+      margin-top: 10px;
+    }
+    nav a {
+      color: #ddd;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+    nav a:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      background: #fff;
+      color: #333;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .top-info {
+      text-align: center;
+      font-size: 14px;
+      color: #888;
+      margin-bottom: 20px;
+    }
+    /* Fortschrittsanzeige */
+    #progress {
+      text-align: center;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    /* Animierter Fortschrittsbalken */
+    #progress-bar {
+      width: 80%;
+      height: 20px;
+      background: #ccc;
+      border-radius: 5px;
+      margin: 0 auto 20px;
+      overflow: hidden;
+    }
+    #progress-fill {
+      height: 100%;
+      width: 0%;
+      background: #007bff;
+      transition: width 0.5s ease-in-out;
+    }
+    /* Flexbox-Aufteilung der Aufgaben */
+    .flex-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: flex-start; 
+    }
+
+    .column {
+      flex: 1;
+      min-width: 300px;
+    }
+    h2 {
+      color: #007bff;
+      margin-top: 0;
+    }
+    .task {
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    .task h3 {
+      margin-top: 0;
+      color: #007bff;
+    }
+    .btn {
+      padding: 8px 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: #0056b3;
+    }
+    input[type="text"], input[type="password"] {
+      margin-top: 10px;
+      padding: 5px;
+      width: 100%;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    .error-message {
+      color: red;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .achievements {
+      margin-top: 20px;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+    }
+    .achievement {
+      background: #e0e0e0;
+      margin-bottom: 10px;
+      padding: 5px;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+    footer {
+      text-align: center;
+      margin: 20px 0;
+      color: #ccc;
+      font-size: 14px;
+    }
+    footer a {
+      color: #ffffff;
+      text-decoration: none;
+    }
+    footer a:hover {
+      color: #ffdd00; /* Gelb beim Hover */
+      text-decoration: underline;
+    }
+    /* Cookie-Banner */
+    .cookie-banner {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      z-index: 1000;
+    }
+    .cookie-banner button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .cookie-banner button:hover {
+      background-color: #0056b3;
+    }
+    /* Ausklappbarer Bereich für geheime Flags */
+    #secret-header {
+      cursor: pointer;
+      background: #f0f0f0;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      user-select: none;
+    }
+    #secret-flags {
+      display: none;
+    }
+    #secret-toggle {
+      float: right;
+      font-weight: bold;
+      color: #007bff;
+    }
+  </style>
 </head>
 <body>
   <!-- Header & Navigation -->
@@ -438,7 +628,6 @@
       renderAchievementsFromStorage();
     }
   </script>
-<script src="/assets/js/app.js"></script>
 </body>
 </html>
 

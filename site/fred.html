@@ -4,8 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fred wurde entführt! - Digitale Forensik</title>
-    
-<link rel="stylesheet" href="/assets/css/shared.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #2c3e50, #4ca1af);
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        h1, h2, h3 {
+            text-align: center;
+            color: #007bff;
+        }
+        .info {
+            background: #f4f4f4;
+            padding: 15px;
+            border-left: 4px solid #007bff;
+            margin-bottom: 20px;
+        }
+        .console {
+            background: #000;
+            color: #0f0;
+            font-family: monospace;
+            padding: 15px;
+            border-radius: 5px;
+            height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+        .btn {
+            display: block;
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            margin: 10px auto;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .task {
+            margin-top: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: calc(100% - 22px);
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+        .flag {
+            background: #28a745;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -250,7 +320,6 @@ History Software Agent: GIMP 2.10
             document.getElementById("flag-container").classList.remove("hidden");
         }
     </script>
-<script src="/assets/js/app.js"></script>
 </body>
 </html>
 

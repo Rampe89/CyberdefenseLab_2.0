@@ -1,0 +1,4 @@
+Safe repair build:
+- Restored original layout/styling structure
+- Restored frontend password-protected area behavior
+- Fixed inconsistent achievement mapping in site/404.html

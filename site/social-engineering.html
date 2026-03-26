@@ -4,8 +4,151 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Social Engineering Lab</title>
-  
-<link rel="stylesheet" href="/assets/css/shared.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #2c3e50, #4ca1af);
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      padding: 20px 30px;
+      border: 1px solid #ddd;
+    }
+    h1 {
+      font-size: 28px;
+      color: #007bff;
+      text-align: center;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 10px;
+    }
+    .explanation {
+      background-color: #e9f7fd;
+      border: 1px solid #b3e0ff;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      color: #333;
+      line-height: 1.6;
+    }
+    .explanation p {
+      margin: 0 0 10px 0;
+    }
+    /* Neues Chatfenster-Design */
+    .chat-window {
+      background: #fefefe;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+      height: 400px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Chat-Bubble-Stile */
+    .message {
+      max-width: 70%;
+      padding: 10px 15px;
+      border-radius: 15px;
+      margin: 5px;
+      word-wrap: break-word;
+    }
+    .message .sender {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    /* Eigene Nachrichten (rechts, grün) */
+    .message.du {
+      background-color: #d1e7dd;
+      color: #0f5132;
+      align-self: flex-end;
+      border-radius: 15px 15px 0 15px;
+    }
+    /* Nachrichten von anderen (links, grau) */
+    .message.other {
+      background-color: #e2e3e5;
+      color: #41464b;
+      align-self: flex-start;
+      border-radius: 15px 15px 15px 0;
+    }
+    /* Systemnachrichten */
+    .message.system-message {
+      background: none;
+      color: #555;
+      font-style: italic;
+      padding: 5px 10px;
+      margin: 5px auto;
+    }
+    /* Verbesserte Buttons */
+    .choice-button {
+      display: block;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      margin: 10px 0;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 14px;
+      text-align: left;
+      transition: background 0.3s ease;
+    }
+    .choice-button:hover {
+      background: #0056b3;
+    }
+    .flag {
+      margin-top: 20px;
+      padding: 15px;
+      background: #28a745;
+      color: white;
+      text-align: center;
+      font-weight: bold;
+      font-size: 18px;
+      border-radius: 5px;
+    }
+    .info {
+      background: #f9f9f9;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-top: 20px;
+      color: #333;
+      line-height: 1.6;
+    }
+    /* Schöner Scrollbar-Stil */
+    .chat-window::-webkit-scrollbar {
+      width: 8px;
+    }
+    .chat-window::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    .chat-window::-webkit-scrollbar-thumb {
+      background: #007bff;
+      border-radius: 10px;
+    }
+    /* Zurück zur Startseite Button */
+    .back-button {
+      background-color: #28a745;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+    .back-button:hover {
+      background-color: #218838;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -369,7 +512,6 @@
     
     window.onload = loadScenario;
   </script>
-<script src="/assets/js/app.js"></script>
 </body>
 </html>
 

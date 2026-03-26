@@ -4,8 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MR. ROBOT FLAG</title>
-  
-<link rel="stylesheet" href="/assets/css/shared.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background-color: black;
+      color: #00ff00;
+      font-family: "Courier New", monospace;
+      font-size: 18px;
+      text-align: center;
+    }
+    /* Eine scrollbare Konsole */
+    .console {
+      max-width: 80%;
+      margin: 0 auto;
+      white-space: break-spaces;
+      overflow-y: auto;      /* Scrollbar, falls zu lang */
+      max-height: 80vh;      /* Damit man notfalls scrollen kann */
+      border: 1px solid #00ff00;
+      padding: 10px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
   <div class="console" id="console"></div>
@@ -82,7 +103,6 @@
       setTimeout(typeBinary, 1000);
     };
   </script>
-<script src="/assets/js/app.js"></script>
 </body>
 </html>
 
