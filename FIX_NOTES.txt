@@ -1,4 +1,0 @@
-v5 patch:
-- fixed task card element flow/spacing so buttons, helper text, inputs and submit buttons stack cleanly
-- moved 'Quelltext & Kommentare' and 'URL-Parameter' into the non-password-protected 'Offene Aufgaben' section
-- normalized 'Gib beide Flags ein' as note text for better spacing
