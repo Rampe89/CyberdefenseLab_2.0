@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="assets/cdl-unified.css">
   <style>
     body { margin:0; padding:24px; }
-    .container { max-width: 900px; margin:0 auto; padding:28px; }
+    .container { max-width: 920px; margin:0 auto; padding:28px; }
     .status {
       margin: 18px 0;
       padding: 16px 18px;
@@ -26,24 +26,38 @@
       border: 1px solid rgba(124,227,255,.16);
       font-family:"Courier New", monospace;
     }
-    code { font-family: "Courier New", monospace; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>URL-Parameter</h1>
+
     <p>
-      Webseiten übernehmen häufig Werte direkt aus der URL. Das kann praktisch sein –
-      aber auch problematisch, wenn solche Werte vertraut werden, ohne sie sauber zu prüfen.
+      Manche Webseiten lesen Werte direkt aus der URL aus. Das ist praktisch -
+      aber nur dann unproblematisch, wenn solche Werte nicht blind vertraut werden.
     </p>
 
     <div class="info">
-      <strong>Deine Aufgabe:</strong> Schau dir die URL genau an. Kannst du durch eine kleine Änderung beeinflussen,
-      was diese Seite anzeigt?<br><span class="note">Tipp: Diese Seite reagiert auf einen Parameter wie <code>?role=user</code>.</span>
+      <strong>Didaktische Idee:</strong><br>
+      Dieses Lab zeigt, dass Eingaben nicht nur aus Formularen kommen koennen,
+      sondern auch direkt aus der URL.
     </div>
+
+    <p>
+      <strong>Deine Aufgabe:</strong> Diese Seite reagiert auf einen URL-Parameter.
+      Starte mit einer normalen Ansicht und pruefe dann, ob eine kleine Aenderung
+      in der URL eine andere Rolle aktiviert.
+    </p>
+
+    <div class="code-box">Starte mit: ?role=user
+Frage dich dann: Welche andere Rolle waere hier interessant?</div>
 
     <div class="status" id="statusBox"></div>
     <div class="flag-box" id="flagBox">{URL_PARAMETERS_ARE_INPUT}</div>
+
+    <p class="note">
+      <strong>Merksatz:</strong> Auch Werte aus der URL sind Eingaben - und muessen mitgedacht werden.
+    </p>
 
     <a class="btn" href="index.html">Zurück zur Startseite</a>
   </div>

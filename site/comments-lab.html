@@ -7,7 +7,18 @@
   <link rel="stylesheet" href="assets/cdl-unified.css">
   <style>
     body { margin:0; padding:24px; }
-    .container { max-width: 900px; margin:0 auto; padding:28px; }
+    .container { max-width: 920px; margin:0 auto; padding:28px; }
+    .step { margin-top:16px; }
+    .code-box {
+      margin-top:16px;
+      padding:16px 18px;
+      border-radius:16px;
+      background: linear-gradient(180deg, #091521, #0c1c2a);
+      color:#d8eaff;
+      border:1px solid rgba(124,227,255,.16);
+      font-family:"Courier New", monospace;
+      white-space:pre-wrap;
+    }
   </style>
   <!-- Interner Hinweis: staging-note entfernen
   FLAG: {SOURCE_CODE_IS_STILL_CODE}
@@ -16,18 +27,38 @@
 <body>
   <div class="container">
     <h1>Quelltext & Kommentare</h1>
+
     <p>
-      Nicht alles, was auf einer Website nicht sichtbar ist, ist wirklich verborgen.
-      Browser laden HTML, Kommentare und viele weitere Informationen trotzdem mit.
+      Webseiten bestehen nicht nur aus dem, was du sichtbar auf dem Bildschirm siehst.
+      Der Browser laedt auch den zugrunde liegenden HTML-Quelltext.
     </p>
 
     <div class="info">
-      <strong>Deine Aufgabe:</strong> Finde heraus, ob in dieser Seite mehr steckt,
-      als im sichtbaren Bereich angezeigt wird.
+      <strong>Didaktische Idee:</strong><br>
+      Dieses Lab zeigt den Unterschied zwischen <em>sichtbar im Browser</em> und
+      <em>trotzdem im Dokument vorhanden</em>.
     </div>
 
-    <p>
-      Denk daran: „nicht angezeigt“ ist nicht dasselbe wie „nicht vorhanden“.
+    <div class="step">
+      <strong>Was solltest du hier verstehen?</strong>
+      <p>
+        Kommentare im HTML werden nicht normal auf der Seite angezeigt.
+        Trotzdem sind sie oft weiterhin im Quelltext enthalten - und damit lesbar.
+      </p>
+    </div>
+
+    <div class="step">
+      <strong>Deine Aufgabe:</strong>
+      <p>
+        Finde heraus, ob diese Seite mehr Informationen enthaelt, als im sichtbaren Bereich auftauchen.
+      </p>
+    </div>
+
+    <div class="code-box">Tipp: Rechtsklick -> "Seitenquelltext anzeigen"
+oder in den Entwicklertools nach HTML-Kommentaren suchen.</div>
+
+    <p class="note">
+      <strong>Merksatz:</strong> Nicht angezeigt ist nicht automatisch verborgen.
     </p>
 
     <a class="btn" href="index.html">Zurück zur Startseite</a>

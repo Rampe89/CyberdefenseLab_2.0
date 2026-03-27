@@ -261,7 +261,7 @@
     </p>
 
     <!-- Fortschrittsanzeige & Fortschrittsbalken -->
-    <div id="progress">Fortschritt: 0/19 Flags gesammelt</div>
+    <div id="progress">Fortschritt: 0/17 Flags gesammelt</div>
     <div id="progress-bar">
       <div id="progress-fill"></div>
     </div>
@@ -281,7 +281,7 @@
 
         <div class="task">
           <h3>Quelltext & Kommentare</h3>
-          <p>Finde heraus, warum Inhalte im HTML-Quelltext sichtbar sein können, auch wenn sie auf der Seite nicht angezeigt werden.</p>
+          <p>Ein geführter Einstieg in HTML-Kommentare: Verstehe den Unterschied zwischen sichtbar im Browser und trotzdem im Quelltext vorhanden.</p>
           <a href="comments-lab.html" class="btn">Aufgabe öffnen</a>
           <input type="text" id="flag15" placeholder="{Flag eingeben}"/>
           <button class="btn" onclick="checkFlag(15, 'e1NPVVJDRV9DT0RFX0lTX1NUSUxMX0NPREV9', '📝 Kommentar-Leser')">Prüfen</button>
@@ -289,7 +289,7 @@
 
         <div class="task">
           <h3>URL-Parameter</h3>
-          <p>Untersuche, wie kleine Änderungen in der URL beeinflussen können, welche Inhalte eine Seite anzeigt.</p>
+          <p>Ein geführter Einstieg in URL-Parameter: Lerne, dass Werte auch direkt aus der Adresszeile kommen können.</p>
           <a href="parameter-lab.html?role=user" class="btn">Aufgabe öffnen</a>
           <input type="text" id="flag16" placeholder="{Flag eingeben}"/>
           <button class="btn" onclick="checkFlag(16, 'e1VSTF9QQVJBTUVURVJTX0FSRV9JTlBVVH0=', '🔗 Parameter-Tuner')">Prüfen</button>
@@ -322,7 +322,7 @@
 
       <details class="column category-panel" id="analysis-panel" open>
         <summary>🟡 Analyse & Angriffe 🔒</summary>
-        <p class="top-info">Dieser Bereich wird per Passwort freigeschaltet. Für den Moment ist das Passwort auf <code>Securepassword123</code> gesetzt.</p>
+        <p class="top-info">Dieser Bereich wird per Passwort freigeschaltet. Das Passwort soll über das Brute-Force-Lab erschlossen werden.</p>
 
         <div id="analysis-password-container" class="lock-box">
           <p>Gib das Passwort ein, um diese Kategorie freizuschalten:</p>
@@ -373,29 +373,13 @@
             <input type="text" id="flag8" placeholder="{Flag eingeben}"/>
             <button class="btn" onclick="checkCookie()">Prüfen</button>
           </div>
-
-          <div class="task">
-            <h3>Hidden Input</h3>
-            <p>Untersuche ein Formular und prüfe, ob auch unsichtbare Felder im Browser verändert werden können.</p>
-            <a href="hidden-input.html" class="btn">Aufgabe öffnen</a>
-            <input type="text" id="flag17" placeholder="{Flag eingeben}"/>
-            <button class="btn" onclick="checkFlag(17, 'e0hJRERFTl9GSUVMRFNfQVJFX05PVF9TQUZFfQ==', '🧾 Hidden-Input-Finder')">Prüfen</button>
-          </div>
-
-          <div class="task">
-            <h3>Disabled Button</h3>
-            <p>Teste, ob ein deaktivierter Button wirklich Sicherheit bedeutet oder nur im Frontend blockiert ist.</p>
-            <a href="disabled-button.html" class="btn">Aufgabe öffnen</a>
-            <input type="text" id="flag18" placeholder="{Flag eingeben}"/>
-            <button class="btn" onclick="checkFlag(18, 'e0RJU0FCTEVEX0lTX05PVF9TRUNVUklUWX0=', '⛔ Disabled-Button-Bypass')">Prüfen</button>
-          </div>
-        </div>
+</div>
       </details>
     </div>
 
     <details class="category-panel category-full" id="advanced-panel" open>
       <summary>🔒 Erweiterte Labs</summary>
-      <p class="top-info">Hier liegt das angeleitete SQL-Injection-Lab. Das Passwort ist aktuell ebenfalls auf <code>Securepassword123</code> gesetzt.</p>
+      <p class="top-info">Hier liegt das angeleitete SQL-Injection-Lab. Der Zugangshinweis liegt nicht direkt auf dieser Startseite.</p>
 
       <div id="advanced-password-container" class="lock-box">
         <p>Gib das Passwort für die erweiterten Labs ein:</p>
@@ -481,8 +465,8 @@
         <div class="task">
           <h3>Versteckter Button</h3>
           <p>Gib die Flag des per CSS versteckten Buttons ein.</p>
-          <input type="text" id="flag19" placeholder="{Flag eingeben}"/>
-          <button class="btn" onclick="checkFlag(19, 'e0NTU19DQU5fSElERV9CVVRfTk9UX1BST1RFQ1R9', '👻 Versteckter Button')">
+          <input type="text" id="flag17" placeholder="{Flag eingeben}"/>
+          <button class="btn" onclick="checkFlag(17, 'e0NTU19DQU5fSElERV9CVVRfTk9UX1BST1RFQ1R9', '👻 Versteckter Button')">
             Prüfen
           </button>
         </div>
@@ -518,14 +502,14 @@
     /***********************************
      * Globale Variablen & Konfiguration
      ***********************************/
-    // Insgesamt 19 Flags (Index 0-18)
+    // Insgesamt 17 Flags (Index 0-16)
     let collectedFlags = JSON.parse(localStorage.getItem("collectedFlags")) || 
-      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
     // Base64-String für das Cookie {COOKIES_REVEAL_SECRETS}
     const cookieEncoded = "e0NPT0tJRVNfUkVWRUFMX1NFQ1JFVFN9";
     // Konfetti soll nur einmal ausgelöst werden
     let confettiShown = false;
-    // Mapping: Flag-Index (1-16) → Achievement-Titel
+    // Mapping: Flag-Index (1-17) -> Achievement-Titel
     const ACHIEVEMENTS = {
   1: '🔓 Passwortknacker',
   2: '🎣 Phishing-Profi',
@@ -543,9 +527,7 @@
   14: '🤖 robots.txt Scout',
   15: '📝 Kommentar-Leser',
   16: '🔗 Parameter-Tuner',
-  17: '🧾 Hidden-Input-Finder',
-  18: '⛔ Disabled-Button-Bypass',
-  19: '👻 Versteckter Button',
+  17: '👻 Versteckter Button',
 };
 
     /*****************************
@@ -683,7 +665,7 @@
 
     function unlockAnalysis() {
       const inputPassword = document.getElementById("analysis-password").value.trim();
-      const correct = "Securepassword123";
+      const correct = atob("dXNlcjEyMw==");
       const errorMsg = document.getElementById("analysis-error-message");
       const protectedArea = document.getElementById("analysis-tasks");
       if (inputPassword === correct) {
@@ -697,7 +679,7 @@
 
     function unlockAdvanced() {
       const inputPassword = document.getElementById("advanced-password").value.trim();
-      const correct = "Securepassword123";
+      const correct = atob("dXNlcjEyMw==");
       const errorMsg = document.getElementById("advanced-error-message");
       const protectedArea = document.getElementById("advanced-tasks");
       if (inputPassword === correct) {
@@ -711,7 +693,7 @@
 
     function unlockTeacher() {
       const inputPassword = document.getElementById("teacher-password").value.trim();
-      const correct = "Teachers1x1";
+      const correct = atob("VGVhY2hlcnMxeDE=");
       const errorMsg = document.getElementById("teacher-error-message");
       const protectedArea = document.getElementById("teacher-content");
       if (inputPassword === correct) {
@@ -728,10 +710,10 @@
      ****************************/
     function updateProgress() {
       const count = collectedFlags.filter(Boolean).length;
-      document.getElementById("progress").textContent = `Fortschritt: ${count}/19 Flags gesammelt`;
-      const percentage = (count / 19) * 100;
+      document.getElementById("progress").textContent = `Fortschritt: ${count}/17 Flags gesammelt`;
+      const percentage = (count / 17) * 100;
       document.getElementById("progress-fill").style.width = percentage + '%';
-      if (count === 19 && !confettiShown) {
+      if (count === 17 && !confettiShown) {
         confetti();
         confettiShown = true;
         alert("Flag: {Mission_accomplished}");
@@ -742,7 +724,7 @@
       renderAchievementsFromStorage();
     }
     function updateUI() {
-      for (let i = 1; i <= 19; i++) {
+      for (let i = 1; i <= 17; i++) {
         const el = document.getElementById(`flag${i}`);
         if (el && collectedFlags[i - 1]) {
           el.disabled = true;
