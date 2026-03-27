@@ -521,6 +521,140 @@
       renderAchievementsFromStorage();
     }
   </script>
+
+      <h2>🟡 Analyse & Angriffe</h2>
+      <p class="top-info">Hier geht es um typische Angriffsmuster und Recon-Ideen. Der Fokus liegt weiter auf Verständnis statt auf Tool-Fetisch.</p>
+
+      <div class="task">
+        <h3>Phishing-Quiz</h3>
+        <p>Identifiziere Phishing-Mails und lerne, wie du echte von gefälschten Nachrichten unterscheidest.</p>
+        <a href="phishing.html" class="btn">Aufgabe öffnen</a>
+        <input type="text" id="flag2" placeholder="{Flag eingeben}"/>
+        <button class="btn" onclick="checkFlag(2, atob('UGhpc2hpbmdCYXNpY3M='), '📧 Mail-Misstrauer')">Prüfen</button>
+      </div>
+
+      <div class="task">
+        <h3>Hashing Lab</h3>
+        <p>Entschlüssele Hashes mit Rainbow Tables und lerne, wie Salt die Sicherheit erhöht.</p>
+        <a href="hashing.html" class="btn">Aufgabe öffnen</a>
+        <p class="note">Gib beide Flags ein:</p>
+        <input type="text" id="flag3" placeholder="{Flag 1}"/>
+        <input type="text" id="flag4" placeholder="{Flag 2}"/>
+        <button class="btn" onclick="checkDoubleFlag()">Prüfen</button>
+      </div>
+
+      <div class="task">
+        <h3>Finde die versteckte Flag in den Cookies 🍪</h3>
+        <p>Suche in den Browser-Cookies nach dem Hinweis.</p>
+        <a href="cookies.html" class="btn">Info-Material</a>
+        <input type="text" id="flag5" placeholder="{Flag eingeben}"/>
+        <button class="btn" onclick="checkFlag(5, atob('Q29va2llTW9uc3Rlcg=='), '🍪 Cookie-Monster')">Prüfen</button>
+      </div>
+
+      <div class="task">
+        <h3>Gobuster-Simulation</h3>
+        <p>Finde versteckte Verzeichnisse auf einem Server durch einen Directory Buster Scan.</p>
+        <a href="gobuster.html" class="btn">Aufgabe öffnen</a>
+        <input type="text" id="flag6" placeholder="{Flag eingeben}"/>
+        <button class="btn" onclick="checkFlag(6, atob('R29idXN0ZXJCYXNpY3M='), '📂 Pfadfinder')">Prüfen</button>
+      </div>
+
+      <div class="task">
+        <h3>Hidden Input</h3>
+        <p>Untersuche ein Formular und prüfe, ob auch unsichtbare Felder im Browser verändert werden können.</p>
+        <a href="hidden-input.html" class="btn">Aufgabe öffnen</a>
+        <input type="text" id="flag17" placeholder="{Flag eingeben}"/>
+        <button class="btn" onclick="checkFlag(17, 'e0hJRERFTl9GSUVMRFNfQVJFX05PVF9TQUZFfQ==', '🧾 Hidden-Input-Finder')">Prüfen</button>
+      </div>
+
+      <div class="task">
+        <h3>Disabled Button</h3>
+        <p>Teste, ob ein deaktivierter Button wirklich Sicherheit bedeutet oder nur im Frontend blockiert ist.</p>
+        <a href="disabled-button.html" class="btn">Aufgabe öffnen</a>
+        <input type="text" id="flag18" placeholder="{Flag eingeben}"/>
+        <button class="btn" onclick="checkFlag(18, 'e0RJU0FCTEVEX0lTX05PVF9TRUNVUklUWX0=', '⛔ Disabled-Button-Bypass')">Prüfen</button>
+      </div>
+
+
+      <h2>🔒 Erweiterte Labs</h2>
+      <p class="top-info">Dieser Bereich baut auf den Grundlagen auf. Das Passwort dafür ist aktuell im Grundlagenbereich versteckt.</p>
+
+      <div class="task">
+        <h3>SQL Injection</h3>
+        <p>Beobachte, wie sich eine Abfrage verändert, wenn Eingaben ungeprüft übernommen werden. Dieses Lab ist stärker angeleitet als ein klassisches CTF-Rätsel.</p>
+        <a href="sql-lab.html" class="btn">Aufgabe öffnen</a>
+        <input type="text" id="flag19" placeholder="{Flag eingeben}"/>
+        <button class="btn" onclick="checkFlag(19, 'e0lOUFVUX0NBTl9DSEFOR0VfVEhFX1FVRVJZfQ==', '💉 SQL Injector')">Prüfen</button>
+      </div>
+
+      <div class="task">
+        <h3>Passwortgeschützter Bereich</h3>
+        <p>Das Passwort für diesen Bereich ist vorbereitet: <code>Securepassword123</code>. Die eigentliche Versteck-Logik kannst du später noch anpassen.</p>
+      </div>
+
+
+      <h2>🔒 Didaktischer Kommentar für Lehrkräfte</h2>
+      <p class="top-info">Zusätzlicher Bereich für Lösungen, Einordnung und Unterrichtsimpulse.</p>
+
+      <div class="task">
+        <h3>Lehrkräfte-Bereich</h3>
+        <p>Geschützter Zusatzbereich mit didaktischen Kommentaren und Unterrichtsperspektive. Vorbereitetes Passwort: <code>Teachers1x1</code>.</p>
+        <a href="teachers-commentary.html" class="btn">Bereich öffnen</a>
+      </div>
+
+
+      <h2>🏁 Geheime Flags</h2>
+      <p class="top-info">Diese Eingabefelder bleiben jederzeit sichtbar. Hier kannst du geheime oder versteckte Flags direkt einreichen, sobald du sie entdeckt hast.</p>
+
+      <div class="task">
+        <h3>Geheime Flag #7</h3>
+        <p>Versteckte Entdeckung außerhalb der normalen Aufgaben.</p>
+        <input type="text" id="flag7" placeholder="{Geheime Flag eingeben}"/>
+        <button class="btn" onclick="checkFlag(7, atob('TGV0SGltQ29vaw=='), '🍲 Let Him Cook + Add A Pinch of Salt')">Prüfen</button>
+      </div>
+
+      <div class="task">
+        <h3>Geheime Flag #8</h3>
+        <p>Versteckte Entdeckung außerhalb der normalen Aufgaben.</p>
+        <input type="text" id="flag8" placeholder="{Geheime Flag eingeben}"/>
+        <button class="btn" onclick="checkFlag(8, atob('Q29va2llSmFlZ2Vy'), '🍪 Cookie-Jäger')">Prüfen</button>
+      </div>
+
+      <div class="task">
+        <h3>Geheime Flag #9</h3>
+        <p>Versteckte Entdeckung außerhalb der normalen Aufgaben.</p>
+        <input type="text" id="flag9" placeholder="{Geheime Flag eingeben}"/>
+        <button class="btn" onclick="checkFlag(9, atob('U2VjcmV0RmxhZzk='), '🕵️ Geheimnisfinder')">Prüfen</button>
+      </div>
+
+      <div class="task">
+        <h3>Geheime Flag #10</h3>
+        <p>Versteckte Entdeckung außerhalb der normalen Aufgaben.</p>
+        <input type="text" id="flag10" placeholder="{Geheime Flag eingeben}"/>
+        <button class="btn" onclick="checkFlag(10, atob('U2VjcmV0RmxhZzEw'), '🧩 Spurensucher')">Prüfen</button>
+      </div>
+
+      <div class="task">
+        <h3>Geheime Flag #11</h3>
+        <p>Versteckte Entdeckung außerhalb der normalen Aufgaben.</p>
+        <input type="text" id="flag11" placeholder="{Geheime Flag eingeben}"/>
+        <button class="btn" onclick="checkFlag(11, atob('U2VjcmV0RmxhZzEx'), '🗝️ Hidden Hunter')">Prüfen</button>
+      </div>
+
+      <div class="task">
+        <h3>Geheime Flag #12</h3>
+        <p>Versteckte Entdeckung außerhalb der normalen Aufgaben.</p>
+        <input type="text" id="flag12" placeholder="{Geheime Flag eingeben}"/>
+        <button class="btn" onclick="checkFlag(12, atob('U2VjcmV0RmxhZzEy'), '🧠 Clever Finder')">Prüfen</button>
+      </div>
+
+      <div class="task">
+        <h3>Geheime Flag #13</h3>
+        <p>Versteckte Entdeckung außerhalb der normalen Aufgaben.</p>
+        <input type="text" id="flag13" placeholder="{Geheime Flag eingeben}"/>
+        <button class="btn" onclick="checkFlag(13, atob('U2VjcmV0RmxhZzEz'), '🔍 Deep Dive')">Prüfen</button>
+      </div>
+
 </body>
 </html>
 
