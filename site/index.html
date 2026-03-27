@@ -218,7 +218,7 @@
     </p>
 
     <!-- Fortschrittsanzeige & Fortschrittsbalken -->
-    <div id="progress">Fortschritt: 0/16 Flags gesammelt</div>
+    <div id="progress">Fortschritt: 0/19 Flags gesammelt</div>
     <div id="progress-bar">
       <div id="progress-fill"></div>
     </div>
@@ -227,188 +227,42 @@
     <div class="flex-container">
       <!-- Öffentliche Aufgaben -->
       <div class="column" id="open-tasks">
-        <h2>Offene Aufgaben</h2>
+        
+      <h2>🟢 Grundlagen</h2>
+      <p class="top-info">Einstieg in typische Web-Prinzipien: sichtbar, manipulierbar, oft missverstanden. Diese Labs sind bewusst niedrigschwellig und führen in den geschützten Bereich hinein.</p>
 
-
-          
-          <div class="task">
-            <h3>Quelltext & Kommentare</h3>
-            <p>Finde heraus, warum Inhalte im HTML-Quelltext sichtbar sein können, auch wenn sie auf der Seite nicht angezeigt werden.</p>
-            <a href="comments-lab.html" class="btn">Aufgabe öffnen</a>
-            <input type="text" id="flag15" placeholder="{Flag eingeben}"/>
-            <button class="btn" onclick="checkFlag(15, 'e1NPVVJDRV9DT0RFX0lTX1NUSUxMX0NPREV9', '📝 Kommentar-Leser')">Prüfen</button>
-          </div>
-
-          
-
-
-          <div class="task">
-            <h3>URL-Parameter</h3>
-            <p>Untersuche, wie kleine Änderungen in der URL beeinflussen können, welche Inhalte eine Seite anzeigt.</p>
-            <a href="parameter-lab.html" class="btn">Aufgabe öffnen</a>
-            <input type="text" id="flag16" placeholder="{Flag eingeben}"/>
-            <button class="btn" onclick="checkFlag(16, 'e1VSTF9QQVJBTUVURVJTX0FSRV9JTlBVVH0=', '🔗 Parameter-Tuner')">Prüfen</button>
-          </div>
-
-          
-        <!-- Brute-Force-Simulator -->
-        <div class="task">
-          <h3>Brute-Force-Simulator</h3>
-          <p>Simuliere einen Brute-Force-Angriff und lerne, wie schwache Passwörter ausgenutzt werden können.</p>
-          <a href="bruteforce.html" class="btn">Aufgabe öffnen</a>
-          <input type="text" id="flag1" placeholder="{Flag eingeben}"/>
-          <button class="btn" onclick="checkFlag(1, 'e0JSVVRFX0ZPUkNFX0FETUlOX1NVQ0NFU1N9', '🔓 Passwortknacker')">
-            Prüfen
-          </button>
-        </div>
-        <!-- Phishing-Quiz -->
-        <div class="task">
-          <h3>Phishing-Quiz</h3>
-          <p>Identifiziere Phishing-Mails und lerne, wie du echte von gefälschten Nachrichten unterscheidest.</p>
-          <a href="phishingquiz.html" class="btn">Aufgabe öffnen</a>
-          <input type="text" id="flag2" placeholder="{Flag eingeben}"/>
-          <button class="btn" onclick="checkFlag(2, 'e0NBVUdIVF9BTExfVEhFX1BISVNIfQ==', '🎣 Phishing-Profi')">
-            Prüfen
-          </button>
-        </div>
-        <!-- Social-Engineering-Simulation -->
-        <div class="task">
-          <h3>Social-Engineering-Simulation</h3>
-          <p>Lerne, wie Angreifer durch Täuschung Informationen gewinnen und wie du dich dagegen schützt.</p>
-          <a href="social-engineering.html" class="btn">Aufgabe öffnen</a>
-          <input type="text" id="flag3" placeholder="{Flag eingeben}"/>
-          <button class="btn" onclick="checkFlag(3, 'e0RFRkVOREVSX09GX1RSVVNUfQ==', '🤝 Abwehrstratege')">
-            Prüfen
-          </button>
-        </div>
-        <!-- Passwortmanager-Lab -->
-        <div class="task">
-          <h3>Passwortmanager-Lab</h3>
-          <p>Lerne, wie ein Passwortmanager deine Sicherheit erhöht.</p>
-          <a href="password-simulator.html" class="btn">Aufgabe öffnen</a>
-          <input type="text" id="flag4" placeholder="{Flag eingeben}"/>
-          <button class="btn" onclick="checkFlag(4, 'e1VOQlJFQUtBQkxFX1BBU1NXT1JEfQ==', '🔑 Schlüsselmeister')">
-            Prüfen
-          </button>
-        </div>
+      <div class="task">
+        <h3>Brute-Force-Simulator</h3>
+        <p>Simuliere einen Brute-Force-Angriff und lerne, wie schwache Passwörter ausgenutzt werden können. Dieses Lab führt zum Passwort für den geschützten Bereich.</p>
+        <a href="bruteforce.html" class="btn">Aufgabe öffnen</a>
+        <input type="text" id="flag1" placeholder="{Flag eingeben}"/>
+        <button class="btn" onclick="checkFlag(1, atob('QnJ1dGVGb3JjZUJhc2ljcw=='), '🔓 First Break-In')">Prüfen</button>
       </div>
 
-      <!-- Passwortgeschützte Aufgaben (unsichtbar bis Freischaltung) -->
-      <div class="column">
-        <h2 id="pw-title">Passwortgeschützter Bereich</h2>
-        <div id="password-container">
-          <p>Gib das User-Passwort ein, um fortgeschrittene Aufgaben freizuschalten:</p>
-          <input type="password" id="lab-password" placeholder="User-Passwort eingeben"/>
-          <button class="btn" onclick="unlockTasks()">Freischalten</button>
-          <p class="error-message hidden" id="error-message">Wenn du das Passwort nicht selbst herausfindest, bist du noch nicht bereit!</p>
-        </div>
-        <div id="protected-tasks" class="hidden">
-          <!-- Updates & Patches -->
-          <div class="task">
-            <h3>Updates und Patches 🔒</h3>
-            <p>Erfahre, warum es wichtig ist, Systeme regelmäßig zu patchen, und teste eine Schwachstelle.</p>
-            <a href="updates.html" class="btn">Aufgabe öffnen</a>
-            <input type="text" id="flag5" placeholder="{Flag eingeben}"/>
-            <button class="btn" onclick="checkFlag(5, 'e1BBVENIX1RIRV9QQVRDSH0=', '🛡️ Schildwache')">
-              Prüfen
-            </button>
-          </div>
-          <!-- Gobuster-Simulation -->
-          <div class="task">
-            <h3>Gobuster-Simulation</h3>
-            <p>Finde versteckte Verzeichnisse auf einem Server durch einen Directory Busting Scan.</p>
-            <a href="dirbuster.html" class="btn">Aufgabe öffnen</a>
-            <input type="text" id="flag6" placeholder="{Flag eingeben}"/>
-            <button class="btn" onclick="checkFlag(6, 'e0ZPVU5EX1NFQ1JFVF9GTEFHfQ==', '🔍 Directory Detective')">
-              Prüfen
-            </button>
-          </div><div class="task">
-            <h3>URL-Parameter</h3>
-            <p>Untersuche, wie kleine Änderungen in der URL beeinflussen können, welche Inhalte eine Seite anzeigt.</p>
-            <a href="parameter-lab.html" class="btn">Aufgabe öffnen</a>
-            <input type="text" id="flag16" placeholder="{Flag eingeben}"/>
-            <button class="btn" onclick="checkFlag(16, 'e1VSTF9QQVJBTUVURVJTX0FSRV9JTlBVVH0=', '🔗 Parameter-Tuner')">Prüfen</button>
-          </div>
-
-          <!-- robots.txt Recon -->
-          <div class="task">
-            <h3>robots.txt Recon</h3>
-            <p>Prüfe die robots.txt, finde einen nicht gelisteten Pfad und zeige, warum „Disallow“ kein echter Schutz ist.</p>
-            <a href="robots-lab.html" class="btn">Aufgabe öffnen</a>
-            <input type="text" id="flag14" placeholder="{Flag eingeben}"/>
-            <button class="btn" onclick="checkFlag(14, 'e1JPQk9UU19BUkVfSElOVFNfTk9UX1NISUVMRFN9', '🤖 robots.txt Scout')">
-              Prüfen
-            </button>
-          </div>
-
-          <!-- Hashing Lab (zwei Flags) -->
-          <div class="task">
-            <h3>Hashing Lab</h3>
-            <p>Entschlüssele Hashes mit Rainbow Tables und lerne, wie Salt die Sicherheit erhöht.</p>
-            <a href="hash.html" class="btn">Aufgabe öffnen</a>
-            <p><p class="note">Gib beide Flags ein:</p></p>
-            <input type="text" id="flag7a" placeholder="{Flag 1}"/>
-            <input type="text" id="flag7b" placeholder="{Flag 2}"/>
-            <button class="btn" onclick="checkHashFlags()">Prüfen</button>
-          </div>
-          <!-- Cookie-Flag -->
-          <div class="task">
-            <h3>Finde die versteckte Flag in den Cookies 🍪</h3>
-            <a href="cookies.html" class="btn">Info-Material</a>
-            <p>Suche in den Browser-Cookies nach dem Hinweis:</p>
-            <input type="text" id="flag8" placeholder="{Flag eingeben}"/>
-            <button class="btn" onclick="checkCookie()">Prüfen</button>
-          </div>
-        </div>
+      <div class="task">
+        <h3>Quelltext & Kommentare</h3>
+        <p>Finde heraus, warum Inhalte im HTML-Quelltext sichtbar sein können, auch wenn sie auf der Seite nicht angezeigt werden.</p>
+        <a href="comments-lab.html" class="btn">Aufgabe öffnen</a>
+        <input type="text" id="flag15" placeholder="{Flag eingeben}"/>
+        <button class="btn" onclick="checkFlag(15, 'e1NPVVJDRV9DT0RFX0lTX1NUSUxMX0NPREV9', '📝 Kommentar-Leser')">Prüfen</button>
       </div>
-    </div>
 
-    <!-- Ausklappbarer Bereich für geheime Flags -->
-    <div id="secret-flags-container">
-      <h2 id="secret-header">Geheime Flags <span id="secret-toggle">[+]</span></h2>
-      <div id="secret-flags">
-        <!-- SYS_ADMIN -->
-        <div class="task">
-          <h3>SYS_ADMIN</h3>
-          <p>Gib die geheime Admin-Flag ein.</p>
-          <input type="text" id="flag9" placeholder="{Flag eingeben}"/>
-          <button class="btn" onclick="checkFlag(9, 'e0ZMQUdfQURNSU5fT1ZFUlJJREV9', '👑 SysAdmin')">
-            Prüfen
-          </button>
-        </div>
-        <!-- Mr. Robot -->
-        <div class="task">
-          <h3>Mr. Robot</h3>
-          <p>Gib die Flag ein.</p>
-          <input type="text" id="flag10" placeholder="{Flag eingeben}"/>
-          <button class="btn" onclick="checkFlag(10, 'e01SX1JPQk9UX1JFRkVSRU5DRX0=', '🤖 Mr. Robot')">
-            Prüfen
-          </button>
-        </div>
-        <!-- Mäusejäger -->
-        <div class="task">
-          <h3>Mäusejäger</h3>
-          <p>Gib die Flag ein.</p>
-          <input type="text" id="flag11" placeholder="{Flag eingeben}"/>
-          <button class="btn" onclick="checkFlag(11, 'e1dIRVJFX0lTX0ZSRUQ/fQ==', '🐭 Mäusejäger')">
-            Prüfen
-          </button>
-        </div>
-        <!-- Console Leak -->
-        <div class="task">
-          <h3>Console Leak</h3>
-          <p>Gib die Konsole-Leak-Flag ein.</p>
-          <input type="text" id="flag12" placeholder="{Flag eingeben}"/>
-          <button class="btn" onclick="checkFlag(12, 'e0ZMQUdfQ09OU09MRV9MRUFLfQ==', '💬 Console Leak')">
-            Prüfen
-          </button>
-        </div>
+      <div class="task">
+        <h3>URL-Parameter</h3>
+        <p>Untersuche, wie kleine Änderungen in der URL beeinflussen können, welche Inhalte eine Seite anzeigt.</p>
+        <a href="parameter-lab.html?role=user" class="btn">Aufgabe öffnen</a>
+        <input type="text" id="flag16" placeholder="{Flag eingeben}"/>
+        <button class="btn" onclick="checkFlag(16, 'e1VSTF9QQVJBTUVURVJTX0FSRV9JTlBVVH0=', '🔗 Parameter-Tuner')">Prüfen</button>
       </div>
-    </div>
 
-    <!-- Achievements -->
-    <div id="achievements" class="achievements hidden">
-      <h2>Erreichte Titel</h2>
+      <div class="task">
+        <h3>robots.txt Recon</h3>
+        <p>Prüfe die robots.txt, finde einen nicht gelisteten Pfad und zeige, warum „Disallow“ kein echter Schutz ist.</p>
+        <a href="robots-lab.html" class="btn">Aufgabe öffnen</a>
+        <input type="text" id="flag14" placeholder="{Flag eingeben}"/>
+        <button class="btn" onclick="checkFlag(14, 'e1JPQk9UU19BUkVfSElOVFNfTk9UX1NISUVMRHN9', '🤖 robots.txt Scout')">Prüfen</button>
+      </div>
+<h2>Erreichte Titel</h2>
     </div>
   </div>
 
@@ -434,14 +288,14 @@
     /***********************************
      * Globale Variablen & Konfiguration
      ***********************************/
-    // Insgesamt 16 Flags (Index 0-15)
+    // Insgesamt 19 Flags (Index 0-18)
     let collectedFlags = JSON.parse(localStorage.getItem("collectedFlags")) || 
-      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
     // Base64-String für das Cookie {COOKIES_REVEAL_SECRETS}
     const cookieEncoded = "e0NPT0tJRVNfUkVWRUFMX1NFQ1JFVFN9";
     // Konfetti soll nur einmal ausgelöst werden
     let confettiShown = false;
-    // Mapping: Flag-Index (1-16) → Achievement-Titel
+    // Mapping: Flag-Index (1-19) → Achievement-Titel
     const ACHIEVEMENTS = {
   1: '🔓 Passwortknacker',
   2: '🎣 Phishing-Profi',
@@ -459,6 +313,9 @@
   14: '🤖 robots.txt Scout',
   15: '📝 Kommentar-Leser',
   16: '🔗 Parameter-Tuner',
+  17: '🧾 Hidden-Input-Finder',
+  18: '⛔ Disabled-Button-Bypass',
+  19: '💉 SQL Injector',
 };
 
     /*****************************
@@ -609,10 +466,10 @@
      ****************************/
     function updateProgress() {
       const count = collectedFlags.filter(Boolean).length;
-      document.getElementById("progress").textContent = `Fortschritt: ${count}/16 Flags gesammelt`;
-      const percentage = (count / 16) * 100;
+      document.getElementById("progress").textContent = `Fortschritt: ${count}/19 Flags gesammelt`;
+      const percentage = (count / 19) * 100;
       document.getElementById("progress-fill").style.width = percentage + '%';
-      if (count === 16 && !confettiShown) {
+      if (count === 19 && !confettiShown) {
         confetti();
         confettiShown = true;
         alert("Flag: {Mission_accomplished}");
@@ -623,7 +480,7 @@
       renderAchievementsFromStorage();
     }
     function updateUI() {
-      for (let i = 1; i <= 16; i++) {
+      for (let i = 1; i <= 19; i++) {
         const el = document.getElementById(`flag${i}`);
         if (el && collectedFlags[i - 1]) {
           el.disabled = true;

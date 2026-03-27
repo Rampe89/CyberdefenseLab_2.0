@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Injection</title>
+  <link rel="stylesheet" href="assets/cdl-unified.css">
+  <style>
+    body { margin:0; padding:24px; }
+    .container { max-width: 960px; margin:0 auto; padding:28px; }
+    .query-box, .flag-box, .result-box {
+      margin-top:18px;
+      padding:16px 18px;
+      border-radius:16px;
+      background: linear-gradient(180deg, #091521, #0c1c2a);
+      color:#d8eaff;
+      border:1px solid rgba(124,227,255,.16);
+      font-family:"Courier New", monospace;
+      white-space:pre-wrap;
+    }
+    .flag-box { color:#a8f5a8; display:none; }
+    .form-row { margin-top:18px; }
+    code { font-family:"Courier New", monospace; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>SQL Injection</h1>
+    <p>
+      Diese Seite simuliert eine unsauber gebaute Datenbankabfrage. Ziel ist nicht,
+      „echte Systeme“ anzugreifen, sondern zu verstehen, warum ungeprüfte Eingaben problematisch sind.
+    </p>
+
+    <div class="info">
+      <strong>Was passiert hier?</strong><br>
+      Das System baut eine Abfrage zusammen und setzt deinen Namen direkt hinein.
+    </div>
+
+    <div class="query-box" id="queryBox">SELECT * FROM users WHERE username = 'max';</div>
+
+    <p class="note">
+      <strong>Deine Aufgabe:</strong> Probiere aus, wie sich die Abfrage verändert, wenn du nicht nur
+      einen normalen Namen eingibst. Achte besonders auf Zeichen wie <code>'</code>.
+    </p>
+
+    <div class="form-row">
+      <input type="text" id="userInput" placeholder="Benutzernamen eingeben">
+      <button class="btn" onclick="runQuery()">Abfrage testen</button>
+    </div>
+
+    <div class="result-box" id="resultBox">Status: normale Abfrage</div>
+    <div class="flag-box" id="flagBox">{INPUT_CAN_CHANGE_THE_QUERY}</div>
+
+    <p class="note">
+      <strong>Merksatz:</strong> Wenn Eingaben ungeprüft in eine Abfrage übernommen werden,
+      kann sich die Bedeutung der Abfrage verändern.
+    </p>
+
+    <a class="btn" href="index.html">Zurück zur Startseite</a>
+  </div>
+
+  <script>
+    function runQuery() {
+      const input = document.getElementById('userInput').value || 'max';
+      const query = "SELECT * FROM users WHERE username = '" + input + "';";
+      const queryBox = document.getElementById('queryBox');
+      const resultBox = document.getElementById('resultBox');
+      const flagBox = document.getElementById('flagBox');
+
+      queryBox.textContent = query;
+      flagBox.style.display = 'none';
+
+      const normalized = input.trim().toLowerCase();
+
+      if (normalized.includes("' or 1=1") || normalized.includes('" or 1=1') || normalized.includes("' or '1'='1")) {
+        resultBox.innerHTML = "Status: Die Bedingung wurde manipuliert. Die Abfrage würde nun deutlich mehr Treffer liefern als gedacht.";
+        flagBox.style.display = 'block';
+      } else if (input.includes("'")) {
+        resultBox.innerHTML = "Status: Auffällige Eingabe erkannt. Du bist auf einer interessanten Spur.";
+      } else {
+        resultBox.innerHTML = "Status: normale Abfrage";
+      }
+    }
+  </script>
+</body>
+</html>

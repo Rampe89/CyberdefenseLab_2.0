@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Disabled Button</title>
+  <link rel="stylesheet" href="assets/cdl-unified.css">
+  <style>
+    body { margin:0; padding:24px; }
+    .container { max-width: 900px; margin:0 auto; padding:28px; }
+    .flag-box {
+      display:none; margin-top:16px; padding:16px 18px; border-radius:16px;
+      background: linear-gradient(180deg, #091521, #0c1c2a); color:#a8f5a8;
+      border:1px solid rgba(124,227,255,.16); font-family:"Courier New", monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Disabled Button</h1>
+    <p>
+      Ein deaktivierter Button sieht nach Schutz aus. Technisch ist er aber nur im Frontend ausgegraut.
+    </p>
+
+    <div class="info">
+      <strong>Deine Aufgabe:</strong> Finde heraus, ob der Browser wirklich entscheidet, was erlaubt ist.
+    </div>
+
+    <button class="btn" id="adminButton" disabled onclick="unlockFlag()">Admin-Funktion starten</button>
+    <div class="flag-box" id="flagBox">{DISABLED_IS_NOT_SECURITY}</div>
+
+    <p class="note">
+      <strong>Merksatz:</strong> Ein deaktiviertes Frontend-Element ist kein echter Zugriffsschutz.
+    </p>
+
+    <a class="btn" href="index.html">Zurück zur Startseite</a>
+  </div>
+
+  <script>
+    function unlockFlag() {
+      document.getElementById('flagBox').style.display = 'block';
+    }
+  </script>
+</body>
+</html>

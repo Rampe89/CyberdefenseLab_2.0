@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hidden Input</title>
+  <link rel="stylesheet" href="assets/cdl-unified.css">
+  <style>
+    body { margin:0; padding:24px; }
+    .container { max-width: 900px; margin:0 auto; padding:28px; }
+    .flag-box {
+      display:none; margin-top:16px; padding:16px 18px; border-radius:16px;
+      background: linear-gradient(180deg, #091521, #0c1c2a); color:#a8f5a8;
+      border:1px solid rgba(124,227,255,.16); font-family:"Courier New", monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Hidden Input</h1>
+    <p>
+      Manche Webseiten speichern Werte in Formularfeldern, die im Browser nicht sichtbar sind.
+      Diese Felder heißen oft <code>hidden</code>.
+    </p>
+
+    <div class="info">
+      <strong>Deine Aufgabe:</strong> Prüfe, ob dieses Formular im Browser wirklich nur die sichtbaren Werte enthält.
+    </div>
+
+    <form onsubmit="return checkForm(event)">
+      <input type="hidden" id="roleField" value="user">
+      <label for="nameField"><strong>Name</strong></label>
+      <input type="text" id="nameField" placeholder="Dein Name">
+      <button class="btn" type="submit">Absenden</button>
+    </form>
+
+    <div class="flag-box" id="flagBox">{HIDDEN_FIELDS_ARE_NOT_SAFE}</div>
+
+    <p class="note">
+      <strong>Merksatz:</strong> Alles, was im Browser liegt, kann dort auch verändert werden.
+    </p>
+
+    <a class="btn" href="index.html">Zurück zur Startseite</a>
+  </div>
+
+  <script>
+    function checkForm(event) {
+      event.preventDefault();
+      const role = document.getElementById('roleField').value;
+      const flagBox = document.getElementById('flagBox');
+      if (role === 'admin') {
+        flagBox.style.display = 'block';
+      } else {
+        alert('Formular gesendet. Rolle: ' + role);
+      }
+      return false;
+    }
+  </script>
+</body>
+</html>
