@@ -18,10 +18,7 @@
 <body>
   <div class="container">
     <h1>Hidden Input</h1>
-    <p>
-      Manche Webseiten speichern Werte in Formularfeldern, die im Browser nicht sichtbar sind.
-      Diese Felder heißen oft <code>hidden</code>.
-    </p>
+    <p>Manche Webseiten speichern Werte in Formularfeldern, die im Browser nicht sichtbar sind. Solche Felder heißen oft <code>hidden</code>.</p>
 
     <div class="info">
       <strong>Deine Aufgabe:</strong> Prüfe, ob dieses Formular im Browser wirklich nur die sichtbaren Werte enthält.
@@ -35,11 +32,7 @@
     </form>
 
     <div class="flag-box" id="flagBox">{HIDDEN_FIELDS_ARE_NOT_SAFE}</div>
-
-    <p class="note">
-      <strong>Merksatz:</strong> Alles, was im Browser liegt, kann dort auch verändert werden.
-    </p>
-
+    <p class="note"><strong>Merksatz:</strong> Alles, was im Browser liegt, kann dort auch verändert werden.</p>
     <a class="btn" href="index.html">Zurück zur Startseite</a>
   </div>
 
@@ -47,9 +40,8 @@
     function checkForm(event) {
       event.preventDefault();
       const role = document.getElementById('roleField').value;
-      const flagBox = document.getElementById('flagBox');
       if (role === 'admin') {
-        flagBox.style.display = 'block';
+        document.getElementById('flagBox').style.display = 'block';
       } else {
         alert('Formular gesendet. Rolle: ' + role);
       }
