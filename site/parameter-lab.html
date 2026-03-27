@@ -26,6 +26,16 @@
       border: 1px solid rgba(124,227,255,.16);
       font-family:"Courier New", monospace;
     }
+    .code-box {
+      margin-top:16px;
+      padding:16px 18px;
+      border-radius:16px;
+      background: linear-gradient(180deg, #091521, #0c1c2a);
+      color:#d8eaff;
+      border:1px solid rgba(124,227,255,.16);
+      font-family:"Courier New", monospace;
+      white-space:pre-wrap;
+    }
   </style>
 </head>
 <body>
@@ -33,30 +43,29 @@
     <h1>URL-Parameter</h1>
 
     <p>
-      Manche Webseiten lesen Werte direkt aus der URL aus. Das ist praktisch -
-      aber nur dann unproblematisch, wenn solche Werte nicht blind vertraut werden.
+      Manche Webseiten übernehmen Werte direkt aus der URL. Das ist praktisch,
+      kann aber problematisch werden, wenn solche Werte ungeprüft verwendet werden.
     </p>
 
     <div class="info">
-      <strong>Didaktische Idee:</strong><br>
-      Dieses Lab zeigt, dass Eingaben nicht nur aus Formularen kommen koennen,
-      sondern auch direkt aus der URL.
+      <strong>Worum geht es hier?</strong><br>
+      Dieses Lab zeigt, dass Eingaben nicht nur aus Formularen kommen,
+      sondern auch direkt aus der Adresszeile des Browsers.
     </div>
 
     <p>
-      <strong>Deine Aufgabe:</strong> Diese Seite reagiert auf einen URL-Parameter.
-      Starte mit einer normalen Ansicht und pruefe dann, ob eine kleine Aenderung
-      in der URL eine andere Rolle aktiviert.
+      <strong>Deine Aufgabe:</strong> Starte mit einer normalen Ansicht und prüfe,
+      ob sich durch eine kleine Änderung in der URL auch die Rolle oder Ansicht ändert.
     </p>
 
     <div class="code-box">Starte mit: ?role=user
-Frage dich dann: Welche andere Rolle waere hier interessant?</div>
+Frage dich dann: Welche andere Rolle könnte hier interessant sein?</div>
 
     <div class="status" id="statusBox"></div>
     <div class="flag-box" id="flagBox">{URL_PARAMETERS_ARE_INPUT}</div>
 
     <p class="note">
-      <strong>Merksatz:</strong> Auch Werte aus der URL sind Eingaben - und muessen mitgedacht werden.
+      <strong>Merksatz:</strong> Auch Werte aus der URL sind Eingaben – und sollten nie blind vertraut werden.
     </p>
 
     <a class="btn" href="index.html">Zurück zur Startseite</a>
