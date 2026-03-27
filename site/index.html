@@ -679,7 +679,7 @@
 
     function unlockAdvanced() {
       const inputPassword = document.getElementById("advanced-password").value.trim();
-      const correct = atob("dXNlcjEyMw==");
+      const correct = atob("QXJjaGl2ZURlbHRhMjc=");
       const errorMsg = document.getElementById("advanced-error-message");
       const protectedArea = document.getElementById("advanced-tasks");
       if (inputPassword === correct) {
@@ -687,6 +687,9 @@
         protectedArea.classList.remove("hidden");
         errorMsg.classList.add("hidden");
       } else {
+        errorMsg.classList.remove("hidden");
+      }
+    } else {
         errorMsg.classList.remove("hidden");
       }
     }
