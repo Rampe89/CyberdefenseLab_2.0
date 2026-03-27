@@ -377,3 +377,98 @@ input[type="button"]:active{
   color:#176fd6 !important;
   text-decoration:underline;
 }
+
+
+/* --- v4 main page rhythm / cards / forms --- */
+.container{
+  max-width: 1220px !important;
+  padding: 32px 34px !important;
+}
+
+.top-info{
+  margin-bottom: 18px !important;
+  line-height: 1.55 !important;
+  font-size: 1rem !important;
+}
+
+.container > h1,
+.container > h2,
+.container > h3{
+  letter-spacing: -0.02em;
+}
+
+.container h2{
+  font-size: 2rem !important;
+  margin: 16px 0 22px !important;
+  font-weight: 800 !important;
+}
+
+.task-grid,
+.tasks-grid,
+.grid{
+  gap: 24px !important;
+}
+
+.task{
+  padding: 22px 20px 18px !important;
+  border-radius: 20px !important;
+  min-height: 220px;
+}
+
+.task h3{
+  font-size: 1.15rem !important;
+  line-height: 1.3 !important;
+  margin: 0 0 16px !important;
+  font-weight: 800 !important;
+}
+
+.task p{
+  margin: 0 0 16px !important;
+  line-height: 1.55 !important;
+  font-size: 1rem !important;
+  color: #17324c !important;
+}
+
+.task .btn,
+.task button{
+  margin-top: 2px !important;
+}
+
+.task input[type="text"],
+.task input[type="password"]{
+  width: 100% !important;
+  margin: 12px 0 10px !important;
+  min-height: 46px;
+  padding: 11px 14px !important;
+  font-size: .98rem !important;
+}
+
+#progress{
+  font-size: 1.05rem !important;
+  font-weight: 700 !important;
+  margin: 10px 0 10px !important;
+}
+
+#progress-bar,
+.progress-bar-container{
+  height: 18px !important;
+  margin: 0 auto 26px !important;
+}
+
+.note,
+.small,
+.muted{
+  color:#5f7488 !important;
+}
+
+@media (max-width: 900px){
+  .container{
+    padding: 20px 18px !important;
+  }
+  .container h2{
+    font-size: 1.65rem !important;
+  }
+  .task{
+    min-height: unset;
+  }
+}

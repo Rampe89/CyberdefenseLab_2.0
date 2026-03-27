@@ -1,6 +1,6 @@
-Unified styling pass + robots.txt lab added.
-- robot.html kept unchanged
-- common stylesheet injected into all other HTML pages
-- new robots.txt lab: robots-lab.html
-- hidden page: quiet-archive-x9k2v7.html
-- new flag #14 added on index.html
+v4 patch:
+- removed SQL Injection lab from index
+- added intro labs: comments-lab.html and parameter-lab.html
+- added extra hidden secret page: hidden-button.html
+- adjusted index total to 16 flags and added achievements for the two new visible labs
+- improved main page typography, spacing, card rhythm, and input spacing
