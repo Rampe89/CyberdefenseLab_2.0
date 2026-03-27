@@ -7,40 +7,40 @@
   <link rel="stylesheet" href="assets/cdl-unified.css">
   <style>
     body { margin:0; padding:24px; }
-    .container { max-width: 900px; margin: 0 auto; padding: 28px; }
-    .actions { display:flex; gap:12px; flex-wrap:wrap; margin:18px 0 24px; }
+    .container { max-width: 920px; margin: 0 auto; padding: 28px; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>robots.txt Recon</h1>
 
-    <p><strong>Wozu ist robots.txt normalerweise da?</strong></p>
     <p>
-      Die Datei <code>robots.txt</code> liegt im Web-Root einer Website und gibt Suchmaschinen Hinweise,
-      welche Bereiche sie crawlen oder indexieren sollen. Wichtig: Das ist <strong>kein Zugriffsschutz</strong>.
-      Wer die Datei liest, bekommt oft Hinweise auf Pfade, die zwar nicht prominent sichtbar sind, aber trotzdem existieren.
+      Viele Websites besitzen eine Datei mit dem Namen <code>robots.txt</code>.
+      Sie liegt im Hauptverzeichnis der Website und richtet sich eigentlich an Suchmaschinen.
     </p>
 
     <div class="info">
-      <strong>Deine Aufgabe:</strong> Finde selbst heraus, welche Datei im Web-Root dir Hinweise auf nicht prominent sichtbare Pfade geben könnte. Folge dann dieser Spur.
+      <strong>Worum geht es hier?</strong><br>
+      Die <code>robots.txt</code> ist keine Zugangssperre. Sie ist eher eine Bitte an Suchmaschinen,
+      bestimmte Bereiche nicht zu durchsuchen.
     </div>
 
-    <div class="actions">
-      <a class="btn" href="index.html">Zurück zur Startseite</a>
-    </div>
-
-    <h2>Warum ist das relevant?</h2>
     <p>
-      Viele Betreiber denken bei <code>Disallow</code> automatisch an „versteckt“ oder sogar „geschützt“.
-      Tatsächlich ist es aber nur eine Bitte an Suchmaschinen. Wer den Pfad kennt, kann ihn oft direkt aufrufen.
+      <strong>Warum ist das wichtig?</strong> Wenn dort interessante Pfade genannt werden,
+      können Menschen diese oft trotzdem direkt aufrufen. Genau deshalb ist „nicht indexieren“
+      etwas anderes als „wirklich geschützt“.
+    </p>
+
+    <p>
+      <strong>Deine Aufgabe:</strong> Finde die passende Datei, lies sie und prüfe,
+      ob dort ein Pfad genannt wird, der für dich interessant sein könnte.
     </p>
 
     <div class="warning">
-      <strong>Wichtig:</strong> Die Flag reichst du ganz normal auf der Startseite ein.
+      <strong>Wichtig:</strong> Die Flag gibst du wie gewohnt wieder auf der Startseite ein.
     </div>
-  </div>
 
-  <!-- recon note: /assets/ is worth a look -->
+    <a class="btn" href="index.html">Zurück zur Startseite</a>
+  </div>
 </body>
 </html>

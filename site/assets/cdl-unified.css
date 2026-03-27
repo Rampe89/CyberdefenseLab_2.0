@@ -736,3 +736,100 @@ img, iframe, video, canvas{
     border-radius:12px !important;
   }
 }
+
+
+/* --- layout repair pass: keep desktop clean, mobile readable --- */
+*,
+*::before,
+*::after{
+  box-sizing:border-box;
+}
+
+.category-columns{
+  display:grid !important;
+  grid-template-columns:minmax(0, 1fr) minmax(0, 1fr) !important;
+  gap:24px !important;
+  align-items:start !important;
+}
+
+.category-columns > *{
+  min-width:0 !important;
+}
+
+.category-panel,
+.category-full,
+.column{
+  min-width:0 !important;
+  width:100% !important;
+}
+
+.category-panel > summary,
+.category-full > summary{
+  width:100% !important;
+}
+
+.category-panel .task,
+.category-full .task{
+  width:100% !important;
+  margin:0 0 22px 0 !important;
+}
+
+.lock-box{
+  width:100% !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:stretch !important;
+  gap:10px !important;
+  margin:0 0 18px 0 !important;
+}
+
+.lock-box p{
+  margin:0 !important;
+  line-height:1.5 !important;
+}
+
+.lock-box input{
+  width:100% !important;
+  max-width:100% !important;
+  margin:0 !important;
+}
+
+.lock-box .btn,
+.lock-box button{
+  width:max-content !important;
+  min-width:140px;
+  margin:0 !important;
+}
+
+.container .top-info{
+  max-width:none !important;
+}
+
+.file-list li img{
+  width:100%;
+  max-width:620px;
+}
+
+@media (max-width: 1024px){
+  .category-columns{
+    grid-template-columns:1fr !important;
+    gap:18px !important;
+  }
+
+  .lock-box .btn,
+  .lock-box button{
+    width:100% !important;
+    min-width:0;
+  }
+}
+
+@media (max-width: 768px){
+  .container{
+    margin:14px auto !important;
+  }
+
+  .category-panel .task,
+  .category-full .task{
+    margin:0 0 16px 0 !important;
+  }
+}
