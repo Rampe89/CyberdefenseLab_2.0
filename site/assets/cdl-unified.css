@@ -472,3 +472,89 @@ input[type="button"]:active{
     min-height: unset;
   }
 }
+
+
+/* --- v5 card layout fixes --- */
+.task{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:flex-start !important;
+}
+
+.task > *{
+  margin-left:0 !important;
+  margin-right:0 !important;
+}
+
+.task p{
+  display:block !important;
+}
+
+.task .btn,
+.task button,
+.task input[type="text"],
+.task input[type="password"],
+.task label,
+.task .note,
+.task .small,
+.task .muted{
+  display:block !important;
+  clear:both !important;
+}
+
+.task .btn{
+  margin: 0 0 14px 0 !important;
+}
+
+.task input[type="text"],
+.task input[type="password"]{
+  margin: 0 0 12px 0 !important;
+}
+
+.task button{
+  margin: 0 !important;
+}
+
+.task br{
+  display:none !important;
+}
+
+.task .btn + .btn{
+  margin-top:10px !important;
+}
+
+.task input + button{
+  margin-top:2px !important;
+}
+
+.task p + .btn,
+.task p + a.btn{
+  margin-top: 2px !important;
+}
+
+.task .btn + p,
+.task .btn + .note,
+.task .btn + .small{
+  margin-top: 0 !important;
+}
+
+.task .note,
+.task .small,
+.task .muted{
+  margin: 0 0 10px 0 !important;
+  line-height:1.45 !important;
+}
+
+.task .flag-box,
+.task .result-box,
+.task .output-box{
+  width:100% !important;
+  margin-top:12px !important;
+}
+
+@media (max-width: 900px){
+  .task .btn,
+  .task button{
+    width:auto !important;
+  }
+}

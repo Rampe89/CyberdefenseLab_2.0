@@ -1,6 +1,4 @@
-v4 patch:
-- removed SQL Injection lab from index
-- added intro labs: comments-lab.html and parameter-lab.html
-- added extra hidden secret page: hidden-button.html
-- adjusted index total to 16 flags and added achievements for the two new visible labs
-- improved main page typography, spacing, card rhythm, and input spacing
+v5 patch:
+- fixed task card element flow/spacing so buttons, helper text, inputs and submit buttons stack cleanly
+- moved 'Quelltext & Kommentare' and 'URL-Parameter' into the non-password-protected 'Offene Aufgaben' section
+- normalized 'Gib beide Flags ein' as note text for better spacing
