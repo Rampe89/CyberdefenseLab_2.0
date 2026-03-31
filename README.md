@@ -1,4 +1,4 @@
-# CyberDefense Lab
+# CyberDefense Lab – Netlify Clean
 
 Diese Version wurde als statische Netlify-Variante aufgeräumt.
 
@@ -25,3 +25,7 @@ Netlify veröffentlicht den Inhalt aus dem Ordner `site/`.
 ## Lokale Vorschau
 
 Du kannst den Inhalt aus `site/` auch direkt mit einem einfachen Static Server testen, z. B. mit VS Code Live Server.
+
+## Hinweis
+
+Die Demo bleibt bewusst statisch. Serverfunktionen aus dem alten Node-Setup wurden nicht übernommen, weil das Projekt inhaltlich als statische Lern- und Demo-Seite funktioniert.

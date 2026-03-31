@@ -8,22 +8,50 @@
   <style>
     body { margin:0; padding:24px; }
     .container { max-width: 980px; margin:0 auto; padding:28px; }
-    ul { line-height:1.7; }
+    .section { margin-top: 26px; }
+    ul { line-height:1.75; padding-left: 22px; }
+    li { margin-bottom: 8px; }
+    .muted { opacity: .86; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Didaktischer Kommentar für Lehrkräfte</h1>
-    <p>Dieser Bereich ist als geschützter Zusatzbereich für Lehrkräfte gedacht.</p>
-    <div class="info">
-      <strong>Geplant für diesen Bereich:</strong>
+    <p class="muted">Kurzübersicht zu den Labs und dazu, wie die Schülerinnen und Schüler die jeweiligen Flags finden können.</p>
+
+    <div class="info section">
+      <strong>Hinweis:</strong> Die Stichpunkte sind bewusst knapp gehalten und eignen sich als schneller Überblick während der Vorbereitung oder Durchführung.
+    </div>
+
+    <div class="section">
+      <h2>Reguläre Labs</h2>
       <ul>
-        <li>didaktische Einordnung jedes Labs</li>
-        <li>typische Stolperstellen bei Lernenden</li>
-        <li>mögliche Unterrichtseinstiege</li>
-        <li>Reflexionsfragen und Transfer</li>
+        <li><strong>Brute Force:</strong> Lab durchführen; <code>admin</code> mit dem Admin-Passwort testen und <code>user</code> mit dem User-Passwort. Späterer Bezug: passwortgeschützte Bereiche.</li>
+        <li><strong>Quelltext:</strong> Seitenquelltext anzeigen und den dort hinterlegten Kommentar lesen.</li>
+        <li><strong>URL-Parameter:</strong> In der URL den Parameter von <code>user</code> auf <code>admin</code> ändern.</li>
+        <li><strong>robots.txt Recon:</strong> Die Subpage <code>/robots.txt</code> aufrufen und die dort genannten Pfade untersuchen.</li>
+        <li><strong>Social Engineering:</strong> Dem Lab folgen und die Hinweise Schritt für Schritt auswerten.</li>
+        <li><strong>Passwortmanager-Lab:</strong> Dem Lab folgen und die Aufgaben dort bearbeiten.</li>
+        <li><strong>Phishing-Quiz:</strong> Dem Lab folgen und die verdächtigen E-Mails richtig identifizieren.</li>
+        <li><strong>Updates und Patches:</strong> Dem Lab folgen und die dort eingebauten Hinweise nutzen.</li>
+        <li><strong>Gobuster-Simulation:</strong> Den Gobuster-Simulator starten und die gefundenen Subpages untersuchen, zum Beispiel <code>/geheim.html</code>.</li>
+        <li><strong>Hashing-Lab:</strong> Die Hashes mit Crackstation cracken. Beide Lösungen müssen eingegeben werden, damit die Flag erscheint.</li>
+        <li><strong>Cookie-Flag:</strong> Rechtsklick → Untersuchen → <em>Application</em> → <em>Cookies</em>.</li>
+        <li><strong>SQL-Lab:</strong> Dem Lab folgen und die Eingaben im vorgesehenen Kontext testen.</li>
       </ul>
     </div>
+
+    <div class="section">
+      <h2>Geheime Flags</h2>
+      <ul>
+        <li><strong>SysAdmin:</strong> Die Subpage <code>/admin.html</code> direkt aufrufen.</li>
+        <li><strong>Mr. Robot:</strong> <code>/assets</code> aufrufen, dort <code>fsociety.dat</code> finden und den Binärcode decodieren.</li>
+        <li><strong>Mäusejäger:</strong> Unten auf der Seite das Maus-Emoji anklicken und anschließend das Exif-Lab lösen.</li>
+        <li><strong>Console Leak:</strong> Im Kontaktformular eine Nachricht eingeben und absenden; anschließend dem Lab bzw. den Konsolenhinweisen folgen.</li>
+        <li><strong>Versteckter Button:</strong> Rechtsklick → Untersuchen → <em>Elements</em>. Im Style-Bereich beim <code>mysteryButton</code> <code>display: none</code> auf <code>block</code> ändern.</li>
+      </ul>
+    </div>
+
     <a class="btn" href="index.html">Zurück zur Startseite</a>
   </div>
 </body>

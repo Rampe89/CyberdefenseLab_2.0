@@ -35,10 +35,20 @@
       das im Browser zwar existiert, aber nicht sichtbar ist?
     </div>
 
-    <button class="btn" id="mysteryButton" onclick="document.getElementById('hiddenFlag').style.display='block'">Geheime Aktion</button>
-    <div id="hiddenFlag">{CSS_CAN_HIDE_BUT_NOT_PROTECT}</div>
+    <button class="btn" id="mysteryButton" onclick="revealFlag()">Geheime Aktion</button>
+    <div id="hiddenFlag"></div>
 
     <a class="btn" href="index.html">Zurück zur Startseite</a>
   </div>
+
+  <script>
+    function revealFlag() {
+      const encoded = [123,67,83,83,95,67,65,78,95,72,73,68,69,95,66,85,84,95,78,79,84,95,80,82,79,84,69,67,84,125];
+      const flag = encoded.map(code => String.fromCharCode(code)).join('');
+      const output = document.getElementById('hiddenFlag');
+      output.textContent = flag;
+      output.style.display = 'block';
+    }
+  </script>
 </body>
 </html>
