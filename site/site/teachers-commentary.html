@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Didaktischer Kommentar für Lehrkräfte</title>
+  <link rel="stylesheet" href="assets/cdl-unified.css">
+  <style>
+    body { margin: 0; padding: 24px; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 30px; }
+    .intro { margin-bottom: 22px; }
+    .muted { opacity: .88; }
+    .note-box {
+      margin: 20px 0 28px;
+      padding: 18px 20px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+    .section { margin-top: 30px; }
+    .section h2 { margin-bottom: 14px; }
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+    }
+    th, td {
+      padding: 14px 16px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      line-height: 1.55;
+    }
+    th {
+      font-size: 0.96rem;
+      font-weight: 700;
+      background: rgba(255,255,255,0.05);
+    }
+    tr:last-child td { border-bottom: none; }
+    code {
+      background: rgba(255,255,255,0.08);
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 0.92em;
+    }
+    .small { font-size: 0.95rem; }
+    .footer-actions { margin-top: 28px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Didaktischer Kommentar für Lehrkräfte</h1>
+    <p class="intro muted">
+      Diese Übersicht dient als schneller Begleitfaden für die Durchführung des CyberDefenseLabs. Die Hinweise sind bewusst knapp und praxisnah formuliert, damit sie sich direkt während der Stunde oder bei der Vorbereitung nutzen lassen.
+    </p>
+
+    <div class="note-box small">
+      <strong>Hinweis:</strong> Die beschriebenen Wege sollen Lehrkräften einen Überblick geben, wie die Flags grundsätzlich gefunden werden können. Je nach Lerngruppe kann es sinnvoll sein, nur einzelne Hinweise vorab zu geben und andere bewusst offen zu lassen, damit mehr eigenständige Erkundung entsteht.
+    </div>
+
+    <div class="section">
+      <h2>Reguläre Labs</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Lab</th>
+              <th>Wie die Flag gefunden wird</th>
+              <th>Didaktischer Fokus</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Brute Force</strong></td>
+              <td>Das Lab normal bearbeiten. Die Zugänge <code>admin</code> und <code>user</code> mit den jeweiligen Passwörtern testen. Später lässt sich daran gut das Prinzip passwortgeschützter Bereiche anknüpfen.</td>
+              <td>Passwortsicherheit, schwache Zugangsdaten, systematisches Testen</td>
+            </tr>
+            <tr>
+              <td><strong>Quelltext</strong></td>
+              <td>Den Seitenquelltext anzeigen und den dort hinterlegten Kommentar lesen.</td>
+              <td>Quelltext lesen, Informationen in HTML erkennen</td>
+            </tr>
+            <tr>
+              <td><strong>URL-Parameter</strong></td>
+              <td>In der URL den Parameter von <code>user</code> auf <code>admin</code> ändern.</td>
+              <td>Manipulierbare Parameter, fehlende Zugriffskontrolle</td>
+            </tr>
+            <tr>
+              <td><strong>robots.txt Recon</strong></td>
+              <td>Die Datei <code>/robots.txt</code> aufrufen und die dort genannten Pfade gezielt untersuchen.</td>
+              <td>Reconnaissance, sichtbare Metainformationen, Struktur einer Website</td>
+            </tr>
+            <tr>
+              <td><strong>Social Engineering</strong></td>
+              <td>Dem Lab folgen und die eingebauten Hinweise Schritt für Schritt auswerten.</td>
+              <td>Manipulation, Vertrauen, Aufmerksamkeit für soziale Angriffe</td>
+            </tr>
+            <tr>
+              <td><strong>Passwortmanager-Lab</strong></td>
+              <td>Die Aufgaben im Lab bearbeiten und die dort vorgegebenen Hinweise nutzen.</td>
+              <td>Umgang mit Passwörtern, sichere Organisation von Zugangsdaten</td>
+            </tr>
+            <tr>
+              <td><strong>Phishing-Quiz</strong></td>
+              <td>Die E-Mails im Lab prüfen und die verdächtigen Nachrichten korrekt identifizieren.</td>
+              <td>Phishing-Merkmale erkennen, kritisches Prüfen digitaler Kommunikation</td>
+            </tr>
+            <tr>
+              <td><strong>Updates und Patches</strong></td>
+              <td>Dem Lab folgen und die dort eingebauten Hinweise auswerten.</td>
+              <td>Updates, Schwachstellen, Bedeutung aktueller Software</td>
+            </tr>
+            <tr>
+              <td><strong>Gobuster-Simulation</strong></td>
+              <td>Den Simulator starten und die gefundenen Subpages untersuchen, z.&nbsp;B. <code>/geheim.html</code> oder weitere auffällige Funde.</td>
+              <td>Verzeichnisrecherche, verborgene Pfade, systematisches Erkunden</td>
+            </tr>
+            <tr>
+              <td><strong>Hashing-Lab</strong></td>
+              <td>Die Hashes mit einem passenden Dienst wie Crackstation entschlüsseln. Erst wenn beide Lösungen eingegeben werden, erscheint die Flag.</td>
+              <td>Hashing, Passwortspeicherung, Grenzen schwacher Hashes</td>
+            </tr>
+            <tr>
+              <td><strong>Cookie-Flag</strong></td>
+              <td>Rechtsklick → <em>Untersuchen</em> → <em>Application</em> → <em>Cookies</em>.</td>
+              <td>Browserdaten, gespeicherte Sitzungsinformationen, Datenschutz</td>
+            </tr>
+            <tr>
+              <td><strong>SQL-Lab</strong></td>
+              <td>Dem Lab folgen und die Eingaben im vorgesehenen Kontext testen.</td>
+              <td>Eingabevalidierung, Datenbanken, typische Schwachstellen</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Geheime Flags</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Geheime Flag</th>
+              <th>Wie sie gefunden wird</th>
+              <th>Worum es dabei geht</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>SysAdmin</strong></td>
+              <td>Die Subpage <code>/admin.html</code> direkt aufrufen.</td>
+              <td>Versteckte Bereiche, direkte Pfadaufrufe, fehlende Abschottung</td>
+            </tr>
+            <tr>
+              <td><strong>Mr. Robot</strong></td>
+              <td><code>/assets</code> aufrufen, dort <code>fsociety.dat</code> finden und den Binärcode decodieren.</td>
+              <td>Dateifunde, Codierungen, genaues Untersuchen von Assets</td>
+            </tr>
+            <tr>
+              <td><strong>Mäusejäger</strong></td>
+              <td>Unten auf der Seite das Maus-Emoji anklicken und danach das Exif-Lab lösen.</td>
+              <td>Versteckte Interaktionen, Bildmetadaten, Aufmerksamkeit für Details</td>
+            </tr>
+            <tr>
+              <td><strong>Console Leak</strong></td>
+              <td>Im Kontaktformular eine Nachricht eingeben und absenden. Anschließend den Hinweisen in der Konsole folgen.</td>
+              <td>Browser-Konsole, Debug-Ausgaben, versehentlich offengelegte Informationen</td>
+            </tr>
+            <tr>
+              <td><strong>Versteckter Button</strong></td>
+              <td>Rechtsklick → <em>Untersuchen</em> → <em>Elements</em>. Im Style-Bereich beim <code>mysteryButton</code> <code>display: none</code> auf <code>block</code> setzen und dann den Button anklicken.</td>
+              <td>DOM, CSS, versteckte Elemente und DevTools-Nutzung</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="footer-actions">
+      <a class="btn" href="index.html">Zurück zur Startseite</a>
+    </div>
+  </div>
+</body>
+</html>
