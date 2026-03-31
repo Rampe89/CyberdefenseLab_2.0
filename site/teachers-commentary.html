@@ -9,24 +9,43 @@
     body {
       margin: 0;
       padding: 24px;
+      line-height: 1.7;
     }
 
     .container {
-      max-width: 1050px;
+      max-width: 1080px;
       margin: 0 auto;
       padding: 32px;
     }
 
+    .page-intro {
+      margin-bottom: 24px;
+    }
+
+    .page-intro h1 {
+      margin-bottom: 10px;
+    }
+
+    .page-intro p {
+      margin: 0;
+      color: #587089;
+      font-size: 0.98rem;
+    }
+
     .intro-box,
     .section-box,
-    .lab-entry {
+    .lab-entry,
+    .principles-grid,
+    .note-grid {
       margin-bottom: 24px;
     }
 
     .intro-box,
-    .section-box {
+    .section-box,
+    .toc,
+    .note-card {
       padding: 24px;
-      line-height: 1.7;
+      line-height: 1.75;
     }
 
     .section-title {
@@ -41,6 +60,39 @@
     .small-note {
       color: #587089;
       font-size: 0.95rem;
+    }
+
+    .principles-grid,
+    .note-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .note-card h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    .note-card p:last-child,
+    .intro-box p:last-child,
+    .section-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .toc ul {
+      margin: 0;
+      padding-left: 20px;
+      line-height: 1.9;
+    }
+
+    .toc a {
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .toc a:hover {
+      text-decoration: underline;
     }
 
     details.lab-entry {
@@ -78,7 +130,7 @@
 
     .lab-content {
       padding: 0 20px 20px 20px;
-      line-height: 1.75;
+      line-height: 1.8;
     }
 
     .lab-content p {
@@ -101,27 +153,15 @@
       margin-top: 28px;
     }
 
-    .toc {
-      padding: 20px 24px;
+    code {
+      word-break: break-word;
     }
 
-    .toc ul {
-      margin: 0;
-      padding-left: 20px;
-      line-height: 1.9;
-    }
-
-    .toc a {
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .toc a:hover {
-      text-decoration: underline;
-    }
-
-    hr {
-      margin: 28px 0;
+    @media (max-width: 860px) {
+      .principles-grid,
+      .note-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 700px) {
@@ -130,6 +170,13 @@
       }
 
       .container {
+        padding: 18px;
+      }
+
+      .intro-box,
+      .section-box,
+      .toc,
+      .note-card {
         padding: 18px;
       }
 
@@ -146,47 +193,91 @@
 </head>
 <body>
   <div class="container">
-    <h1>Didaktischer Kommentar für Lehrkräfte</h1>
-    <p class="small-note">
-      Dieser Bereich ist als begleitender Kommentar für Lehrkräfte gedacht. Er soll die Labs nicht „auflösen“, sondern ihre Relevanz einordnen und die didaktische Richtung klar machen.
-    </p>
+    <div class="page-intro">
+      <h1>Didaktischer Kommentar für Lehrkräfte</h1>
+      <p>
+        Dieser Bereich ist als begleitender Kommentar für Lehrkräfte gedacht. Er soll die Labs nicht einfach auflösen, sondern ihre Relevanz einordnen, typische Lernwege sichtbar machen und die didaktische Absicht hinter dem Aufbau der Seite transparent machen.
+      </p>
+    </div>
 
     <div class="intro-box info">
       <h2 class="section-title">Warum dieses Thema mehr Aufmerksamkeit verdient</h2>
       <p class="lead">
-        Cyberangriffe sind längst kein Spezialthema mehr für irgendwelche IT-Fachleute, sondern Teil der Lebensrealität unserer Schülerinnen und Schüler. Passwortleaks, Phishing-Nachrichten, unsichere Webseiten oder schlecht geschützte Zugänge tauchen nicht nur in Unternehmen auf, sondern ganz konkret im Alltag. Viele Jugendliche bewegen sich selbstverständlich im Netz, haben aber oft nur ein begrenztes Gefühl dafür, wie einfach Daten abgegriffen, Zugänge missbraucht oder Menschen manipuliert werden können.
+        Cyberangriffe sind längst kein Spezialthema mehr für einige wenige IT-Fachleute, sondern Teil der Lebensrealität unserer Schülerinnen und Schüler. Passwortleaks, Phishing-Nachrichten, unsichere Webseiten, betrügerische Anhänge oder manipulierte Logins tauchen nicht nur in Unternehmen auf, sondern ganz konkret im Alltag junger Menschen.
       </p>
       <p>
-        Im Kerncurriculum Informatik ist das Thema IT-Sicherheit zwar angelegt, bleibt in der Praxis aber häufig eher abstrakt. Begriffe wie Vertraulichkeit, Integrität und Verfügbarkeit sind wichtig, reichen für sich allein aber oft nicht aus, damit Lernende wirklich verstehen, wie Angriffe funktionieren und warum sie selbst betroffen sein können. Genau an dieser Stelle setzt das CyberDefense Lab an. Die Schülerinnen und Schüler lesen nicht nur über Sicherheitsprobleme, sondern erleben typische Angriffsmuster selbst in einem geschützten, didaktisch reduzierten Rahmen.
+        Im Kerncurriculum Informatik ist IT-Sicherheit zwar angelegt, bleibt im Unterricht aber oft eher auf Begriffe, Regeln und gute Vorsätze beschränkt. Das ist nachvollziehbar, greift aber zu kurz. Wer Schutzmaßnahmen ernst nehmen soll, muss erst einmal verstehen, wie typische Angriffe überhaupt funktionieren, warum Menschen auf sie hereinfallen und an welchen Stellen digitale Systeme unnötig angreifbar werden.
       </p>
       <p>
-        Der entscheidende Punkt ist dabei: Wer Schutzmaßnahmen ernst nehmen soll, muss vorher nachvollziehen können, wovor eigentlich geschützt wird. Wenn Lernende einmal selbst erlebt haben, wie leicht ein schwaches Passwort erraten werden kann, wie viel Informationen im Quelltext oder in Cookies liegen oder wie schnell man auf versteckte Unterseiten stößt, entsteht ein deutlich tieferes Verständnis als durch reine Theorie.
+        Genau hier setzt das CyberDefense Lab an. Die Lernenden lesen nicht nur über Sicherheitsprobleme, sondern erleben typische Schwachstellen in einem geschützten, didaktisch reduzierten Rahmen selbst. Dadurch entsteht ein deutlich tieferes Verständnis als durch reine Theorie. Ein schwaches Passwort, eine ungeschützte Unterseite oder ein harmlos wirkender Cookie werden erst dann wirklich greifbar, wenn man erlebt, wie wenig es manchmal braucht, um daraus ein Sicherheitsproblem zu machen.
       </p>
       <p>
-        Damit geht der Ansatz bewusst etwas weiter, als es das Kerncurriculum bisher in seiner Grundstruktur vorgibt. Es geht nicht nur darum, Sicherheitsbegriffe zu kennen, sondern darum, digitale Resilienz aufzubauen. Die Schülerinnen und Schüler sollen lernen, Angriffslogiken zu erkennen, typische Schwachstellen einzuordnen und ihr eigenes Handeln im Netz reflektierter zu gestalten. Dazu kommt ein zweiter wichtiger Punkt: Jugendliche sind nicht nur potenzielle Opfer, sondern können mit sehr wenig Vorwissen auch selbst in problematische Richtungen abrutschen. Gerade deshalb ist es aus meiner Sicht unsere Aufgabe, Aufklärung nicht nur oberflächlich, sondern praktisch und nachvollziehbar anzulegen.
+        Der Ansatz geht damit bewusst ein Stück weiter als das Kerncurriculum in seiner Grundstruktur. Ziel ist nicht nur das Kennenlernen einzelner Fachbegriffe, sondern der Aufbau von digitaler Urteilskraft und Resilienz. Die Schülerinnen und Schüler sollen Angriffslogiken erkennen, Schwachstellen einordnen und ihr eigenes Handeln im Netz reflektierter gestalten. Gleichzeitig wird deutlich: Wer digitale Systeme nutzt, trägt Verantwortung, und wer ihre Schwächen versteht, kann sich und andere besser schützen.
       </p>
+    </div>
+
+    <div class="principles-grid">
+      <div class="note-card info">
+        <h3>Didaktischer Grundgedanke</h3>
+        <p>
+          Das Lab arbeitet mit einem entdeckenden Zugang. Die Lernenden sollen nicht bloß richtige Antworten abliefern, sondern beobachten, ausprobieren, irritiert werden und daraus Einsichten gewinnen. Kleine Aha-Momente sind hier ausdrücklich Teil des Lernwegs.
+        </p>
+      </div>
+      <div class="note-card info">
+        <h3>Bewusste Vereinfachungen</h3>
+        <p>
+          Mehrere Labs arbeiten bewusst mit vereinfachten oder simulierten Sicherheitslagen. Das betrifft insbesondere den Bereich mit geschützten Lehrerhinweisen oder Rollenwechseln über Parameter. Diese Konstruktionen ersetzen keine echte serverseitige Authentifizierung, sondern veranschaulichen Prinzipien von Sichtbarkeit, Zugriff und Fehlkonfiguration in didaktisch reduzierter Form.
+        </p>
+      </div>
     </div>
 
     <div class="section-box toc">
       <h2 class="section-title">Inhalt dieses Kommentars</h2>
       <ul>
+        <li><a href="#principles">Didaktische Leitlinien für die Nutzung</a></li>
         <li><a href="#labs">Reguläre Labs</a></li>
-        <li><a href="#secret-flags">Geheime Flags / Zusatzaufgaben</a></li>
+        <li><a href="#secret-flags">Geheime Flags und Zusatzaufgaben</a></li>
       </ul>
+    </div>
+
+    <div class="section-box info" id="principles">
+      <h2 class="section-title">Didaktische Leitlinien für die Nutzung</h2>
+      <p>
+        Die Seite ist nicht als Sammlung kleiner Gags gedacht, sondern als strukturierter Lernraum. Auch dort, wo Easter Eggs oder bewusst versteckte Elemente auftauchen, bleibt die fachliche Idee dieselbe: Lernende sollen entdecken, dass digitale Oberflächen nie die ganze Wahrheit zeigen. Was sichtbar ist, was verborgen bleibt und was trotzdem technisch vorhanden ist, kann im Unterricht immer wieder aufgegriffen werden.
+      </p>
+      <p>
+        Für die Arbeit im Unterricht bietet sich an, die Labs nicht nur auf die Flag hin bearbeiten zu lassen, sondern die Lernenden nach jedem Durchgang kurz festhalten zu lassen, <em>welche Schwachstelle ausgenutzt wurde</em>, <em>warum sie problematisch ist</em> und <em>wie man sie in echten Systemen vermeiden würde</em>. Genau an dieser Stelle wird aus einer spielerischen Oberfläche belastbares Verständnis.
+      </p>
+    </div>
+
+    <div class="note-grid">
+      <div class="note-card info">
+        <h3>Wichtige Reflexionsfrage</h3>
+        <p>
+          Die entscheidende pädagogische Frage lautet nicht nur: „Haben sie die Flag gefunden?“, sondern: „Haben sie verstanden, warum das funktioniert hat?“ Gerade das Nachgespräch ist deshalb zentral.
+        </p>
+      </div>
+      <div class="note-card info">
+        <h3>Abgrenzung zur Realität</h3>
+        <p>
+          Es sollte offen benannt werden, dass reale IT-Sicherheit deutlich komplexer ist. Das Lab zeigt typische Grundmuster. Es trainiert Wahrnehmung, Vorsicht und Begriffsverständnis, nicht den Angriff auf echte Systeme.
+        </p>
+      </div>
     </div>
 
     <div class="section-box info" id="labs">
       <h2 class="section-title">Reguläre Labs</h2>
       <p>
-        Die folgenden Abschnitte sind bewusst ausklappbar gehalten. So bleibt die Seite übersichtlich, gleichzeitig ist zu jedem Lab hinterlegt, warum es relevant ist, was dabei inhaltlich gelernt werden soll und wie die Flag gefunden wird.
+        Die folgenden Abschnitte sind bewusst ausklappbar gehalten. So bleibt die Seite übersichtlich, gleichzeitig ist zu jedem Lab hinterlegt, warum es relevant ist, was dabei inhaltlich gelernt werden soll, worauf Lehrkräfte im Gespräch achten können und wie der Weg zur Flag aussieht.
       </p>
     </div>
 
     <details class="lab-entry task">
       <summary>Brute Force</summary>
       <div class="lab-content">
-        <p><span class="label">Warum das relevant ist:</span> Beim Brute-Force-Lab wird sehr schnell deutlich, wie anfällig einfache Zugangsdaten sind. Viele Schülerinnen und Schüler nutzen selbst Passwörter, die leicht zu erraten, kurz oder mehrfach verwendet sind. Das Lab zeigt sehr klar, dass es oft gar kein spektakuläres „Hacking“ braucht, sondern dass simples Ausprobieren bereits zum Erfolg führen kann.</p>
-        <p><span class="label">Was dabei gelernt werden soll:</span> Die Lernenden sollen verstehen, warum schwache Passwörter ein echtes Risiko darstellen und weshalb Wiederverwendung problematisch ist. Gleichzeitig wird deutlich, dass Angriffe oft nicht aus hochkomplexer Technik bestehen, sondern aus dem Ausnutzen menschlicher Bequemlichkeit.</p>
+        <p><span class="label">Warum das relevant ist:</span> Beim Brute-Force-Lab wird sehr schnell deutlich, wie anfällig einfache Zugangsdaten sind. Viele Schülerinnen und Schüler nutzen selbst Passwörter, die kurz, leicht zu erraten oder mehrfach verwendet sind. Das Lab zeigt, dass es oft gar kein spektakuläres „Hacking“ braucht, sondern dass simples Ausprobieren bereits zum Erfolg führen kann.</p>
+        <p><span class="label">Was dabei gelernt werden soll:</span> Die Lernenden sollen verstehen, warum schwache Passwörter ein echtes Risiko darstellen und weshalb Wiederverwendung problematisch ist. Gleichzeitig wird deutlich, dass Angriffe oft weniger mit Genialität als mit Systematik und menschlicher Bequemlichkeit zu tun haben.</p>
+        <p><span class="label">Didaktischer Fokus:</span> Im Nachgespräch lohnt sich die Frage, was ein starkes Passwort ausmacht und warum Passwortmanager gerade deshalb sinnvoll sein können. Wichtig ist außerdem die Einsicht, dass Sicherheit nicht an Geheimwissen scheitert, sondern oft an schlechten Gewohnheiten.</p>
         <p><span class="label">Weg zur Flag:</span> Die Schülerinnen und Schüler führen das Lab durch und testen typische Login-Kombinationen. Dabei bietet es sich an, sowohl den Admin-Zugang als auch den User-Zugang auszuprobieren und die passenden Passwörter zu finden.</p>
       </div>
     </details>
@@ -196,6 +287,7 @@
       <div class="lab-content">
         <p><span class="label">Warum das relevant ist:</span> Phishing gehört zu den häufigsten Angriffsmethoden überhaupt. Die Lernenden kommen im Alltag permanent mit Nachrichten, Mails, Links und Formularen in Kontakt. Gerade deshalb ist es wichtig, typische Merkmale manipulativer oder gefälschter Kommunikation zu erkennen.</p>
         <p><span class="label">Was dabei gelernt werden soll:</span> Die Schülerinnen und Schüler sollen Hinweise auf betrügerische Mails erkennen, zum Beispiel Druck, Dringlichkeit, unpassende Absender, sprachliche Auffälligkeiten oder verdächtige Links. Ziel ist nicht nur das richtige Ergebnis im Quiz, sondern ein geschulterer Blick für digitale Kommunikation insgesamt.</p>
+        <p><span class="label">Didaktischer Fokus:</span> Besonders ergiebig ist die Frage, warum Phishing gerade deshalb funktioniert, weil es auf Gefühle wie Stress, Hilfsbereitschaft oder Angst setzt. So wird deutlich, dass Sicherheit immer auch mit Kommunikationskompetenz zu tun hat.</p>
         <p><span class="label">Weg zur Flag:</span> Das Lab wird normal bearbeitet. Die Lernenden identifizieren die verdächtigen bzw. echten Nachrichten und erhalten über die korrekte Bearbeitung die Flag.</p>
       </div>
     </details>
@@ -205,6 +297,7 @@
       <div class="lab-content">
         <p><span class="label">Warum das relevant ist:</span> Dieses Lab macht sichtbar, dass viele Angriffe nicht in erster Linie technische Systeme angreifen, sondern Menschen. Gerade Jugendliche unterschätzen häufig, wie stark soziale Mechanismen wie Autorität, Hilfsbereitschaft, Zeitdruck oder Neugier ausgenutzt werden können.</p>
         <p><span class="label">Was dabei gelernt werden soll:</span> Die Schülerinnen und Schüler sollen erkennen, dass Manipulation oft subtil beginnt und dass kritisches Nachfragen ein wichtiger Schutzmechanismus ist. Das Lab verbindet damit technische Bildung mit einem reflektierten Umgang mit Kommunikation und Beeinflussung.</p>
+        <p><span class="label">Didaktischer Fokus:</span> Hier lässt sich gut herausarbeiten, dass Vorsicht nichts mit Misstrauen gegen Menschen im Allgemeinen zu tun hat, sondern mit bewusstem Prüfen von Situationen. Gerade im schulischen Umfeld ist das eine wichtige Transferstelle.</p>
         <p><span class="label">Weg zur Flag:</span> Das Lab wird Schritt für Schritt bearbeitet. Wer der Aufgabenstruktur folgt und die Manipulationsmuster erkennt, gelangt zur Flag.</p>
       </div>
     </details>
@@ -214,6 +307,7 @@
       <div class="lab-content">
         <p><span class="label">Warum das relevant ist:</span> Passwörter spielen im digitalen Alltag eine zentrale Rolle. Gleichzeitig wissen viele Lernende kaum, wie Passwörter in Anwendungen überhaupt gespeichert werden und warum Klartextspeicherung ein massives Problem wäre. Dieses Lab führt in die Logik sicherer Passwortspeicherung ein.</p>
         <p><span class="label">Was dabei gelernt werden soll:</span> Die Schülerinnen und Schüler sollen nachvollziehen, dass Passwörter nicht einfach „irgendwo gespeichert“, sondern idealerweise gehasht und zusätzlich abgesichert werden. Das Lab schafft damit die Grundlage für ein tieferes Verständnis von Passwortsicherheit.</p>
+        <p><span class="label">Didaktischer Fokus:</span> Hilfreich ist hier die Abgrenzung zwischen Speichern, Verschlüsseln und Hashing. Viele Lernende werfen diese Dinge zunächst durcheinander. Wenn dieser Unterschied klar wird, ist bereits viel gewonnen.</p>
         <p><span class="label">Weg zur Flag:</span> Die Lernenden folgen dem Lab und arbeiten sich durch die vorgesehenen Schritte, bis die Flag freigeschaltet wird.</p>
       </div>
     </details>
@@ -223,6 +317,7 @@
       <div class="lab-content">
         <p><span class="label">Warum das relevant ist:</span> Viele Lernende sehen bei einer Webseite nur die Oberfläche. Dieses Lab macht deutlich, dass der Quelltext öffentlich einsehbar ist und dort versehentlich Informationen landen können, die eigentlich nicht für Nutzerinnen und Nutzer gedacht waren.</p>
         <p><span class="label">Was dabei gelernt werden soll:</span> Die Schülerinnen und Schüler lernen, dass Kommentare, Hinweise oder schlecht versteckte Informationen im Quelltext ein reales Sicherheitsproblem darstellen können. Gleichzeitig wird der Blick dafür geschärft, dass sichtbare Oberfläche und technische Struktur nicht dasselbe sind.</p>
+        <p><span class="label">Didaktischer Fokus:</span> Gerade für Anfängerinnen und Anfänger ist dieses Lab ein guter Türöffner, weil es ohne Spezialsoftware funktioniert. Es zeigt sehr niedrigschwellig, dass digitale Systeme immer noch eine zweite Ebene besitzen.</p>
         <p><span class="label">Weg zur Flag:</span> Die Seite wird per „Seitenquelltext anzeigen“ untersucht. Im Kommentarbereich befindet sich der entscheidende Hinweis bzw. die Flag.</p>
       </div>
     </details>
@@ -232,6 +327,7 @@
       <div class="lab-content">
         <p><span class="label">Warum das relevant ist:</span> Viele unsichere Systeme verlassen sich zu stark auf Eingaben aus der URL. Wenn Rollen oder Rechte nur über Parameter gesteuert werden, kann das sehr schnell zu ungewollten Zugriffen führen.</p>
         <p><span class="label">Was dabei gelernt werden soll:</span> Die Schülerinnen und Schüler sollen erkennen, dass bloßes Ändern einer URL bereits Auswirkungen auf Berechtigungen haben kann. Damit wird das Verständnis für unsichere Zugriffskontrollen und für die Notwendigkeit serverseitiger Prüfungen geschärft.</p>
+        <p><span class="label">Didaktischer Fokus:</span> Hier sollte klar benannt werden, dass das Lab absichtlich vereinfacht ist. In realen Anwendungen würden Rollen nicht so umgesetzt werden dürfen. Gerade diese Vereinfachung macht den Denkfehler aber besonders sichtbar.</p>
         <p><span class="label">Weg zur Flag:</span> In der URL wird der Parameter von <code>user</code> auf <code>admin</code> geändert. Dadurch wird der geschützte Bereich sichtbar bzw. die Flag zugänglich.</p>
       </div>
     </details>
@@ -241,6 +337,7 @@
       <div class="lab-content">
         <p><span class="label">Warum das relevant ist:</span> Viele Lernende kennen die Datei <code>robots.txt</code> gar nicht. Gleichzeitig eignet sie sich hervorragend, um zu zeigen, dass Informationen über eine Webstruktur manchmal offen herumliegen und eher aus Gewohnheit als aus Sicherheitslogik veröffentlicht werden.</p>
         <p><span class="label">Was dabei gelernt werden soll:</span> Die Schülerinnen und Schüler sollen verstehen, dass nicht verlinkte Bereiche trotzdem auffindbar sein können und dass eine Datei, die eigentlich für Suchmaschinen gedacht ist, unbeabsichtigt Hinweise für Angreifer liefern kann.</p>
+        <p><span class="label">Didaktischer Fokus:</span> Das Lab eignet sich gut, um zwischen „nicht im Menü sichtbar“ und „wirklich geschützt“ zu unterscheiden. Diese Verwechslung begegnet Lernenden erstaunlich oft.</p>
         <p><span class="label">Weg zur Flag:</span> Die Datei <code>/robots.txt</code> wird aufgerufen. Anschließend werden die dort genannten Unterseiten untersucht, bis die Flag gefunden wird.</p>
       </div>
     </details>
@@ -250,6 +347,7 @@
       <div class="lab-content">
         <p><span class="label">Warum das relevant ist:</span> Sicherheitslücken entstehen nicht nur durch schlechte Passwörter oder unvorsichtige Nutzer, sondern auch durch ungepatchte Systeme. Das ist für Jugendliche oft abstrakt, obwohl es in der Realität einer der häufigsten Gründe für erfolgreiche Angriffe ist.</p>
         <p><span class="label">Was dabei gelernt werden soll:</span> Die Schülerinnen und Schüler sollen erkennen, warum Updates keine lästige Nebensache sind, sondern ein zentraler Teil von IT-Sicherheit. Gleichzeitig wird deutlich, dass viele Angriffe bekannte Schwachstellen ausnutzen, für die es längst Schutzmaßnahmen gäbe.</p>
+        <p><span class="label">Didaktischer Fokus:</span> Hier lässt sich gut die Brücke zum Alltag schlagen: Smartphones, Apps, Browser und Schulsoftware aktualisieren sich nicht ohne Grund. Wer Updates ignoriert, lässt bekannte Risiken oft unnötig offen.</p>
         <p><span class="label">Weg zur Flag:</span> Das Lab wird regulär bearbeitet. Die Flag ergibt sich aus dem Durchlaufen der vorgesehenen Schritte.</p>
       </div>
     </details>
@@ -259,6 +357,7 @@
       <div class="lab-content">
         <p><span class="label">Warum das relevant ist:</span> Dieses Lab zeigt einen sehr typischen Schritt aus der Reconnaissance-Phase: das Auffinden versteckter Dateien und Unterseiten. Viele Schülerinnen und Schüler gehen zunächst davon aus, dass „nicht verlinkt“ automatisch „nicht auffindbar“ bedeutet. Genau dieses Missverständnis wird hier aufgebrochen.</p>
         <p><span class="label">Was dabei gelernt werden soll:</span> Die Lernenden sollen verstehen, wie automatisierte Verzeichnissuche funktioniert und warum schlecht geschützte oder vergessene Dateien ein Sicherheitsproblem darstellen. Gleichzeitig lernen sie, dass Angriffe oft mit systematischer Informationssuche beginnen.</p>
+        <p><span class="label">Didaktischer Fokus:</span> Das Lab ist ein guter Anlass, um über die Denkweise von Angreifern zu sprechen: Nicht sofort eingreifen, sondern erst sammeln, kartieren, vergleichen. Genau diese Vorarbeit wird im Unterricht sonst leicht übersehen.</p>
         <p><span class="label">Weg zur Flag:</span> Die Gobuster-Simulation wird ausgeführt. Anschließend werden die gefundenen Unterseiten untersucht, zum Beispiel <code>/geheim.html</code>.</p>
       </div>
     </details>
@@ -268,6 +367,7 @@
       <div class="lab-content">
         <p><span class="label">Warum das relevant ist:</span> Hashing ist für viele Schülerinnen und Schüler zunächst ein sperriger Begriff. Gleichzeitig ist es ein sehr guter Zugang, um zu zeigen, wie Passwortspeicherung sinnvoll abgesichert werden kann und wo die Grenzen dieser Absicherung liegen.</p>
         <p><span class="label">Was dabei gelernt werden soll:</span> Die Lernenden sollen verstehen, dass Hashes nicht einfach „verschlüsselte Passwörter“ sind, sondern Prüfsummen mit eigener Logik. Außerdem wird deutlich, warum schwache oder bekannte Passwörter trotz Hashing problematisch bleiben und weshalb Salt ein wichtiger zusätzlicher Schutz ist.</p>
+        <p><span class="label">Didaktischer Fokus:</span> Fachlich wichtig ist hier die Einsicht, dass Hashing kein Rückweg zur ursprünglichen Eingabe sein soll. Gerade der Unterschied zu „Entschlüsselung“ ist hier zentral und sollte bewusst geklärt werden.</p>
         <p><span class="label">Weg zur Flag:</span> Die im Lab angegebenen Hashes werden mit einem geeigneten Tool oder einer geeigneten Datenbank, zum Beispiel Crackstation, aufgelöst. Beide Ergebnisse müssen korrekt eingegeben werden, damit die Flag erscheint.</p>
       </div>
     </details>
@@ -277,6 +377,7 @@
       <div class="lab-content">
         <p><span class="label">Warum das relevant ist:</span> Cookies sind für die meisten Schülerinnen und Schüler ein vertrauter Begriff, aber oft eher im Zusammenhang mit Einwilligungsbannern als mit Sicherheit. Das Lab macht sichtbar, dass im Browser tatsächlich Informationen gespeichert werden, die für Angriffe interessant sein können.</p>
         <p><span class="label">Was dabei gelernt werden soll:</span> Die Lernenden sollen verstehen, dass lokale Browserdaten nicht harmlos sind und dass man mit Entwicklertools deutlich mehr über eine Webseite herausfinden kann, als auf den ersten Blick sichtbar ist.</p>
+        <p><span class="label">Didaktischer Fokus:</span> Hier bietet sich die Frage an, welche Daten ein Browser über uns speichert und weshalb Session-Cookies, Rolleninformationen oder Tracking-Daten aus Sicherheitssicht relevant sein können.</p>
         <p><span class="label">Weg zur Flag:</span> Über Rechtsklick und „Untersuchen“ werden die Entwicklertools geöffnet. Anschließend wird im Bereich „Application“ bzw. „Cookies“ die gespeicherte Flag gesucht.</p>
       </div>
     </details>
@@ -286,6 +387,7 @@
       <div class="lab-content">
         <p><span class="label">Warum das relevant ist:</span> SQL-Injection ist ein klassisches Beispiel dafür, wie unsaubere Eingabeverarbeitung zu gravierenden Sicherheitsproblemen führen kann. Für Lernende ist das ein guter Zugang, um zu erkennen, dass Eingaben nicht einfach „Text“ sind, sondern in Datenbanksystemen eine besondere Wirkung haben können.</p>
         <p><span class="label">Was dabei gelernt werden soll:</span> Die Schülerinnen und Schüler sollen ein erstes Gefühl dafür bekommen, warum Eingaben gefiltert und korrekt verarbeitet werden müssen. Gleichzeitig lernen sie, dass hinter einer scheinbar einfachen Login- oder Suchmaske oft komplexe Prozesse stehen.</p>
+        <p><span class="label">Didaktischer Fokus:</span> SQL-Injection sollte hier nicht als Zaubertrick, sondern als Folge schlechter Eingabeverarbeitung verstanden werden. Die zentrale Frage lautet: Warum darf Nutzereingabe nie ungeprüft Teil einer Datenbankabfrage werden?</p>
         <p><span class="label">Weg zur Flag:</span> Das Lab wird gemäß Aufgabenstellung bearbeitet. Die Flag ergibt sich aus der vorgesehenen Eingabemanipulation innerhalb des geschützten Lab-Rahmens.</p>
       </div>
     </details>
@@ -293,7 +395,7 @@
     <div class="section-box info" id="secret-flags">
       <h2 class="section-title">Geheime Flags / Zusatzaufgaben</h2>
       <p>
-        Die geheimen Flags eignen sich besonders für schnelle Schülerinnen und Schüler oder als Zusatzaufgaben. Sie erweitern den Pflichtteil um kleine Entdeckungsmomente und fördern eigenständiges Erkunden.
+        Die geheimen Flags eignen sich besonders für schnelle Schülerinnen und Schüler oder als Zusatzaufgaben. Sie erweitern den Pflichtteil um kleine Entdeckungsmomente und fördern eigenständiges Erkunden. Gerade hier ist es sinnvoll, nach der Bearbeitung noch einmal ausdrücklich zu thematisieren, <em>welcher Denkfehler</em> oder <em>welche Form von Nachlässigkeit</em> jeweils sichtbar wurde.
       </p>
     </div>
 
@@ -302,6 +404,7 @@
       <div class="lab-content">
         <p><span class="label">Warum das relevant ist:</span> Diese Zusatzaufgabe knüpft an den Gedanken an, dass sensible Bereiche oft direkt erreichbar sind, wenn Schutzmechanismen fehlen oder unzureichend umgesetzt sind.</p>
         <p><span class="label">Was dabei gelernt werden soll:</span> Die Lernenden sollen erkennen, dass Administratorbereiche nicht einfach durch „Nicht-Verlinken“ geschützt sind und dass das Auffinden solcher Seiten oft erstaunlich banal sein kann.</p>
+        <p><span class="label">Didaktischer Fokus:</span> Hier lässt sich hervorragend zwischen Oberfläche und tatsächlicher Zugriffskontrolle unterscheiden. Ein Bereich ist nicht deshalb geschützt, weil man ihn nicht prominent bewirbt.</p>
         <p><span class="label">Weg zur Flag:</span> Die Unterseite <code>/admin.html</code> wird direkt aufgerufen und untersucht.</p>
       </div>
     </details>
@@ -311,6 +414,7 @@
       <div class="lab-content">
         <p><span class="label">Warum das relevant ist:</span> Diese Aufgabe verbindet Webrecherche mit Decodierung und zeigt, dass Dateien auf einem Server nicht nur existieren, sondern manchmal auch zusätzliche Informationen in kodierter Form enthalten.</p>
         <p><span class="label">Was dabei gelernt werden soll:</span> Die Schülerinnen und Schüler üben genaues Hinsehen, den Umgang mit Dateiinhalt und den Gedanken, dass Informationen nicht immer direkt lesbar präsentiert werden.</p>
+        <p><span class="label">Didaktischer Fokus:</span> Gerade stärkere Lernende können hier zeigen, dass Sicherheitsarbeit oft aus mehreren kleinen Schritten besteht: finden, lesen, erkennen, umwandeln, verstehen.</p>
         <p><span class="label">Weg zur Flag:</span> Über <code>/assets</code> wird die Datei <code>fsociety.dat</code> gefunden. Der enthaltene Binärcode wird decodiert.</p>
       </div>
     </details>
@@ -320,6 +424,7 @@
       <div class="lab-content">
         <p><span class="label">Warum das relevant ist:</span> Dieses Easter Egg lenkt den Blick auf Metadaten und versteckte Informationen in Mediendateien. Gerade Bilder wirken auf den ersten Blick harmlos, enthalten aber oft mehr Informationen, als Lernende vermuten.</p>
         <p><span class="label">Was dabei gelernt werden soll:</span> Die Lernenden sollen verstehen, dass auch Dateien selbst untersucht werden können und dass Metadaten ein echter Informationskanal sind.</p>
+        <p><span class="label">Didaktischer Fokus:</span> Das ist ein guter Anlass, um über Bilder aus Messengern, Social Media und Smartphones zu sprechen. Viele Jugendliche wissen nicht, wie viele Zusatzinformationen Dateien mitbringen können.</p>
         <p><span class="label">Weg zur Flag:</span> Unten auf der Seite wird das Maus-Emoji angeklickt. Danach wird das EXIF-Lab bearbeitet, um die Flag zu erhalten.</p>
       </div>
     </details>
@@ -329,6 +434,7 @@
       <div class="lab-content">
         <p><span class="label">Warum das relevant ist:</span> Browserkonsolen werden von Lernenden meistens gar nicht genutzt. Dieses Lab ist deshalb gut geeignet, um zu zeigen, dass sich dort Informationen finden können, die auf der Seite selbst nicht sichtbar sind.</p>
         <p><span class="label">Was dabei gelernt werden soll:</span> Die Schülerinnen und Schüler sollen die Entwicklerkonsole als Werkzeug kennenlernen und verstehen, dass Fehlermeldungen, Debug-Ausgaben oder unsaubere Implementierungen Informationen preisgeben können.</p>
+        <p><span class="label">Didaktischer Fokus:</span> Hier wird besonders gut sichtbar, dass technische Systeme oft mehr verraten, als ihre Oberfläche vermuten lässt. Genau das macht die Entwicklerwerkzeuge als Lerninstrument so wertvoll.</p>
         <p><span class="label">Weg zur Flag:</span> Im Kontaktformular wird eine Nachricht eingegeben und abgesendet. Anschließend wird das Lab über die Konsole weiterverfolgt.</p>
       </div>
     </details>
@@ -338,6 +444,7 @@
       <div class="lab-content">
         <p><span class="label">Warum das relevant ist:</span> Diese Aufgabe zeigt sehr anschaulich, dass „nicht sichtbar“ nicht dasselbe ist wie „nicht vorhanden“. Elemente können im Frontend ausgeblendet sein, aber trotzdem vollständig im DOM existieren.</p>
         <p><span class="label">Was dabei gelernt werden soll:</span> Die Schülerinnen und Schüler sollen die Entwicklertools gezielt nutzen und verstehen, dass CSS nur die Darstellung verändert, nicht aber den grundsätzlichen Seiteninhalt entfernt.</p>
+        <p><span class="label">Didaktischer Fokus:</span> Das Lab eignet sich sehr gut, um die Grenze zwischen Design und Funktion zu thematisieren. Wer nur auf das sichtbare Layout schaut, versteht viele Sicherheitsprobleme nicht vollständig.</p>
         <p><span class="label">Weg zur Flag:</span> Über Rechtsklick und „Untersuchen“ wird im Elements-Bereich das versteckte Element gesucht. Im Style-Bereich wird beim <code>mysteryButton</code> die Einstellung <code>display: none</code> so verändert, dass der Button sichtbar wird. Nach dem Klick erscheint die Flag.</p>
       </div>
     </details>

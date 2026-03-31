@@ -8,19 +8,33 @@
   <style>
     body { margin:0; padding:24px; }
     .container { max-width: 860px; margin: 0 auto; padding: 28px; }
+    .lead { color:#587089; line-height:1.75; }
+    .hint-box { margin: 18px 0; padding: 18px; }
+    ul { margin: 12px 0 0 18px; }
+    li { margin-bottom: 8px; }
+    @media (max-width: 640px){
+      body { padding: 14px; }
+      .container { padding: 18px; }
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>image_of_funny_cat.jpg.exe</h1>
-    <p>
-      Kleiner Sicherheits-Hinweis: Achte immer auf die komplette Dateiendung.
-      Eine Datei kann auf den ersten Blick wie ein harmloses Bild aussehen und
-      am Ende trotzdem eine ausführbare Datei sein.
+    <p class="lead">
+      Genau das ist die Idee: Auf den ersten Blick wirkt der Dateiname wie ein harmloses Bild. Liest man ihn vollständig, steckt am Ende aber eine ausführbare Datei. Gerade auf kleinen Displays oder bei wenig Aufmerksamkeit übersieht man so etwas schnell.
     </p>
-    <div class="info">
-      <strong>Merksatz:</strong><br>
-      Nicht nur den Dateinamen lesen – immer die volle Endung prüfen.
+    <div class="info hint-box">
+      <strong>Didaktischer Hinweis:</strong><br>
+      Die Seite startet bewusst keinen Download. Sie soll den Blick für Dateiendungen schärfen, ohne dabei selbst etwas Riskantes auszulösen.
+    </div>
+    <div class="task hint-box">
+      <strong>Merksätze:</strong>
+      <ul>
+        <li>Nicht nur den Anfang eines Dateinamens lesen, sondern immer die vollständige Endung prüfen.</li>
+        <li>Ein bekannt wirkender Dateiname macht eine Datei noch nicht vertrauenswürdig.</li>
+        <li>Besonders Anhänge aus Mails, Chats oder unbekannten Quellen verdienen einen zweiten Blick.</li>
+      </ul>
     </div>
     <a class="btn" href="../assets.html">Zurück zur Asset-Liste</a>
   </div>

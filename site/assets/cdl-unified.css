@@ -833,3 +833,128 @@ img, iframe, video, canvas{
     margin:0 0 16px 0 !important;
   }
 }
+
+
+/* --- layout polish / responsiveness --- */
+body{
+  line-height:1.6;
+  overflow-wrap:anywhere;
+}
+
+img,
+video,
+iframe{
+  max-width:100%;
+  height:auto;
+}
+
+.container,
+.quiz-container{
+  width:min(100%, 1200px);
+  box-sizing:border-box;
+}
+
+.task,
+.email,
+.learn,
+.info,
+.flag,
+.achievement,
+.result-box,
+.output-box,
+.demo-box,
+.simulation-box,
+.card,
+.box,
+.panel,
+.warning,
+.notice,
+.instructions,
+.quiz-question{
+  overflow-wrap:anywhere;
+}
+
+.flex-container,
+.category-columns{
+  width:100%;
+  box-sizing:border-box;
+}
+
+.category-panel > summary,
+details.lab-entry > summary{
+  word-break:break-word;
+}
+
+@media (max-width: 900px){
+  nav{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+  }
+
+  nav a{
+    margin:0 !important;
+  }
+
+  #progress-bar{
+    width:100% !important;
+  }
+}
+
+@media (max-width: 700px){
+  body{
+    font-size:16px;
+  }
+
+  header{
+    padding:14px 12px !important;
+  }
+
+  .container,
+  .quiz-container{
+    width:100%;
+    margin:14px auto !important;
+    padding:16px !important;
+  }
+
+  .flex-container,
+  .category-columns{
+    flex-direction:column;
+    gap:16px;
+  }
+
+  .column{
+    min-width:0 !important;
+  }
+
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr{
+    display:block;
+  }
+
+  table thead{
+    display:none;
+  }
+
+  table tr{
+    margin-bottom:12px;
+    border:1px solid rgba(19,61,93,.10);
+    border-radius:12px;
+    overflow:hidden;
+    background:#fff;
+  }
+
+  table td{
+    border:none;
+    border-bottom:1px solid rgba(19,61,93,.08);
+  }
+
+  table td:last-child{
+    border-bottom:none;
+  }
+}

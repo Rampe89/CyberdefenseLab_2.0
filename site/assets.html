@@ -4,75 +4,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assets · CyberDefense Lab</title>
+    <link rel="stylesheet" href="assets/cdl-unified.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
             margin: 0;
             padding: 20px;
         }
         .container {
-            max-width: 800px;
+            max-width: 860px;
             margin: 0 auto;
-            background: #fff;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 24px;
         }
         h1 {
             text-align: center;
-            color: #007bff;
-            margin-bottom: 20px;
+            margin-bottom: 8px;
+        }
+        .intro {
+            text-align: center;
+            color: #587089;
+            margin: 0 0 20px 0;
+            line-height: 1.7;
         }
         .file-list {
-            list-style-type: none;
+            list-style: none;
             padding: 0;
             margin: 0;
+            overflow: hidden;
         }
         .file-list li {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 15px;
-            border-bottom: 1px solid #ddd;
+            gap: 16px;
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(19,61,93,.10);
         }
         .file-list li:last-child {
             border-bottom: none;
         }
         .file-list a {
             text-decoration: none;
-            color: #007bff;
+            font-weight: 600;
+            word-break: break-word;
         }
-        .file-list a:hover {
-            text-decoration: underline;
+        .file-size {
+            color: #587089;
+            font-size: 0.95rem;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .preview {
+            padding: 0;
+            display: block;
+        }
+        .preview img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+        }
+        @media (max-width: 640px) {
+            body {
+                padding: 14px;
+            }
+            .container {
+                padding: 18px;
+            }
+            .file-list li {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+            .file-size {
+                white-space: normal;
+            }
         }
     </style>
-
-  <link rel="stylesheet" href="assets/cdl-unified.css">
 </head>
 <body>
     <div class="container">
         <h1>Asset-Liste</h1>
-        <ul class="file-list">
-            <li>
-                <img src="assets/images/hackerman.jpg" alt="TOP SECR3T" style="max-width:100%;border-radius:8px;display:block;">
+        <p class="intro">
+            Ein kleiner Dateibereich zum Stöbern. Nicht alles hier ist so harmlos oder so wichtig, wie es auf den ersten Blick wirkt.
+        </p>
+        <ul class="file-list task">
+            <li class="preview">
+                <img src="assets/images/hackerman.jpg" alt="TOP SECR3T">
             </li>
             <li>
                 <a href="assets/image_of_funny_cat.jpg.exe.html" target="_self">image_of_funny_cat.jpg.exe</a>
-                <span>0.8 MB</span>
+                <span class="file-size">0.8 MB</span>
             </li>
             <li>
                 <a href="assets/passwords.pdf" target="_blank">passwords.pdf</a>
-                <span>1.0 MB</span>
+                <span class="file-size">1.0 MB</span>
             </li>
-
             <li>
                 <a href="assets/teacher_access_notes.pdf" target="_blank">teacher_access_notes.pdf</a>
-                <span>0.9 MB</span>
+                <span class="file-size">0.9 MB</span>
             </li>
             <li>
                 <a href="robot.html" target="_self">fsociety.dat</a>
-                <span>1.337 MB</span>
+                <span class="file-size">1.337 MB</span>
             </li>
         </ul>
     </div>
