@@ -1,44 +1,27 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Versteckte Elemente</title>
-  <link rel="stylesheet" href="assets/cdl-unified.css">
-  <style>
-    body { margin:0; padding:24px; }
-    .container { max-width: 900px; margin:0 auto; padding:28px; }
-    #hiddenFlag {
-      display:none;
-      margin-top:16px;
-      padding:12px;
-      border-radius:8px;
-      background:#f9f9f9;
-      color:#333;
-      border:1px solid #ddd;
-      font-family:"Courier New", monospace;
-    }
-    #mysteryButton {
-      display:none;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Versteckter Button</title>
 </head>
 <body>
-  <div class="container">
-    <h1>Versteckte Elemente</h1>
-    <p>
-      Manche Inhalte sind nur per CSS verborgen. Sie sind deshalb aber noch lange nicht aus dem Dokument verschwunden.
-    </p>
 
-    <div class="info">
-      <strong>Geheime Aufgabe:</strong> Gibt es auf dieser Seite vielleicht ein verstecktes Element,
-      das im Browser zwar existiert, aber nicht sichtbar ist?
-    </div>
+<p>Irgendetwas fehlt hier... 🤔</p>
+<p style="font-size: 0.9em; color: #888;">
+Tipp: Nur weil du etwas nicht siehst, heißt das nicht, dass es nicht da ist.
+</p>
 
-    <button class="btn" id="mysteryButton" onclick="document.getElementById('hiddenFlag').style.display='block'">Geheime Aktion</button>
-    <div id="hiddenFlag">{CSS_CAN_HIDE_BUT_NOT_PROTECT}</div>
+<button id="secret-btn" style="display:none;" onclick="revealFlag()">
+Klick mich
+</button>
 
-    <a class="btn" href="index.html">Zurück zur Startseite</a>
-  </div>
+<p id="flag-output" style="margin-top: 10px; font-weight: bold;"></p>
+
+<script>
+function revealFlag() {
+    document.getElementById("flag-output").innerText = "FLAG{CSS_HIDDEN_BUTTON}";
+}
+</script>
+
 </body>
 </html>
