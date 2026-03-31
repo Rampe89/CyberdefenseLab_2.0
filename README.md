@@ -29,9 +29,3 @@ Du kannst den Inhalt aus `site/` auch direkt mit einem einfachen Static Server t
 ## Hinweis
 
 Die Demo bleibt bewusst statisch. Serverfunktionen aus dem alten Node-Setup wurden nicht übernommen, weil das Projekt inhaltlich als statische Lern- und Demo-Seite funktioniert.
-
-
-## Ergänzungen
-
-- `site/css-button.html`: Secret-Lab mit per CSS verstecktem Button
-- `site/lehrerkommentar.html`: kurze Übersicht für Lehrkräfte, wie die Flags gefunden werden

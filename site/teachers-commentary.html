@@ -8,22 +8,48 @@
   <style>
     body { margin:0; padding:24px; }
     .container { max-width: 980px; margin:0 auto; padding:28px; }
+    h2 { margin-top: 28px; }
     ul { line-height:1.7; }
+    li { margin-bottom: 8px; }
+    .note { opacity: 0.9; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Didaktischer Kommentar für Lehrkräfte</h1>
-    <p>Dieser Bereich ist als geschützter Zusatzbereich für Lehrkräfte gedacht.</p>
-    <div class="info">
-      <strong>Geplant für diesen Bereich:</strong>
-      <ul>
-        <li>didaktische Einordnung jedes Labs</li>
-        <li>typische Stolperstellen bei Lernenden</li>
-        <li>mögliche Unterrichtseinstiege</li>
-        <li>Reflexionsfragen und Transfer</li>
-      </ul>
-    </div>
+    <p>Kurze Übersicht, wie die Lernenden an die jeweiligen Flags kommen. Die Hinweise sind bewusst knapp gehalten.</p>
+
+    <h2>Grundlagen</h2>
+    <ul>
+      <li><strong>Brute-Force-Simulator:</strong> Passwort im Simulator herausfinden und die dort angezeigte Flag übernehmen.</li>
+      <li><strong>Quelltext &amp; Kommentare:</strong> Seitenquelltext öffnen und den HTML-Kommentar mit der Flag finden.</li>
+      <li><strong>URL-Parameter:</strong> Den Parameter in der Adresszeile verändern und die Reaktion der Seite beobachten.</li>
+      <li><strong>robots.txt Recon:</strong> Die <code>robots.txt</code> lesen, dem versteckten Pfad folgen und dort die Flag finden.</li>
+      <li><strong>Social Engineering:</strong> Hinweise im Dialog/Material auswerten und die richtige Flag aus dem Szenario entnehmen.</li>
+      <li><strong>Passwortmanager-Lab:</strong> Das Material lesen und die Flag aus der korrekten Sicherheitslösung ableiten.</li>
+    </ul>
+
+    <h2>Analyse &amp; Angriffe</h2>
+    <ul>
+      <li><strong>Phishing-Quiz:</strong> Phishing-Nachrichten korrekt erkennen; danach wird die Flag sichtbar.</li>
+      <li><strong>Updates und Patches:</strong> Die Schwachstelle verstehen und die Seite bis zur Flag durchklicken.</li>
+      <li><strong>Gobuster-Simulation:</strong> Verzeichnisse durchprobieren bzw. Hinweise im Lab nutzen, bis die versteckte Seite mit Flag gefunden wird.</li>
+      <li><strong>Hashing Lab:</strong> Beide Hashes lösen; eine Flag stammt aus dem unsicheren Hash, die zweite aus dem Thema Salt.</li>
+      <li><strong>Cookies:</strong> Cookies akzeptieren, in den Entwicklertools das gesetzte Cookie ansehen und den Wert übernehmen.</li>
+    </ul>
+
+    <h2>Erweiterte Labs &amp; Secret Flags</h2>
+    <ul>
+      <li><strong>SQL Injection:</strong> Eingaben so verändern, dass die simulierte Abfrage kippt; die Flag erscheint im Lab.</li>
+      <li><strong>SYS_ADMIN:</strong> Über das Admin-Lab bzw. dessen Hinweise zur Admin-Flag gelangen.</li>
+      <li><strong>Mr. Robot:</strong> Über das Robot-Lab bzw. die referenzierte versteckte Spur die Flag finden.</li>
+      <li><strong>Mäusejäger:</strong> In der Fred-/Metadaten-Spur arbeiten und dort die versteckte Flag entdecken.</li>
+      <li><strong>Console Leak:</strong> Entwicklertools öffnen und in der Browser-Konsole nachsehen.</li>
+      <li><strong>Versteckter Button:</strong> Auf der Seite <code>hidden-button.html</code> das per CSS versteckte Element im DOM finden, sichtbar machen oder direkt auslösen.</li>
+    </ul>
+
+    <p class="note"><strong>Hinweis:</strong> Das Ziel ist nicht „Hacken“ im echten Sinn, sondern das bewusste Wahrnehmen typischer Schwachstellen: Quelltext, DOM, Cookies, Parameter, robots.txt, Konsole und ungeprüfte Eingaben.</p>
+
     <a class="btn" href="index.html">Zurück zur Startseite</a>
   </div>
 </body>

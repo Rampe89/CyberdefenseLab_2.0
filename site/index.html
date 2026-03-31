@@ -197,7 +197,52 @@
       font-weight: bold;
       color: #007bff;
     }
+  
+    .category-columns{
+      display:flex;
+      gap:24px;
+      align-items:flex-start;
+      margin-bottom:24px;
+    }
+    .category-panel{
+      margin:0 0 24px 0;
+      width:100%;
+    }
+    .category-panel > summary{
+      list-style:none;
+      cursor:pointer;
+      font-weight:800;
+      font-size:1.15rem;
+      padding:14px 16px;
+      border-radius:14px;
+      margin-bottom:14px;
+      background:#edf6ff;
+      border:1px solid rgba(19,61,93,.10);
+      color:#0f2c47;
+      user-select:none;
+    }
+    .category-panel > summary::-webkit-details-marker{ display:none; }
+    .category-panel[open] > summary{
+      margin-bottom:18px;
+    }
+    .category-full{
+      width:100%;
+    }
+    .lock-box{
+      margin-bottom:18px;
+    }
+    .lock-box input{
+      margin-bottom:10px;
+    }
+    @media (max-width: 900px){
+      .category-columns{
+        flex-direction:column;
+      }
+    }
+
   </style>
+
+  <link rel="stylesheet" href="assets/cdl-unified.css">
 </head>
 <body>
   <!-- Header & Navigation -->
@@ -205,7 +250,7 @@
     <h1>CyberDefense Lab 🧪</h1>
     <nav>
       <a href="about.html">Über das Lab</a>
-      <a href="geheim.html">Geheime Flags</a>
+      <a href="geheim.html">Geheime Flags</a> <a href="hidden-button.html" style="opacity:.02;pointer-events:auto;">.</a>
     </nav>
   </header>
 
@@ -216,121 +261,166 @@
     </p>
 
     <!-- Fortschrittsanzeige & Fortschrittsbalken -->
-    <div id="progress">Fortschritt: 0/14 Flags gesammelt</div>
+    <div id="progress">Fortschritt: 0/17 Flags gesammelt</div>
     <div id="progress-bar">
       <div id="progress-fill"></div>
     </div>
-
     <!-- Aufgabenbereiche -->
-    <div class="flex-container">
-      <!-- Öffentliche Aufgaben -->
-      <div class="column" id="open-tasks">
-        <h2>Offene Aufgaben</h2>
-        <!-- Brute-Force-Simulator -->
+    <div class="flex-container category-columns">
+      <details class="column category-panel" id="grundlagen-panel" open>
+        <summary>🟢 Grundlagen</summary>
+        <p class="top-info">Niedrigschwellige Einstiege in typische Web-Prinzipien. Hier startet auch die Spur zum geschützten Bereich.</p>
+
         <div class="task">
           <h3>Brute-Force-Simulator</h3>
           <p>Simuliere einen Brute-Force-Angriff und lerne, wie schwache Passwörter ausgenutzt werden können.</p>
           <a href="bruteforce.html" class="btn">Aufgabe öffnen</a>
           <input type="text" id="flag1" placeholder="{Flag eingeben}"/>
-          <button class="btn" onclick="checkFlag(1, 'e0JSVVRFX0ZPUkNFX0FETUlOX1NVQ0NFU1N9', '🔓 Passwortknacker')">
-            Prüfen
-          </button>
+          <button class="btn" onclick="checkFlag(1, 'e0JSVVRFX0ZPUkNFX0FETUlOX1NVQ0NFU1N9', '🔓 Passwortknacker')">Prüfen</button>
         </div>
-        <!-- Phishing-Quiz -->
+
         <div class="task">
-          <h3>Phishing-Quiz</h3>
-          <p>Identifiziere Phishing-Mails und lerne, wie du echte von gefälschten Nachrichten unterscheidest.</p>
-          <a href="phishingquiz.html" class="btn">Aufgabe öffnen</a>
-          <input type="text" id="flag2" placeholder="{Flag eingeben}"/>
-          <button class="btn" onclick="checkFlag(2, 'e0NBVUdIVF9BTExfVEhFX1BISVNIfQ==', '🎣 Phishing-Profi')">
-            Prüfen
-          </button>
+          <h3>Quelltext & Kommentare</h3>
+          <p>Ein geführter Einstieg in HTML-Kommentare: Verstehe den Unterschied zwischen sichtbar im Browser und trotzdem im Quelltext vorhanden.</p>
+          <a href="comments-lab.html" class="btn">Aufgabe öffnen</a>
+          <input type="text" id="flag15" placeholder="{Flag eingeben}"/>
+          <button class="btn" onclick="checkFlag(15, 'e1NPVVJDRV9DT0RFX0lTX1NUSUxMX0NPREV9', '📝 Kommentar-Leser')">Prüfen</button>
         </div>
-        <!-- Social-Engineering-Simulation -->
+
+        <div class="task">
+          <h3>URL-Parameter</h3>
+          <p>Ein geführter Einstieg in URL-Parameter: Lerne, dass Werte auch direkt aus der Adresszeile kommen können.</p>
+          <a href="parameter-lab.html?role=user" class="btn">Aufgabe öffnen</a>
+          <input type="text" id="flag16" placeholder="{Flag eingeben}"/>
+          <button class="btn" onclick="checkFlag(16, 'e1VSTF9QQVJBTUVURVJTX0FSRV9JTlBVVH0=', '🔗 Parameter-Tuner')">Prüfen</button>
+        </div>
+
+        <div class="task">
+          <h3>robots.txt Recon</h3>
+          <p>Finde heraus, warum „Disallow“ kein echter Schutz ist, und folge der Spur zu einer versteckten Seite.</p>
+          <a href="robots-lab.html" class="btn">Aufgabe öffnen</a>
+          <input type="text" id="flag14" placeholder="{Flag eingeben}"/>
+          <button class="btn" onclick="checkFlag(14, 'e1JPQk9UU19BUkVfSElOVFNfTk9UX1NISUVMRHN9', '🤖 robots.txt Scout')">Prüfen</button>
+        </div>
+
         <div class="task">
           <h3>Social-Engineering-Simulation</h3>
-          <p>Lerne, wie Angreifer durch Täuschung Informationen gewinnen und wie du dich dagegen schützt.</p>
+          <p>Lerne, wie Vertrauen ausgenutzt wird, und trainiere deinen Blick für Manipulation.</p>
           <a href="social-engineering.html" class="btn">Aufgabe öffnen</a>
           <input type="text" id="flag3" placeholder="{Flag eingeben}"/>
-          <button class="btn" onclick="checkFlag(3, 'e0RFRkVOREVSX09GX1RSVVNUfQ==', '🤝 Abwehrstratege')">
-            Prüfen
-          </button>
+          <button class="btn" onclick="checkFlag(3, 'e0RFRkVOREVSX09GX1RSVVNUfQ==', '🧠 Social-Engineer-Scout')">Prüfen</button>
         </div>
-        <!-- Passwortmanager-Lab -->
+
         <div class="task">
           <h3>Passwortmanager-Lab</h3>
-          <p>Lerne, wie ein Passwortmanager deine Sicherheit erhöht.</p>
+          <p>Erfahre, warum starke, einzigartige Passwörter wichtig sind und was Passwortmanager leisten.</p>
           <a href="password-simulator.html" class="btn">Aufgabe öffnen</a>
           <input type="text" id="flag4" placeholder="{Flag eingeben}"/>
-          <button class="btn" onclick="checkFlag(4, 'e1VOQlJFQUtBQkxFX1BBU1NXT1JEfQ==', '🔑 Schlüsselmeister')">
-            Prüfen
-          </button>
+          <button class="btn" onclick="checkFlag(4, 'e1VOQlJFQUtBQkxFX1BBU1NXT1JEfQ==', '🔑 Schlüsselmeister')">Prüfen</button>
         </div>
-      </div>
+      </details>
 
-      <!-- Passwortgeschützte Aufgaben (unsichtbar bis Freischaltung) -->
-      <div class="column">
-        <h2 id="pw-title">Passwortgeschützter Bereich</h2>
-        <div id="password-container">
-          <p>Gib das User-Passwort ein, um fortgeschrittene Aufgaben freizuschalten:</p>
-          <input type="password" id="lab-password" placeholder="User-Passwort eingeben"/>
-          <button class="btn" onclick="unlockTasks()">Freischalten</button>
-          <p class="error-message hidden" id="error-message">Wenn du das Passwort nicht selbst herausfindest, bist du noch nicht bereit!</p>
+      <details class="column category-panel" id="analysis-panel" open>
+        <summary>🟡 Analyse & Angriffe 🔒</summary>
+        <p class="top-info">Dieser Bereich wird per Passwort freigeschaltet. Das Passwort soll über das Brute-Force-Lab erschlossen werden.</p>
+
+        <div id="analysis-password-container" class="lock-box">
+          <p>Gib das Passwort ein, um diese Kategorie freizuschalten:</p>
+          <input type="password" id="analysis-password" placeholder="Passwort eingeben"/>
+          <button class="btn" onclick="unlockAnalysis()">Freischalten</button>
+          <p class="error-message hidden" id="analysis-error-message">Das passt noch nicht.</p>
         </div>
-        <div id="protected-tasks" class="hidden">
-          <!-- Updates & Patches -->
+
+        <div id="analysis-tasks" class="hidden">
           <div class="task">
-            <h3>Updates und Patches 🔒</h3>
+            <h3>Phishing-Quiz</h3>
+            <p>Identifiziere Phishing-Mails und lerne, wie du echte von gefälschten Nachrichten unterscheidest.</p>
+            <a href="phishingquiz.html" class="btn">Aufgabe öffnen</a>
+            <input type="text" id="flag2" placeholder="{Flag eingeben}"/>
+            <button class="btn" onclick="checkFlag(2, 'e0NBVUdIVF9BTExfVEhFX1BISVNIfQ==', '🎣 Phishing-Profi')">Prüfen</button>
+          </div>
+
+          <div class="task">
+            <h3>Updates und Patches</h3>
             <p>Erfahre, warum es wichtig ist, Systeme regelmäßig zu patchen, und teste eine Schwachstelle.</p>
             <a href="updates.html" class="btn">Aufgabe öffnen</a>
             <input type="text" id="flag5" placeholder="{Flag eingeben}"/>
-            <button class="btn" onclick="checkFlag(5, 'e1BBVENIX1RIRV9QQVRDSH0=', '🛡️ Schildwache')">
-              Prüfen
-            </button>
+            <button class="btn" onclick="checkFlag(5, 'e1BBVENIX1RIRV9QQVRDSH0=', '🛡️ Patch-Pilot')">Prüfen</button>
           </div>
-          <!-- Gobuster-Simulation -->
+
           <div class="task">
             <h3>Gobuster-Simulation</h3>
             <p>Finde versteckte Verzeichnisse auf einem Server durch einen Directory Busting Scan.</p>
             <a href="dirbuster.html" class="btn">Aufgabe öffnen</a>
             <input type="text" id="flag6" placeholder="{Flag eingeben}"/>
-            <button class="btn" onclick="checkFlag(6, 'e0ZPVU5EX1NFQ1JFVF9GTEFHfQ==', '🔍 Directory Detective')">
-              Prüfen
-            </button>
+            <button class="btn" onclick="checkFlag(6, 'e0ZPVU5EX1NFQ1JFVF9GTEFHfQ==', '🔍 Directory Detective')">Prüfen</button>
           </div>
-          <!-- SQL Injection Lab -->
-          <div class="task">
-            <h3>SQL Injection Lab</h3>
-            <p>Hier siehst du an einer kleinen Datenbanksimulation, wie eine manipulierte Eingabe wirkt und wie eine sichere Abfrage diese Wirkung stoppt.</p>
-            <a href="sql.html" class="btn">Aufgabe öffnen</a>
-            <input type="text" id="flag13" placeholder="{Flag eingeben}"/>
-            <button class="btn" onclick="checkFlag(13, 'e1lPVURJRFdIQVQ/fQ==', '💉 SQL Injector')">
-              Prüfen
-            </button>
-          </div>
-          <!-- Hashing Lab (zwei Flags) -->
+
           <div class="task">
             <h3>Hashing Lab</h3>
             <p>Entschlüssele Hashes mit Rainbow Tables und lerne, wie Salt die Sicherheit erhöht.</p>
             <a href="hash.html" class="btn">Aufgabe öffnen</a>
-            <p>Gib beide Flags ein:</p>
+            <p class="note">Gib beide Flags ein:</p>
             <input type="text" id="flag7a" placeholder="{Flag 1}"/>
             <input type="text" id="flag7b" placeholder="{Flag 2}"/>
             <button class="btn" onclick="checkHashFlags()">Prüfen</button>
           </div>
-          <!-- Cookie-Flag -->
+
           <div class="task">
             <h3>Finde die versteckte Flag in den Cookies 🍪</h3>
+            <p>Suche in den Browser-Cookies nach dem Hinweis.</p>
             <a href="cookies.html" class="btn">Info-Material</a>
-            <p>Suche in den Browser-Cookies nach dem Hinweis:</p>
             <input type="text" id="flag8" placeholder="{Flag eingeben}"/>
             <button class="btn" onclick="checkCookie()">Prüfen</button>
           </div>
-        </div>
-      </div>
+</div>
+      </details>
     </div>
 
+    <details class="category-panel category-full" id="advanced-panel" open>
+      <summary>🔒 Erweiterte Labs</summary>
+      <p class="top-info">Hier liegt das angeleitete SQL-Injection-Lab. Der Zugangshinweis liegt nicht direkt auf dieser Startseite.</p>
+
+      <div id="advanced-password-container" class="lock-box">
+        <p>Gib das Passwort für die erweiterten Labs ein:</p>
+        <input type="password" id="advanced-password" placeholder="Passwort eingeben"/>
+        <button class="btn" onclick="unlockAdvanced()">Freischalten</button>
+        <p class="error-message hidden" id="advanced-error-message">Das passt noch nicht.</p>
+      </div>
+
+      <div id="advanced-tasks" class="hidden">
+        <div class="task">
+          <h3>SQL Injection</h3>
+          <p>Beobachte, wie sich eine Abfrage verändert, wenn Eingaben ungeprüft übernommen werden. Dieses Lab ist bewusst stärker angeleitet.</p>
+          <a href="sql-lab.html" class="btn">Aufgabe öffnen</a>
+          <input type="text" id="flag13" placeholder="{Flag eingeben}"/>
+          <button class="btn" onclick="checkFlag(13, 'e0lOUFVUX0NBTl9DSEFOR0VfVEhFX1FVRVJZfQ==', '💉 SQL Injector')">Prüfen</button>
+        </div>
+      </div>
+    </details>
+
+    <details class="category-panel category-full" id="teacher-panel" open>
+      <summary>🔒 Didaktischer Kommentar für Lehrkräfte</summary>
+      <p class="top-info">Dieser Bereich ist separat per Lehrkraft-Passwort geschützt.</p>
+
+      <div id="teacher-password-container" class="lock-box">
+        <p>Gib das Lehrkräfte-Passwort ein:</p>
+        <input type="password" id="teacher-password" placeholder="Lehrkräfte-Passwort eingeben"/>
+        <button class="btn" onclick="unlockTeacher()">Freischalten</button>
+        <p class="error-message hidden" id="teacher-error-message">Das passt noch nicht.</p>
+      </div>
+
+      <div id="teacher-content" class="hidden">
+        <div class="task">
+          <h3>Didaktischer Kommentar</h3>
+          <p>Zusätzlicher Bereich mit didaktischer Einordnung, Stolperstellen und Unterrichtsperspektive.</p>
+          <a href="teachers-commentary.html" class="btn">Bereich öffnen</a>
+        </div>
+      </div>
+    </details>
+
     <!-- Ausklappbarer Bereich für geheime Flags -->
+
     <div id="secret-flags-container">
       <h2 id="secret-header">Geheime Flags <span id="secret-toggle">[+]</span></h2>
       <div id="secret-flags">
@@ -370,16 +460,17 @@
             Prüfen
           </button>
         </div>
+      
         <!-- Versteckter Button -->
         <div class="task">
           <h3>Versteckter Button</h3>
           <p>Gib die Flag des per CSS versteckten Buttons ein.</p>
-          <a href="css-button.html" class="btn">Aufgabe öffnen</a>
-          <input type="text" id="flag14" placeholder="{Flag eingeben}"/>
-          <button class="btn" onclick="checkFlag(14, 'e0NTU19ISURERV9CVVRUT05fRk9VTkR9', '🫥 CSS-Spürnase')">
+          <input type="text" id="flag17" placeholder="{Flag eingeben}"/>
+          <button class="btn" onclick="checkFlag(17, 'e0NTU19DQU5fSElERV9CVVRfTk9UX1BST1RFQ1R9', '👻 Versteckter Button')">
             Prüfen
           </button>
         </div>
+
       </div>
     </div>
 
@@ -411,32 +502,33 @@
     /***********************************
      * Globale Variablen & Konfiguration
      ***********************************/
-    // Insgesamt 14 Flags (Index 0-13)
-    const FLAG_COUNT = 14;
-    let collectedFlags = JSON.parse(localStorage.getItem("collectedFlags")) || [];
-    if (!Array.isArray(collectedFlags)) collectedFlags = [];
-    collectedFlags = Array.from({ length: FLAG_COUNT }, (_, i) => Boolean(collectedFlags[i]));
+    // Insgesamt 17 Flags (Index 0-16)
+    let collectedFlags = JSON.parse(localStorage.getItem("collectedFlags")) || 
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
     // Base64-String für das Cookie {COOKIES_REVEAL_SECRETS}
     const cookieEncoded = "e0NPT0tJRVNfUkVWRUFMX1NFQ1JFVFN9";
     // Konfetti soll nur einmal ausgelöst werden
     let confettiShown = false;
-    // Mapping: Flag-Index (1-14) → Achievement-Titel
+    // Mapping: Flag-Index (1-17) -> Achievement-Titel
     const ACHIEVEMENTS = {
-      1: '🔓 Passwortknacker',
-      2: '🎣 Phishing-Profi',
-      3: '🤝 Abwehrstratege',
-      4: '🔑 Schlüsselmeister',
-      5: '🛡️ Schildwache',
-      6: '🔍 Directory Detective',
-      7: '🍲 Let Him Cook + Add A Pinch of Salt',
-      8: '🍪 Cookie-Jäger',
-      9: '👑 SysAdmin',
-      10: '🤖 Mr. Robot',
-      11: '🐭 Mäusejäger',
-      12: '💬 Console Leak',
-      13: '💉 SQL Injector',
-      14: '🫥 CSS-Spürnase',
-    };
+  1: '🔓 Passwortknacker',
+  2: '🎣 Phishing-Profi',
+  3: '🧠 Social-Engineer-Scout',
+  4: '🔑 Schlüsselmeister',
+  5: '🛡️ Patch-Pilot',
+  6: '🔍 Directory Detective',
+  7: '🍲 Let Him Cook + Add A Pinch of Salt',
+  8: '🍪 Cookie-Jäger',
+  9: '👑 SysAdmin',
+  10: '🤖 Mr. Robot',
+  11: '🐭 Mäusejäger',
+  12: '💬 Console Leak',
+  13: '💉 SQL Injector',
+  14: '🤖 robots.txt Scout',
+  15: '📝 Kommentar-Leser',
+  16: '🔗 Parameter-Tuner',
+  17: '👻 Versteckter Button',
+};
 
     /*****************************
      * Initialisierung beim Laden
@@ -568,12 +660,44 @@
      * Passwortgeschützte Aufgaben
      ****************************/
     function unlockTasks() {
-      const inputPassword = document.getElementById("lab-password").value.trim();
-      const correct = atob("dXNlcjEyMw=="); // "user123"
-      const errorMsg = document.getElementById("error-message");
-      const protectedArea = document.getElementById("protected-tasks");
+      unlockAnalysis();
+    }
+
+    function unlockAnalysis() {
+      const inputPassword = document.getElementById("analysis-password").value.trim();
+      const correct = atob("dXNlcjEyMw==");
+      const errorMsg = document.getElementById("analysis-error-message");
+      const protectedArea = document.getElementById("analysis-tasks");
       if (inputPassword === correct) {
-        document.getElementById("password-container").classList.add("hidden");
+        document.getElementById("analysis-password-container").classList.add("hidden");
+        protectedArea.classList.remove("hidden");
+        errorMsg.classList.add("hidden");
+      } else {
+        errorMsg.classList.remove("hidden");
+      }
+    }
+
+    function unlockAdvanced() {
+      const inputPassword = document.getElementById("advanced-password").value.trim();
+      const correct = atob("QXJjaGl2ZURlbHRhMjc=");
+      const errorMsg = document.getElementById("advanced-error-message");
+      const protectedArea = document.getElementById("advanced-tasks");
+      if (inputPassword === correct) {
+        document.getElementById("advanced-password-container").classList.add("hidden");
+        protectedArea.classList.remove("hidden");
+        errorMsg.classList.add("hidden");
+      } else {
+        errorMsg.classList.remove("hidden");
+      }
+    }
+
+    function unlockTeacher() {
+      const inputPassword = document.getElementById("teacher-password").value.trim();
+      const correct = atob("VGVhY2hlcnMxeDE=");
+      const errorMsg = document.getElementById("teacher-error-message");
+      const protectedArea = document.getElementById("teacher-content");
+      if (inputPassword === correct) {
+        document.getElementById("teacher-password-container").classList.add("hidden");
         protectedArea.classList.remove("hidden");
         errorMsg.classList.add("hidden");
       } else {
@@ -586,10 +710,10 @@
      ****************************/
     function updateProgress() {
       const count = collectedFlags.filter(Boolean).length;
-      document.getElementById("progress").textContent = `Fortschritt: ${count}/${FLAG_COUNT} Flags gesammelt`;
-      const percentage = (count / FLAG_COUNT) * 100;
+      document.getElementById("progress").textContent = `Fortschritt: ${count}/17 Flags gesammelt`;
+      const percentage = (count / 17) * 100;
       document.getElementById("progress-fill").style.width = percentage + '%';
-      if (count === FLAG_COUNT && !confettiShown) {
+      if (count === 17 && !confettiShown) {
         confetti();
         confettiShown = true;
         alert("Flag: {Mission_accomplished}");
@@ -600,7 +724,7 @@
       renderAchievementsFromStorage();
     }
     function updateUI() {
-      for (let i = 1; i <= FLAG_COUNT; i++) {
+      for (let i = 1; i <= 17; i++) {
         const el = document.getElementById(`flag${i}`);
         if (el && collectedFlags[i - 1]) {
           el.disabled = true;
@@ -641,6 +765,7 @@
       renderAchievementsFromStorage();
     }
   </script>
+  <script src="assets/stability-patch.js"></script>
 </body>
 </html>
 
