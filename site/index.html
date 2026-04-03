@@ -250,7 +250,8 @@
     <h1>CyberDefense Lab 🧪</h1>
     <nav>
       <a href="about.html">Über das Lab</a>
-      <a href="geheim.html">Geheime Flags</a> <a href="hidden-button.html" style="opacity:.02;pointer-events:auto;">.</a>
+      <a href="geheim.html">Geheime Flags</a>
+      <a href="linux-lab.html">Linux Grundkurs</a> <a href="hidden-button.html" style="opacity:.02;pointer-events:auto;">.</a>
     </nav>
   </header>
 
@@ -261,7 +262,7 @@
     </p>
 
     <!-- Fortschrittsanzeige & Fortschrittsbalken -->
-    <div id="progress">Fortschritt: 0/17 Flags gesammelt</div>
+    <div id="progress">Fortschritt: 0/18 Flags gesammelt</div>
     <div id="progress-bar">
       <div id="progress-fill"></div>
     </div>
@@ -399,6 +400,21 @@
       </div>
     </details>
 
+
+    <details class="category-panel category-full" id="linux-panel" open>
+      <summary>🖥️ Linux Grundkurs</summary>
+      <p class="top-info">Ein zusätzliches Terminal-Lab für grundlegende Linux-Kommandos. Hier geht es weniger um einen einzelnen Angriff als um Werkzeugverständnis und Orientierung im Dateisystem.</p>
+
+      <div class="task">
+        <h3>Linux Basics Lab</h3>
+        <p>Arbeite in einer simulierten Bash, nutze grundlegende Befehle wie <code>ls</code>, <code>cd</code>, <code>pwd</code> und <code>cat</code> und finde am Ende die Flag.</p>
+        <p>Der Mehrwert liegt hier vor allem darin, dass Cybersecurity fast immer auch etwas mit Linux, Servern, Dateistrukturen und Terminalarbeit zu tun hat. Das Lab schafft dafür einen niedrigschwelligen Einstieg.</p>
+        <a href="linux-lab.html" class="btn">Lab öffnen</a>
+        <input type="text" id="flag18" placeholder="{Flag eingeben}"/>
+        <button class="btn" onclick="checkFlag(18, 'e0xJTlVYX0VYUExPUkVSfQ==', '🐧 Linux-Navigator')">Prüfen</button>
+      </div>
+    </details>
+
     <details class="category-panel category-full" id="teacher-panel" open>
       <summary>🔒 Didaktischer Kommentar für Lehrkräfte</summary>
       <p class="top-info">Dieser Bereich ist separat per Lehrkraft-Passwort geschützt.</p>
@@ -505,7 +521,8 @@
      ***********************************/
     // Insgesamt 17 Flags (Index 0-16)
     let collectedFlags = JSON.parse(localStorage.getItem("collectedFlags")) || 
-      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
+    while (collectedFlags.length < 18) collectedFlags.push(false);
     // Base64-String für das Cookie {COOKIES_REVEAL_SECRETS}
     const cookieEncoded = "e0NPT0tJRVNfUkVWRUFMX1NFQ1JFVFN9";
     // Konfetti soll nur einmal ausgelöst werden
@@ -529,6 +546,7 @@
   15: '📝 Kommentar-Leser',
   16: '🔗 Parameter-Tuner',
   17: '👻 Versteckter Button',
+  18: '🐧 Linux-Navigator',
 };
 
     /*****************************
@@ -711,10 +729,10 @@
      ****************************/
     function updateProgress() {
       const count = collectedFlags.filter(Boolean).length;
-      document.getElementById("progress").textContent = `Fortschritt: ${count}/17 Flags gesammelt`;
-      const percentage = (count / 17) * 100;
+      document.getElementById("progress").textContent = `Fortschritt: ${count}/18 Flags gesammelt`;
+      const percentage = (count / 18) * 100;
       document.getElementById("progress-fill").style.width = percentage + '%';
-      if (count === 17 && !confettiShown) {
+      if (count === 18 && !confettiShown) {
         confetti();
         confettiShown = true;
         alert("Flag: {Mission_accomplished}");
@@ -725,7 +743,7 @@
       renderAchievementsFromStorage();
     }
     function updateUI() {
-      for (let i = 1; i <= 17; i++) {
+      for (let i = 1; i <= 18; i++) {
         const el = document.getElementById(`flag${i}`);
         if (el && collectedFlags[i - 1]) {
           el.disabled = true;

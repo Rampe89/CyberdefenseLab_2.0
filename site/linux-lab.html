@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linux Grundkurs</title>
+  <link rel="stylesheet" href="assets/cdl-unified.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      background: linear-gradient(135deg, #2c3e50, #4ca1af);
+    }
+    header {
+      background: rgba(31, 44, 56, 0.8);
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+    header h1 { margin: 0; color: #f0f0f0; }
+    nav { margin-top: 10px; }
+    nav a { color: #ddd; margin: 0 10px; text-decoration: none; }
+    nav a:hover { color: #fff; text-decoration: underline; }
+    .page-wrap {
+      max-width: 1200px;
+      margin: 24px auto;
+      background: #fff;
+      color: #333;
+      border-radius: 8px;
+      padding: 24px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .intro { margin-bottom: 20px; }
+    .intro h2 { color: #007bff; margin-top: 0; }
+    .layout {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+    .terminal-box, .legend-box, .hint-box {
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 18px;
+      margin-bottom: 20px;
+    }
+    .terminal-box h3, .legend-box h3, .hint-box h3 {
+      margin-top: 0;
+      color: #007bff;
+    }
+    .terminal {
+      background: #07131e;
+      color: #9ff59f;
+      border-radius: 10px;
+      min-height: 420px;
+      max-height: 520px;
+      overflow-y: auto;
+      padding: 16px;
+      font-family: Consolas, Monaco, monospace;
+      box-shadow: inset 0 0 0 1px rgba(124,227,255,.12);
+    }
+    .line { margin: 0 0 8px 0; white-space: pre-wrap; word-break: break-word; }
+    .prompt { color: #7ce3ff; }
+    .terminal-input {
+      background: transparent !important;
+      border: none !important;
+      outline: none;
+      color: #9ff59f !important;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 1rem;
+      width: calc(100% - 200px);
+      box-shadow: none !important;
+      padding: 0 !important;
+    }
+    .btn {
+      padding: 8px 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    .flag-box {
+      margin-top: 16px;
+      padding: 14px;
+      background: #eef6ff;
+      border: 1px solid #cddff6;
+      border-radius: 8px;
+    }
+    .flag-box label { display:block; margin-bottom:8px; font-weight:bold; color:#0f2c47; }
+    .flag-box input[type="text"] { width:100%; box-sizing:border-box; }
+    code { background:#edf6ff; padding:2px 6px; border-radius:4px; }
+    ul { padding-left: 20px; }
+    footer { text-align:center; margin:20px 0; color:#d0deec; font-size:14px; }
+    footer a { color:#fff; text-decoration:none; }
+    footer a:hover { text-decoration:underline; }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CyberDefense Lab 🧪</h1>
+    <nav>
+      <a href="index.html">Startseite</a>
+      <a href="about.html">Über das Lab</a>
+      <a href="geheim.html">Geheime Flags</a>
+      <a href="linux-lab.html">Linux Grundkurs</a>
+    </nav>
+  </header>
+
+  <div class="page-wrap">
+    <div class="intro">
+      <h2>Linux Grundkurs – Navigation im Terminal</h2>
+      <p>
+        Dieses Zusatz-Lab setzt einen anderen Schwerpunkt als die klassischen Web-Labs. Hier geht es nicht um einen einzelnen Angriff,
+        sondern um ein grundlegendes Werkzeugverständnis. Wer sich mit Cybersecurity beschäftigt, stößt sehr schnell auf Linux-Systeme,
+        Verzeichnisse, Konfigurationsdateien und die Arbeit im Terminal. Gerade deshalb ist es sinnvoll, dass die Schülerinnen und Schüler
+        zumindest die Grundlogik von <code>ls</code>, <code>cd</code>, <code>pwd</code> und <code>cat</code> einmal praktisch erleben.
+      </p>
+      <p>
+        Das Lab ist bewusst simuliert. Es geht nicht darum, ein echtes System zu bedienen, sondern ein erstes Gefühl dafür zu entwickeln,
+        wie man sich in einer Dateistruktur bewegt, Hinweise liest und Schritt für Schritt eine gesuchte Datei findet.
+      </p>
+    </div>
+
+    <div class="layout">
+      <div>
+        <div class="terminal-box">
+          <h3>Fake Bash</h3>
+          <div class="terminal" id="terminal"></div>
+          <div class="flag-box">
+            <label for="linux-flag">Flag eingeben</label>
+            <input type="text" id="linux-flag" placeholder="{Flag eingeben}">
+            <button class="btn" onclick="checkLinuxFlag()">Prüfen</button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="legend-box">
+          <h3>Legende</h3>
+          <ul>
+            <li><code>ls</code> → Inhalte anzeigen</li>
+            <li><code>ls -a</code> → auch versteckte Einträge anzeigen</li>
+            <li><code>cd NAME</code> → Verzeichnis wechseln</li>
+            <li><code>cd ..</code> → eine Ebene zurück</li>
+            <li><code>pwd</code> → aktuellen Pfad anzeigen</li>
+            <li><code>cat DATEI</code> → Dateiinhalt anzeigen</li>
+          </ul>
+        </div>
+
+        <div class="hint-box">
+          <h3>Hinweise</h3>
+          <p>Das Ziel ist nicht, viele Befehle zu kennen, sondern die Logik zu verstehen.</p>
+          <p>Nicht alles ist sofort sichtbar. Schau deshalb genau hin und lies Hinweise in Dateien wirklich mit.</p>
+          <p>Ein paar kleine Easter Eggs gibt es auch. Sie helfen nicht direkt, sorgen aber hoffentlich für ein kurzes Grinsen.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Lizenziert unter der MIT-Lizenz von Ramon Berghorn, 2025 | Bildungszwecke |
+    <a href="impressum.html">Impressum</a> |
+    <a href="datenschutz.html">Datenschutzerklärung</a> |
+    <a href="sources.html">Quellen</a> |
+    <a href="contact.html">Kontakt</a>
+  </footer>
+
+  <script>
+    let currentPath = "/home/user";
+    const fs = {
+      "/": ["home"],
+      "/home": ["user"],
+      "/home/user": ["notes.txt", "documents", ".hidden"],
+      "/home/user/documents": ["todo.txt", "backup"],
+      "/home/user/documents/backup": ["old_config.bak", "real_final_final.txt"],
+      "/home/user/.hidden": ["clue.txt", "secret"],
+      "/home/user/.hidden/secret": ["flag.txt"]
+    };
+
+    const files = {
+      "/home/user/notes.txt": "Manchmal lohnt es sich, auch unsichtbare Dinge anzuschauen.",
+      "/home/user/documents/todo.txt": "1. Kaffee\n2. Ruhig bleiben\n3. Tiefer schauen als nur bis ins erste Verzeichnis",
+      "/home/user/documents/backup/old_config.bak": "debug=true\nadmin_mode=enabled\n# das hier hätte nicht öffentlich herumliegen sollen",
+      "/home/user/documents/backup/real_final_final.txt": "Ja, das ist jetzt wirklich die finale Version. Ganz bestimmt.",
+      "/home/user/.hidden/clue.txt": "Gut. Jetzt bist du an der Stelle, die viele übersehen. Von hier ist es nicht mehr weit.",
+      "/home/user/.hidden/secret/flag.txt": atob("e0xJTlVYX0VYUExPUkVSfQ==")
+    };
+
+    const terminal = document.getElementById("terminal");
+
+    function print(text = "") {
+      const line = document.createElement("div");
+      line.className = "line";
+      line.textContent = text;
+      terminal.appendChild(line);
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+
+    function normalisePath(base, target) {
+      if (!target) return base;
+      if (target === "/") return "/";
+      let parts = (target.startsWith("/") ? target : (base === "/" ? "/" + target : base + "/" + target)).split("/");
+      const stack = [];
+      for (const part of parts) {
+        if (!part || part === ".") continue;
+        if (part === "..") stack.pop();
+        else stack.push(part);
+      }
+      return "/" + stack.join("/");
+    }
+
+    function addPrompt() {
+      const line = document.createElement("div");
+      line.className = "line";
+
+      const prompt = document.createElement("span");
+      prompt.className = "prompt";
+      prompt.textContent = currentPath + " $ ";
+
+      const input = document.createElement("input");
+      input.className = "terminal-input";
+      input.autocomplete = "off";
+      input.spellcheck = false;
+
+      input.addEventListener("keydown", function(e) {
+        if (e.key === "Enter") {
+          const value = input.value.trim();
+          input.disabled = true;
+          handleCommand(value);
+          addPrompt();
+        }
+      });
+
+      line.appendChild(prompt);
+      line.appendChild(input);
+      terminal.appendChild(line);
+      input.focus();
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+
+    function handleCommand(cmd) {
+      if (!cmd) return;
+      const parts = cmd.split(/\s+/);
+      const base = parts[0];
+
+      if (cmd === "ls") {
+        const entries = fs[currentPath] || [];
+        print(entries.filter(entry => !entry.startsWith('.')).join("  "));
+        return;
+      }
+
+      if (cmd === "ls -a") {
+        const entries = fs[currentPath] || [];
+        print([".", "..", ...entries].join("  "));
+        return;
+      }
+
+      if (base === "cd") {
+        const target = parts[1];
+        if (!target) {
+          print("Wohin möchtest du wechseln?");
+          return;
+        }
+        if (currentPath === "/home/user/.hidden" && target === "secret") {
+          currentPath = "/home/user/.hidden/secret";
+          return;
+        }
+        const next = normalisePath(currentPath, target);
+        if (fs[next]) {
+          currentPath = next;
+        } else {
+          print("Verzeichnis nicht gefunden");
+        }
+        return;
+      }
+
+      if (cmd === "pwd") {
+        print(currentPath);
+        return;
+      }
+
+      if (base === "cat") {
+        const target = parts.slice(1).join(" ");
+        if (!target) {
+          print("Welche Datei möchtest du anzeigen?");
+          return;
+        }
+        const path = normalisePath(currentPath, target);
+        if (fs[path]) {
+          print("Das ist ein Verzeichnis.");
+          return;
+        }
+        if (files[path]) {
+          print(files[path]);
+        } else {
+          print("Datei nicht gefunden");
+        }
+        return;
+      }
+
+      if (cmd === "help") {
+        print("Mehr als ls, cd, pwd und cat brauchst du hier nicht.");
+        return;
+      }
+
+      if (cmd === "sudo rm -rf /") {
+        print("Nice try 😄");
+        return;
+      }
+
+      if (cmd === "whoami") {
+        print("user");
+        return;
+      }
+
+      print("Befehl nicht gefunden");
+    }
+
+    function checkLinuxFlag() {
+      const input = document.getElementById("linux-flag");
+      const correct = atob("e0xJTlVYX0VYUExPUkVSfQ==");
+      if (input.value.trim() === correct) {
+        alert("Richtig! Linux-Flag akzeptiert.");
+        localStorage.setItem("linuxLabSolved", "true");
+        const flags = JSON.parse(localStorage.getItem("collectedFlags") || "[]");
+        while (flags.length < 18) flags.push(false);
+        flags[17] = true;
+        localStorage.setItem("collectedFlags", JSON.stringify(flags));
+      } else {
+        alert("Noch nicht richtig. Schau dir die Verzeichnisstruktur nochmal an.");
+      }
+    }
+
+    print("Willkommen im Linux Grundkurs.");
+    print("Finde die Flag, indem du dich sinnvoll durch die Verzeichnisse bewegst.");
+    print("Tipp: Nicht alles ist sofort sichtbar.");
+    print("");
+    addPrompt();
+
+    console.log("Du bist hier nicht zufällig gelandet 👀");
+    console.log("ls -a ist manchmal eine ziemlich gute Idee.");
+  </script>
+</body>
+</html>

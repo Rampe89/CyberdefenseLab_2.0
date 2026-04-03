@@ -212,6 +212,9 @@
         Genau hier setzt das CyberDefense Lab an. Die Lernenden lesen nicht nur über Sicherheitsprobleme, sondern erleben typische Schwachstellen in einem geschützten, didaktisch reduzierten Rahmen selbst. Dadurch entsteht ein deutlich tieferes Verständnis als durch reine Theorie. Ein schwaches Passwort, eine ungeschützte Unterseite oder ein harmlos wirkender Cookie werden erst dann wirklich greifbar, wenn man erlebt, wie wenig es manchmal braucht, um daraus ein Sicherheitsproblem zu machen.
       </p>
       <p>
+        Ein zusätzlicher Mehrwert entsteht dort, wo die Perspektive vom bloßen Klicken auf ein grundlegendes Systemverständnis erweitert wird. Gerade Linux spielt in der Welt der IT-Sicherheit eine zentrale Rolle: Server, Tools, Container, Logdateien, Verzeichnisstrukturen und viele sicherheitsrelevante Arbeitsumgebungen basieren auf Linux oder orientieren sich daran. Wer sich mit Cybersecurity beschäftigt, profitiert deshalb sehr davon, zumindest die Grundlogik des Arbeitens im Terminal zu verstehen.
+      </p>
+      <p>
         Der Ansatz geht damit bewusst ein Stück weiter als das Kerncurriculum in seiner Grundstruktur. Ziel ist nicht nur das Kennenlernen einzelner Fachbegriffe, sondern der Aufbau von digitaler Urteilskraft und Resilienz. Die Schülerinnen und Schüler sollen Angriffslogiken erkennen, Schwachstellen einordnen und ihr eigenes Handeln im Netz reflektierter gestalten. Gleichzeitig wird deutlich: Wer digitale Systeme nutzt, trägt Verantwortung, und wer ihre Schwächen versteht, kann sich und andere besser schützen.
       </p>
     </div>
@@ -236,6 +239,7 @@
       <ul>
         <li><a href="#principles">Didaktische Leitlinien für die Nutzung</a></li>
         <li><a href="#labs">Reguläre Labs</a></li>
+        <li><a href="#linux">Linux Grundkurs</a></li>
         <li><a href="#secret-flags">Geheime Flags und Zusatzaufgaben</a></li>
       </ul>
     </div>
@@ -392,6 +396,29 @@
       </div>
     </details>
 
+
+    <div class="section-box info" id="linux">
+      <h2 class="section-title">Linux Grundkurs</h2>
+      <p>
+        Das Linux-Lab nimmt im Projekt eine kleine Sonderrolle ein. Anders als viele andere Aufgaben zeigt es keine konkrete Web-Schwachstelle, sondern stärkt ein grundlegendes Werkzeugverständnis. Das ist aus didaktischer Sicht sehr sinnvoll, weil Cybersecurity in der Praxis fast nie nur aus dem Erkennen bunter Oberflächen besteht. Wer sich ernsthaft mit Systemen, Servern, Logs, Dateistrukturen oder Tools beschäftigen will, braucht früher oder später ein Gefühl für den Umgang mit einem Terminal.
+      </p>
+      <p>
+        Genau hier liegt der Mehrwert dieses Labs: Die Schülerinnen und Schüler arbeiten nicht nur mit einer Webseite, sondern lernen eine andere Form der Interaktion kennen. Sie müssen Befehle selbst eintippen, Verzeichnisse lesen, zwischen Ordnern wechseln und aus kleinen Hinweisen die richtige Spur ableiten. Dadurch entsteht ein erster Zugang zu einer Arbeitsweise, die in Informatik, Administration und IT-Sicherheit sehr häufig vorkommt.
+      </p>
+      <p>
+        Gleichzeitig bleibt das Ganze bewusst niedrigschwellig. Es handelt sich nicht um ein echtes System, sondern um eine reduzierte Simulation. Gerade das ist für den Unterricht hilfreich: Die Lernenden werden nicht mit zu vielen Möglichkeiten überfordert, sondern konzentrieren sich auf wenige Grundbefehle wie <code>ls</code>, <code>cd</code>, <code>pwd</code> und <code>cat</code>. Inhaltlich lernen sie dabei, dass man sich in einem Dateisystem orientieren, versteckte Inhalte entdecken und Informationen aus Dateien herauslesen kann.
+      </p>
+    </div>
+
+    <details class="lab-entry task">
+      <summary>Linux Grundkurs</summary>
+      <div class="lab-content">
+        <p><span class="label">Warum das relevant ist:</span> Linux spielt in der Informatik und insbesondere in der IT-Sicherheit eine viel größere Rolle, als Schülerinnen und Schüler zunächst vermuten. Viele Server, Tools und Lernumgebungen arbeiten direkt mit Linux oder mit einer vergleichbaren Terminallogik. Wer sich dort orientieren kann, versteht technische Systeme später deutlich leichter.</p>
+        <p><span class="label">Was dabei gelernt werden soll:</span> Die Lernenden sollen erste Sicherheit im Umgang mit einer Terminaloberfläche gewinnen. Sie üben das Anzeigen von Verzeichnissen, das Wechseln zwischen Ordnern, das Lesen von Dateien und den Unterschied zwischen sichtbaren und versteckten Inhalten. Gleichzeitig lernen sie, Hinweise systematisch zu verfolgen, statt nur auf sichtbare Buttons zu reagieren.</p>
+        <p><span class="label">Didaktischer Fokus:</span> Der große Gewinn dieses Labs liegt im Perspektivwechsel. Die Schülerinnen und Schüler verlassen die reine Klickoberfläche und arbeiten mit einer reduzierten, textbasierten Umgebung. Gerade das macht deutlich, dass Informatik und Cybersecurity oft dort beginnen, wo man Strukturen lesen und mit wenigen Werkzeugen gezielt handeln kann.</p>
+        <p><span class="label">Weg zur Flag:</span> Im simulierten Terminal werden die Grundbefehle ausprobiert. Über <code>ls</code> und <code>ls -a</code> werden Verzeichnisse sichtbar gemacht, mit <code>cd</code> wird navigiert und mit <code>cat</code> werden Hinweise gelesen. Am Ende wird die Flag in der richtigen Datei gefunden und auf der Startseite eingetragen.</p>
+      </div>
+    </details>
     <div class="section-box info" id="secret-flags">
       <h2 class="section-title">Geheime Flags / Zusatzaufgaben</h2>
       <p>
