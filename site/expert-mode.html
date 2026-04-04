@@ -39,14 +39,169 @@
     const lockedCard = document.getElementById('locked');
     const shell = document.getElementById('shell');
     const terminal = document.getElementById('terminal');
-    let history = [];
+    let commandHistory = [];
     let historyIndex = -1;
-    const labMap = { bruteforce: 'bruteforce.html', phishing: 'phishingquiz.html', robots: 'robots-lab.html', linux: 'linux-lab.html', sql: 'sql-lab.html', social: 'social-engineering.html', dirbuster: 'dirbuster.html', hash: 'hash.html' };
-    function print(text='') { const line = document.createElement('div'); line.className = 'line'; line.textContent = text; terminal.appendChild(line); terminal.scrollTop = terminal.scrollHeight; }
-    function clearTerminal(){ terminal.innerHTML = ''; }
-    function addPrompt(){ const line = document.createElement('div'); line.className = 'line'; const prompt = document.createElement('span'); prompt.className = 'prompt'; prompt.textContent = 'expert@cyberlab $ '; const input = document.createElement('input'); input.className = 'terminal-input'; input.autocomplete = 'off'; input.spellcheck = false; input.addEventListener('keydown', (e) => { if (e.key === 'ArrowUp') { e.preventDefault(); if (!history.length) return; if (historyIndex < history.length - 1) historyIndex++; input.value = history[history.length - 1 - historyIndex]; return; } if (e.key === 'ArrowDown') { e.preventDefault(); if (!history.length) return; if (historyIndex > 0) { historyIndex--; input.value = history[history.length - 1 - historyIndex]; } else { historyIndex = -1; input.value = ''; } return; } if (e.key === 'Enter') { const value = input.value.trim(); input.disabled = true; if (value) { history.push(value); historyIndex = -1; } handle(value); addPrompt(); } }); line.appendChild(prompt); line.appendChild(input); terminal.appendChild(line); input.focus(); }
-    function handle(cmd){ if (!cmd) return; const [base, ...rest] = cmd.split(/\s+/); if (cmd === 'help') { print('Befehle: help, labs, open <name>, status, clear, exit'); return; } if (cmd === 'labs') { print('Verfügbare Labs: ' + Object.keys(labMap).join(', ')); return; } if (base === 'open') { const target = rest[0]; if (!target) { print('Welches Lab möchtest du öffnen?'); return; } if (!labMap[target]) { print('Unbekanntes Lab. Nutze: labs'); return; } print('Öffne ' + target + ' ...'); window.location.href = labMap[target]; return; } if (cmd === 'status') { const flags = JSON.parse(localStorage.getItem('collectedFlags') || '[]'); const count = flags.filter(Boolean).length; print('Linux-Kurs: abgeschlossen'); print('Gesammelte Flags: ' + count + '/18'); return; } if (cmd === 'clear') { clearTerminal(); return; } if (cmd === 'exit') { window.location.href = 'index.html'; return; } print('Befehl nicht gefunden. Nutze help.'); }
-    if (!unlocked) { lockedCard.style.display = 'block'; } else { shell.style.display = 'block'; print('Expert Mode aktiviert.'); print('Das ist bewusst reduziert: weniger Oberfläche, mehr Orientierung.'); print('Nutze help für die verfügbaren Befehle.'); print('Mit labs siehst du die Kurzbefehle für die wichtigsten Seiten.'); print(''); addPrompt(); }
+    const labMap = {
+      bruteforce: 'bruteforce.html',
+      phishing: 'phishingquiz.html',
+      robots: 'robots-lab.html',
+      linux: 'linux-lab.html',
+      sql: 'sql-lab.html',
+      social: 'social-engineering.html',
+      dirbuster: 'dirbuster.html',
+      hash: 'hash.html'
+    };
+
+    function print(text = '') {
+      const line = document.createElement('div');
+      line.className = 'line';
+      line.textContent = text;
+      terminal.appendChild(line);
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+
+    function focusActiveInput() {
+      const inputs = terminal.querySelectorAll('.terminal-input');
+      const last = inputs[inputs.length - 1];
+      if (last) last.focus();
+    }
+
+    function clearTerminal() {
+      terminal.innerHTML = '';
+    }
+
+    function addPrompt() {
+      const line = document.createElement('div');
+      line.className = 'line';
+
+      const prompt = document.createElement('span');
+      prompt.className = 'prompt';
+      prompt.textContent = 'expert@cyberlab $ ';
+
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.className = 'terminal-input';
+      input.autocomplete = 'off';
+      input.spellcheck = false;
+      input.setAttribute('aria-label', 'Terminal Eingabe');
+
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          if (!commandHistory.length) return;
+          if (historyIndex < commandHistory.length - 1) historyIndex++;
+          input.value = commandHistory[commandHistory.length - 1 - historyIndex] || '';
+          return;
+        }
+
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          if (!commandHistory.length) return;
+          if (historyIndex > 0) {
+            historyIndex--;
+            input.value = commandHistory[commandHistory.length - 1 - historyIndex] || '';
+          } else {
+            historyIndex = -1;
+            input.value = '';
+          }
+          return;
+        }
+
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const rawValue = input.value;
+          const value = rawValue.trim();
+          input.disabled = true;
+          input.readOnly = true;
+          print('expert@cyberlab $ ' + rawValue);
+          if (value) {
+            commandHistory.push(value);
+            historyIndex = -1;
+          }
+          handle(value);
+          addPrompt();
+        }
+      });
+
+      line.appendChild(prompt);
+      line.appendChild(input);
+      terminal.appendChild(line);
+      focusActiveInput();
+    }
+
+    function handle(cmd) {
+      const normalized = (cmd || '').trim().toLowerCase();
+      if (!normalized) return;
+
+      const [base, ...rest] = normalized.split(/\s+/);
+
+      if (normalized === 'help') {
+        print('Befehle: help, labs, open <name>, status, clear, exit');
+        print('Beispiel: open linux');
+        return;
+      }
+
+      if (normalized === 'labs') {
+        print('Verfügbare Labs: ' + Object.keys(labMap).join(', '));
+        return;
+      }
+
+      if (base === 'open') {
+        const target = rest[0];
+        if (!target) {
+          print('Welches Lab möchtest du öffnen?');
+          return;
+        }
+        if (!labMap[target]) {
+          print('Unbekanntes Lab. Nutze: labs');
+          return;
+        }
+        print('Öffne ' + target + ' ...');
+        window.location.href = labMap[target];
+        return;
+      }
+
+      if (normalized === 'status') {
+        let flags = [];
+        try {
+          flags = JSON.parse(localStorage.getItem('collectedFlags') || '[]');
+        } catch (err) {
+          flags = [];
+        }
+        const count = Array.isArray(flags) ? flags.filter(Boolean).length : 0;
+        print('Linux-Kurs: abgeschlossen');
+        print('Gesammelte Flags: ' + count + '/18');
+        return;
+      }
+
+      if (normalized === 'clear') {
+        clearTerminal();
+        return;
+      }
+
+      if (normalized === 'exit') {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      print('Befehl nicht gefunden. Nutze help.');
+    }
+
+    document.addEventListener('click', () => {
+      focusActiveInput();
+    });
+
+    if (!unlocked) {
+      lockedCard.style.display = 'block';
+    } else {
+      shell.style.display = 'block';
+      print('Expert Mode aktiviert.');
+      print('Das ist bewusst reduziert: weniger Oberfläche, mehr Orientierung.');
+      print('Nutze help für die verfügbaren Befehle.');
+      print('Mit labs siehst du die Kurzbefehle für die wichtigsten Seiten.');
+      print('');
+      addPrompt();
+    }
   </script>
 </body>
 </html>

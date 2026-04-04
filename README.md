@@ -28,6 +28,7 @@ Du kannst den Inhalt aus `site/` auch direkt mit einem einfachen Static Server t
 
 
 ## Patch-Hinweis (April 2026)
+- Doppelte `site/site`-Struktur entfernt
 - Linux-Lab erweitert
 - Expert Mode wird nach Abschluss des Linux-Kurses freigeschaltet
 - Mobile-/Tablet-Polish in `assets/cdl-unified.css`
