@@ -223,34 +223,34 @@
     const files = {
       "/home/user/notes.txt": "Manchmal lohnt es sich, auch unsichtbare Dinge anzuschauen.",
       "/home/user/readme.md": "Mini-Mission: orientieren, Nutzerkontext prüfen, History lesen, Struktur durchsuchen, Flag finden.",
-      "/home/user/documents/todo.txt": "1. Kaffee
+      "/home/user/documents/todo.txt": `1. Kaffee
 2. Nicht alles sofort glauben
 3. Tiefer schauen als nur bis ins erste Verzeichnis
-4. whoami und id helfen bei der Orientierung",
-      "/home/user/documents/script.sh": "#!/bin/bash
-echo \"nothing to see here\"",
-      "/home/user/documents/backup/old_config.bak": "debug=true
+4. whoami und id helfen bei der Orientierung`,
+      "/home/user/documents/script.sh": `#!/bin/bash
+echo "nothing to see here"`,
+      "/home/user/documents/backup/old_config.bak": `debug=true
 admin_mode=enabled
-# das hier hätte nicht öffentlich herumliegen sollen",
+# das hier hätte nicht öffentlich herumliegen sollen`,
       "/home/user/documents/backup/real_final_final.txt": "Ja, das ist jetzt wirklich die finale Version. Ganz bestimmt.",
-      "/home/user/documents/logs/audit.log": "[08:11] user opened notes.txt
+      "/home/user/documents/logs/audit.log": `[08:11] user opened notes.txt
 [08:12] user ran ls -a
-[08:13] Reminder: hidden folders are still folders",
+[08:13] Reminder: hidden folders are still folders`,
       "/home/user/documents/logs/.ops/trace.txt": "Ops-Notiz: Wenn Verzeichnisse wachsen, nutze find statt Zufall.",
       "/home/user/Downloads/manual.txt": "Kurzanleitung: pwd -> ls -> cd -> ls -a -> cat -> find . -name flag.txt",
       "/home/user/.hidden/clue.txt": "Gut. Jetzt bist du an der Stelle, die viele übersehen. Von hier ist es nicht mehr weit.",
-      "/home/user/.hidden/.bash_history": "pwd
+      "/home/user/.hidden/.bash_history": `pwd
 ls
 cd documents
 ls
 cd ..
 ls -a
 cd .hidden
-find . -name flag.txt",
+find . -name flag.txt`,
       "/home/user/.hidden/secret/flag.txt": atob("e0xJTlVYX0VYUExPUkVSfQ=="),
       "/var/log/auth.log": "Apr 04 08:16:44 lab sshd[123]: Failed password for admin from 10.0.0.23",
-      "/etc/issue": "CyberDefenseLab Linux Training Environment
-Unauthorized curiosity encouraged."
+      "/etc/issue": `CyberDefenseLab Linux Training Environment
+Unauthorized curiosity encouraged.`
     };
 
     const terminal = document.getElementById("terminal");

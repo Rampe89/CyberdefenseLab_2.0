@@ -44,7 +44,7 @@
     const fs = {
       '/': ['lab'],
       '/lab': ['labs', 'notes', '.cache', 'README.md'],
-      '/lab/labs': ['bruteforce.txt', 'phishing.txt', 'robots.txt', 'sql.txt', 'social.txt', 'linux.txt'],
+      '/lab/labs': ['bruteforce.txt', 'phishing.txt', 'robots.txt', 'sql.txt', 'social.txt', 'linux.txt', 'dirbuster.txt', 'hash.txt'],
       '/lab/notes': ['operators.md', 'progress.log'],
       '/lab/.cache': ['session.txt', '.deep'],
       '/lab/.cache/.deep': ['easter-egg.txt']
@@ -57,10 +57,12 @@
       '/lab/labs/sql.txt': 'Alias: sql -> sql-lab.html',
       '/lab/labs/social.txt': 'Alias: social -> social-engineering.html',
       '/lab/labs/linux.txt': 'Alias: linux -> linux-lab.html',
+      '/lab/labs/dirbuster.txt': 'Alias: dirbuster -> dirbuster.html',
+      '/lab/labs/hash.txt': 'Alias: hash -> hash.html',
       '/lab/notes/operators.md': 'Hinweis: pwd, ls -a, cat, find und history sind oft nützlicher als hektisches Klicken.',
-      '/lab/notes/progress.log': 'linuxLabSolved=true
+      '/lab/notes/progress.log': `linuxLabSolved=true
 expertMode=ready
-flagsource=localStorage',
+flagsource=localStorage`,
       '/lab/.cache/session.txt': 'cached shortcuts loaded',
       '/lab/.cache/.deep/easter-egg.txt': 'Kein zusätzlicher Punkt, aber Respekt fürs Suchen.'
     };
