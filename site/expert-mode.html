@@ -40,6 +40,30 @@
     const terminal = document.getElementById('terminal');
     let commandHistory = [];
     let historyIndex = -1;
+    let currentPath = '/lab';
+    const fs = {
+      '/': ['lab'],
+      '/lab': ['labs', 'notes', '.cache', 'README.md'],
+      '/lab/labs': ['bruteforce.txt', 'phishing.txt', 'robots.txt', 'sql.txt', 'social.txt', 'linux.txt'],
+      '/lab/notes': ['operators.md', 'progress.log'],
+      '/lab/.cache': ['session.txt', '.deep'],
+      '/lab/.cache/.deep': ['easter-egg.txt']
+    };
+    const files = {
+      '/lab/README.md': 'Expert Mode: reduzierte Oberfläche, mehr Eigensteuerung. Nutze help und arbeite systematisch.',
+      '/lab/labs/bruteforce.txt': 'Alias: bruteforce -> bruteforce.html',
+      '/lab/labs/phishing.txt': 'Alias: phishing -> phishingquiz.html',
+      '/lab/labs/robots.txt': 'Alias: robots -> robots-lab.html',
+      '/lab/labs/sql.txt': 'Alias: sql -> sql-lab.html',
+      '/lab/labs/social.txt': 'Alias: social -> social-engineering.html',
+      '/lab/labs/linux.txt': 'Alias: linux -> linux-lab.html',
+      '/lab/notes/operators.md': 'Hinweis: pwd, ls -a, cat, find und history sind oft nützlicher als hektisches Klicken.',
+      '/lab/notes/progress.log': 'linuxLabSolved=true
+expertMode=ready
+flagsource=localStorage',
+      '/lab/.cache/session.txt': 'cached shortcuts loaded',
+      '/lab/.cache/.deep/easter-egg.txt': 'Kein zusätzlicher Punkt, aber Respekt fürs Suchen.'
+    };
     const labMap = {
       bruteforce: 'bruteforce.html',
       phishing: 'phishingquiz.html',
@@ -59,6 +83,19 @@
       terminal.scrollTop = terminal.scrollHeight;
     }
 
+    function normalisePath(base, target) {
+      if (!target) return base;
+      if (target === '/') return '/';
+      const parts = (target.startsWith('/') ? target : (base === '/' ? '/' + target : base + '/' + target)).split('/');
+      const stack = [];
+      for (const part of parts) {
+        if (!part || part === '.') continue;
+        if (part === '..') stack.pop();
+        else stack.push(part);
+      }
+      return '/' + stack.join('/');
+    }
+
     function focusActiveInput() {
       const inputs = terminal.querySelectorAll('.terminal-input');
       const last = inputs[inputs.length - 1];
@@ -72,18 +109,15 @@
     function addPrompt() {
       const line = document.createElement('div');
       line.className = 'line';
-
       const prompt = document.createElement('span');
       prompt.className = 'prompt';
-      prompt.textContent = 'expert@cyberlab $ ';
-
+      prompt.textContent = 'expert@cyberlab:' + currentPath + ' $ ';
       const input = document.createElement('input');
       input.type = 'text';
       input.className = 'terminal-input';
       input.autocomplete = 'off';
       input.spellcheck = false;
       input.setAttribute('aria-label', 'Terminal Eingabe');
-
       input.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowUp') {
           e.preventDefault();
@@ -92,7 +126,6 @@
           input.value = commandHistory[commandHistory.length - 1 - historyIndex] || '';
           return;
         }
-
         if (e.key === 'ArrowDown') {
           e.preventDefault();
           if (!commandHistory.length) return;
@@ -105,14 +138,11 @@
           }
           return;
         }
-
         if (e.key === 'Enter') {
           e.preventDefault();
-          const rawValue = input.value;
-          const value = rawValue.trim();
+          const value = input.value.trim();
           input.disabled = true;
           input.readOnly = true;
-          print('expert@cyberlab $ ' + rawValue);
           if (value) {
             commandHistory.push(value);
             historyIndex = -1;
@@ -121,7 +151,6 @@
           addPrompt();
         }
       });
-
       line.appendChild(prompt);
       line.appendChild(input);
       terminal.appendChild(line);
@@ -129,73 +158,79 @@
     }
 
     function handle(cmd) {
-      const normalized = (cmd || '').trim().toLowerCase();
+      const raw = (cmd || '').trim();
+      const normalized = raw.toLowerCase();
       if (!normalized) return;
-
-      const [base, ...rest] = normalized.split(/\s+/);
-
+      const [base, ...rest] = raw.split(/\s+/);
+      const baseLc = base.toLowerCase();
       if (normalized === 'help') {
-        print('Befehle: help, labs, open <name>, status, clear, exit');
-        print('Beispiel: open linux');
+        print('Befehle: help, pwd, ls, ls -a, cd, cat, whoami, history, find . -name <datei>, labs, open <name>, status, clear, exit');
+        print('Beispiel: cat README.md oder open linux');
         return;
       }
-
-      if (normalized === 'labs') {
-        print('Verfügbare Labs: ' + Object.keys(labMap).join(', '));
-        return;
-      }
-
-      if (base === 'open') {
+      if (normalized === 'pwd') { print(currentPath); return; }
+      if (normalized === 'ls') { print((fs[currentPath] || []).filter(entry => !entry.startsWith('.')).join('  ')); return; }
+      if (normalized === 'ls -a') { print(['.', '..', ...(fs[currentPath] || [])].join('  ')); return; }
+      if (baseLc === 'cd') {
         const target = rest[0];
-        if (!target) {
-          print('Welches Lab möchtest du öffnen?');
-          return;
-        }
-        if (!labMap[target]) {
-          print('Unbekanntes Lab. Nutze: labs');
-          return;
-        }
+        if (!target) { print('Wohin möchtest du wechseln?'); return; }
+        const next = normalisePath(currentPath, target);
+        if (fs[next]) currentPath = next; else print('Verzeichnis nicht gefunden.');
+        return;
+      }
+      if (baseLc === 'cat') {
+        const target = rest.join(' ');
+        if (!target) { print('Welche Datei möchtest du anzeigen?'); return; }
+        const path = normalisePath(currentPath, target);
+        if (fs[path]) { print('Das ist ein Verzeichnis.'); return; }
+        if (files[path]) print(files[path]); else print('Datei nicht gefunden.');
+        return;
+      }
+      if (normalized === 'whoami') { print('expert'); return; }
+      if (normalized === 'history') {
+        if (!commandHistory.length) print('Noch keine Befehle im Verlauf.'); else commandHistory.forEach((entry, idx) => print((idx + 1) + '  ' + entry));
+        return;
+      }
+      if (baseLc === 'find') {
+        const args = rest;
+        if (args[0] !== '.' || args[1] !== '-name' || !args[2]) { print('Verwendung: find . -name DATEI'); return; }
+        const needle = args.slice(2).join(' ');
+        const matches = Object.keys(files).concat(Object.keys(fs)).filter(path => (path.startsWith(currentPath + '/') || path === currentPath) && path.split('/').pop() === needle);
+        if (!matches.length) print('Keine Treffer'); else matches.forEach(match => print(match.replace(currentPath, '.') || '.'));
+        return;
+      }
+      if (normalized === 'labs') { print('Verfügbare Labs: ' + Object.keys(labMap).join(', ')); return; }
+      if (baseLc === 'open') {
+        const target = (rest[0] || '').toLowerCase();
+        if (!target) { print('Welches Lab möchtest du öffnen?'); return; }
+        if (!labMap[target]) { print('Unbekanntes Lab. Nutze: labs'); return; }
         print('Öffne ' + target + ' ...');
         window.location.href = labMap[target];
         return;
       }
-
       if (normalized === 'status') {
         let flags = [];
-        try {
-          flags = JSON.parse(localStorage.getItem('collectedFlags') || '[]');
-        } catch (err) {
-          flags = [];
-        }
+        try { flags = JSON.parse(localStorage.getItem('collectedFlags') || '[]'); } catch (err) { flags = []; }
         const count = Array.isArray(flags) ? flags.filter(Boolean).length : 0;
         print('Linux-Kurs: abgeschlossen');
+        print('Expert Mode: aktiv');
         print('Gesammelte Flags: ' + count + '/18');
         return;
       }
-
-      if (normalized === 'clear') {
-        clearTerminal();
-        return;
-      }
-
-      if (normalized === 'exit') {
-        window.location.href = 'index.html';
-        return;
-      }
-
+      if (normalized === 'clear') { clearTerminal(); return; }
+      if (normalized === 'exit') { window.location.href = 'index.html'; return; }
       print('Befehl nicht gefunden. Nutze help.');
     }
 
-    document.addEventListener('click', () => {
-      focusActiveInput();
-    });
+    document.addEventListener('click', () => { focusActiveInput(); });
 
     if (!unlocked) {
       lockedCard.style.display = 'block';
     } else {
       shell.style.display = 'block';
       print('Expert Mode aktiviert.');
-      print('Nutze help für die verfügbaren Befehle.');
+      print('Diese Ansicht ist bewusst reduzierter und stärker terminalorientiert.');
+      print('Nutze help für die verfügbaren Befehle und arbeite dich systematisch vor.');
       print('Mit labs siehst du die Kurzbefehle für die wichtigsten Seiten.');
       print('');
       addPrompt();

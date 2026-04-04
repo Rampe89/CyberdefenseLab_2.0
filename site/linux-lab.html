@@ -129,7 +129,7 @@
       </p>
       <p>
         Das Lab ist bewusst simuliert. Es geht nicht darum, ein echtes System zu bedienen, sondern die Grundlogik von <code>ls</code>,
-        <code>cd</code>, <code>pwd</code>, <code>cat</code> und <code>clear</code> praktisch zu erleben. Nach erfolgreichem Abschluss wird der
+        <code>cd</code>, <code>pwd</code>, <code>cat</code>, <code>find</code>, <code>whoami</code>, <code>id</code>, <code>history</code> und <code>clear</code> praktisch zu erleben. Nach erfolgreichem Abschluss wird der
         <strong>Expert Mode</strong> freigeschaltet.
       </p>
     </div>
@@ -140,9 +140,10 @@
           <h3>Ablauf</h3>
           <ol class="mission-list">
             <li>Verschaffe dir einen Überblick über das aktuelle Verzeichnis.</li>
-            <li>Bewege dich gezielt durch die Struktur.</li>
-            <li>Prüfe auch versteckte Inhalte.</li>
-            <li>Lies Hinweise in Dateien statt nur blind herumzuklicken.</li>
+            <li>Nutze neben <code>ls</code> auch <code>pwd</code>, <code>whoami</code> und <code>id</code>, um dich zu orientieren.</li>
+            <li>Bewege dich gezielt durch die Struktur und prüfe auch versteckte Inhalte.</li>
+            <li>Lies Hinweise in Dateien, Logs und History statt nur blind herumzuklicken.</li>
+            <li>Nutze <code>find</code>, wenn die Struktur größer wird.</li>
             <li>Finde die Flag und schalte damit den Expert Mode frei.</li>
           </ol>
         </div>
@@ -169,6 +170,12 @@
             <li><code>cd ..</code> → eine Ebene zurück</li>
             <li><code>pwd</code> → aktuellen Pfad anzeigen</li>
             <li><code>cat DATEI</code> → Dateiinhalt anzeigen</li>
+            <li><code>whoami</code> / <code>id</code> → Infos zum aktuellen Nutzer</li>
+            <li><code>uname -a</code> → Systeminfo simuliert anzeigen</li>
+            <li><code>history</code> → letzte Befehle ansehen</li>
+            <li><code>tree</code> → Struktur als Baum anzeigen</li>
+            <li><code>find . -name DATEI</code> → gezielt suchen</li>
+            <li><code>echo TEXT</code> → Text ausgeben</li>
             <li><code>clear</code> → Terminal leeren</li>
             <li><span class="kbd">↑</span> / <span class="kbd">↓</span> → letzte Befehle durchgehen</li>
           </ul>
@@ -176,10 +183,10 @@
 
         <div class="hint-box">
           <h3>Hinweise</h3>
-          <p>Das Ziel ist nicht, möglichst viele Befehle zu kennen, sondern die Logik zu verstehen.</p>
-          <p>Wenn du festhängst, beginne wieder mit <code>pwd</code> und <code>ls</code>.</p>
-          <p>Nicht alles ist sofort sichtbar. <code>ls -a</code> ist hier wichtiger als auf den ersten Blick gedacht.</p>
-          <p>Ein paar kleine Easter Eggs gibt es ebenfalls. Sie helfen nicht direkt, zeigen aber typische Terminal-Gewohnheiten.</p>
+          <p>Das Ziel ist nicht, möglichst viele Befehle auswendig zu können, sondern die Logik hinter Pfaden, Dateien und Nutzerkontext zu verstehen.</p>
+          <p>Wenn du festhängst, beginne wieder mit <code>pwd</code>, <code>ls</code> und <code>history</code>.</p>
+          <p>Nicht alles ist sofort sichtbar. <code>ls -a</code> und <code>find</code> sind hier wichtiger, als es am Anfang wirkt.</p>
+          <p>Ein paar kleine Easter Eggs gibt es ebenfalls. Sie helfen nicht direkt, zeigen aber typische Terminal-Gewohnheiten und Denkweisen.</p>
         </div>
       </div>
     </div>
@@ -198,23 +205,52 @@
     let history = [];
     let historyIndex = -1;
     const fs = {
-      "/": ["home"],
+      "/": ["home", "var", "etc"],
       "/home": ["user"],
-      "/home/user": ["notes.txt", "documents", ".hidden", "readme.md"],
-      "/home/user/documents": ["todo.txt", "backup"],
+      "/home/user": ["notes.txt", "documents", ".hidden", "readme.md", "Downloads"],
+      "/home/user/documents": ["todo.txt", "backup", "logs", "script.sh"],
       "/home/user/documents/backup": ["old_config.bak", "real_final_final.txt"],
-      "/home/user/.hidden": ["clue.txt", "secret"],
-      "/home/user/.hidden/secret": ["flag.txt"]
+      "/home/user/documents/logs": ["audit.log", ".ops"],
+      "/home/user/documents/logs/.ops": ["trace.txt"],
+      "/home/user/Downloads": ["wallpaper.png", "manual.txt"],
+      "/home/user/.hidden": ["clue.txt", "secret", ".bash_history"],
+      "/home/user/.hidden/secret": ["flag.txt"],
+      "/var": ["log"],
+      "/var/log": ["auth.log"],
+      "/etc": ["issue"]
     };
 
     const files = {
       "/home/user/notes.txt": "Manchmal lohnt es sich, auch unsichtbare Dinge anzuschauen.",
-      "/home/user/readme.md": "Mini-Mission: orientieren, Verzeichnisse wechseln, Hinweise lesen, Flag finden.",
-      "/home/user/documents/todo.txt": "1. Kaffee\n2. Nicht alles sofort glauben\n3. Tiefer schauen als nur bis ins erste Verzeichnis",
-      "/home/user/documents/backup/old_config.bak": "debug=true\nadmin_mode=enabled\n# das hier hätte nicht öffentlich herumliegen sollen",
+      "/home/user/readme.md": "Mini-Mission: orientieren, Nutzerkontext prüfen, History lesen, Struktur durchsuchen, Flag finden.",
+      "/home/user/documents/todo.txt": "1. Kaffee
+2. Nicht alles sofort glauben
+3. Tiefer schauen als nur bis ins erste Verzeichnis
+4. whoami und id helfen bei der Orientierung",
+      "/home/user/documents/script.sh": "#!/bin/bash
+echo \"nothing to see here\"",
+      "/home/user/documents/backup/old_config.bak": "debug=true
+admin_mode=enabled
+# das hier hätte nicht öffentlich herumliegen sollen",
       "/home/user/documents/backup/real_final_final.txt": "Ja, das ist jetzt wirklich die finale Version. Ganz bestimmt.",
+      "/home/user/documents/logs/audit.log": "[08:11] user opened notes.txt
+[08:12] user ran ls -a
+[08:13] Reminder: hidden folders are still folders",
+      "/home/user/documents/logs/.ops/trace.txt": "Ops-Notiz: Wenn Verzeichnisse wachsen, nutze find statt Zufall.",
+      "/home/user/Downloads/manual.txt": "Kurzanleitung: pwd -> ls -> cd -> ls -a -> cat -> find . -name flag.txt",
       "/home/user/.hidden/clue.txt": "Gut. Jetzt bist du an der Stelle, die viele übersehen. Von hier ist es nicht mehr weit.",
-      "/home/user/.hidden/secret/flag.txt": atob("e0xJTlVYX0VYUExPUkVSfQ==")
+      "/home/user/.hidden/.bash_history": "pwd
+ls
+cd documents
+ls
+cd ..
+ls -a
+cd .hidden
+find . -name flag.txt",
+      "/home/user/.hidden/secret/flag.txt": atob("e0xJTlVYX0VYUExPUkVSfQ=="),
+      "/var/log/auth.log": "Apr 04 08:16:44 lab sshd[123]: Failed password for admin from 10.0.0.23",
+      "/etc/issue": "CyberDefenseLab Linux Training Environment
+Unauthorized curiosity encouraged."
     };
 
     const terminal = document.getElementById("terminal");
@@ -244,19 +280,29 @@
       terminal.innerHTML = "";
     }
 
+    function renderTree(path, prefix = "") {
+      const entries = fs[path] || [];
+      entries.forEach((entry, index) => {
+        const isLast = index === entries.length - 1;
+        const connector = isLast ? "└── " : "├── ";
+        print(prefix + connector + entry);
+        const childPath = normalisePath(path, entry);
+        if (fs[childPath]) {
+          renderTree(childPath, prefix + (isLast ? "    " : "│   "));
+        }
+      });
+    }
+
     function addPrompt() {
       const line = document.createElement("div");
       line.className = "line";
-
       const prompt = document.createElement("span");
       prompt.className = "prompt";
       prompt.textContent = currentPath + " $ ";
-
       const input = document.createElement("input");
       input.className = "terminal-input";
       input.autocomplete = "off";
       input.spellcheck = false;
-
       input.addEventListener("keydown", function(e) {
         if (e.key === "ArrowUp") {
           e.preventDefault();
@@ -288,7 +334,6 @@
           addPrompt();
         }
       });
-
       line.appendChild(prompt);
       line.appendChild(input);
       terminal.appendChild(line);
@@ -300,19 +345,16 @@
       if (!cmd) return;
       const parts = cmd.split(/\s+/);
       const base = parts[0];
-
       if (cmd === "ls") {
         const entries = fs[currentPath] || [];
         print(entries.filter(entry => !entry.startsWith('.')).join("  "));
         return;
       }
-
       if (cmd === "ls -a") {
         const entries = fs[currentPath] || [];
         print([".", "..", ...entries].join("  "));
         return;
       }
-
       if (base === "cd") {
         const target = parts[1];
         if (!target) {
@@ -320,19 +362,14 @@
           return;
         }
         const next = normalisePath(currentPath, target);
-        if (fs[next]) {
-          currentPath = next;
-        } else {
-          print("Verzeichnis nicht gefunden");
-        }
+        if (fs[next]) currentPath = next;
+        else print("Verzeichnis nicht gefunden");
         return;
       }
-
       if (cmd === "pwd") {
         print(currentPath);
         return;
       }
-
       if (base === "cat") {
         const target = parts.slice(1).join(" ");
         if (!target) {
@@ -344,34 +381,60 @@
           print("Das ist ein Verzeichnis.");
           return;
         }
-        if (files[path]) {
-          print(files[path]);
-        } else {
-          print("Datei nicht gefunden");
-        }
+        if (files[path]) print(files[path]);
+        else print("Datei nicht gefunden");
         return;
       }
-
       if (cmd === "clear") {
         clearTerminal();
         return;
       }
-
       if (cmd === "help") {
-        print("Verfügbare Befehle: ls, ls -a, cd, pwd, cat, clear");
+        print("Verfügbare Befehle: ls, ls -a, cd, pwd, cat, whoami, id, uname -a, history, tree, find . -name <datei>, echo, clear");
         return;
       }
-
       if (cmd === "sudo rm -rf /") {
         print("Nice try 😄");
         return;
       }
-
       if (cmd === "whoami") {
         print("user");
         return;
       }
-
+      if (cmd === "id") {
+        print("uid=1000(user) gid=1000(user) groups=1000(user),27(sudo),999(cyberlab)");
+        return;
+      }
+      if (cmd === "uname -a") {
+        print("Linux cyberlab 6.1.0-lab #1 SMP PREEMPT_DYNAMIC x86_64 GNU/Linux");
+        return;
+      }
+      if (cmd === "history") {
+        if (!history.length) print("Noch keine Befehle im Verlauf.");
+        else history.forEach((entry, idx) => print((idx + 1) + "  " + entry));
+        return;
+      }
+      if (cmd === "tree") {
+        print(currentPath);
+        renderTree(currentPath);
+        return;
+      }
+      if (base === "find") {
+        const args = parts.slice(1);
+        if (args[0] !== '.' || args[1] !== '-name' || !args[2]) {
+          print("Verwendung: find . -name DATEI");
+          return;
+        }
+        const needle = args.slice(2).join(" ");
+        const matches = Object.keys(files).concat(Object.keys(fs)).filter(path => (path.startsWith(currentPath + '/') || path === currentPath) && path.split('/').pop() === needle);
+        if (!matches.length) print("Keine Treffer");
+        else matches.forEach(match => print(match.replace(currentPath, '.') || '.'));
+        return;
+      }
+      if (base === "echo") {
+        print(parts.slice(1).join(" "));
+        return;
+      }
       print("Befehl nicht gefunden");
     }
 
@@ -405,15 +468,15 @@
     }
 
     print("Willkommen im Linux Grundkurs.");
-    print("Mission: orientieren, versteckte Inhalte finden und die Flag sichern.");
-    print("Tipp: Nicht alles ist sofort sichtbar.");
+    print("Mission: orientieren, Nutzerkontext prüfen, versteckte Inhalte finden und die Flag sichern.");
+    print("Tipp: whoami, id, history und find helfen dir beim systematischen Vorgehen.");
     print("Optional: help zeigt dir die unterstützten Befehle.");
     print("");
     addPrompt();
     syncLinuxUnlockState();
 
     console.log("Du bist hier nicht zufällig gelandet 👀");
-    console.log("ls -a ist manchmal eine ziemlich gute Idee.");
+    console.log("ls -a und find . -name flag.txt sind manchmal ziemlich gute Ideen.");
   </script>
 </body>
 </html>
