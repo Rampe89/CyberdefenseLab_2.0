@@ -503,8 +503,8 @@
     function checkFlag(taskNumber, encodedFlag, displayTitle) {
       const input = document.getElementById(`flag${taskNumber}`);
       if (!input) return;
-      const decoded = atob(encodedFlag);
-      if (input.value === decoded) {
+      const decoded = atob(encodedFlag).trim();
+      if (input.value.trim() === decoded) {
         alert(`Richtig! Flag für Aufgabe ${taskNumber} akzeptiert: ${decoded}`);
         collectedFlags[taskNumber - 1] = true;
         input.disabled = true;
@@ -541,8 +541,8 @@
         alert("Kein verstecktes Cookie gefunden. Hast du Cookies akzeptiert?");
         return;
       }
-      const cookieValue = cFlag.split("=")[1];
-      if (input.value === cookieValue) {
+      const cookieValue = decodeURIComponent((cFlag.split("=").slice(1).join("=") || "")).trim();
+      if (input.value.trim() === cookieValue) {
         alert("Richtig! Du hast die versteckte Cookie-Flag gefunden.");
         collectedFlags[7] = true;
         input.disabled = true;

@@ -301,7 +301,7 @@
           <p>Finde heraus, warum „Disallow“ kein echter Schutz ist, und folge der Spur zu einer versteckten Seite.</p>
           <a href="robots-lab.html" class="btn">Aufgabe öffnen</a>
           <input type="text" id="flag14" placeholder="{Flag eingeben}"/>
-          <button class="btn" onclick="checkFlag(14, 'e1JPQk9UU19BUkVfSElOVFNfTk9UX1NISUVMRHN9', '🤖 robots.txt Scout')">Prüfen</button>
+          <button class="btn" onclick="checkFlag(14, 'e1JPQk9UU19BUkVfSElOVFNfTk9UX1NISUVMRFN9', '🤖 robots.txt Scout')">Prüfen</button>
         </div>
 
         <div class="task">
@@ -395,7 +395,7 @@
           <p>Beobachte, wie sich eine Abfrage verändert, wenn Eingaben ungeprüft übernommen werden. Dieses Lab ist bewusst stärker angeleitet.</p>
           <a href="sql-lab.html" class="btn">Aufgabe öffnen</a>
           <input type="text" id="flag13" placeholder="{Flag eingeben}"/>
-          <button class="btn" onclick="checkFlag(13, 'e0lOUFVUX0NBTl9DSEFOR0VfVEhFX1FVRVJZfQ==', '💉 SQL Injector')">Prüfen</button>
+          <button class="btn" onclick="checkFlag(13, 'e1lPVURJRFdIQVQ/fQ==', '💉 SQL Injector')">Prüfen</button>
         </div>
       </div>
     </details>
@@ -641,8 +641,8 @@
     function checkFlag(taskNumber, encodedFlag, displayTitle) {
       const input = document.getElementById(`flag${taskNumber}`);
       if (!input) return;
-      const decoded = atob(encodedFlag);
-      if (input.value === decoded) {
+      const decoded = atob(encodedFlag).trim();
+      if (input.value.trim() === decoded) {
         alert(`Richtig! Flag für Aufgabe ${taskNumber} akzeptiert: ${decoded}`);
         collectedFlags[taskNumber - 1] = true;
         input.disabled = true;
@@ -679,8 +679,8 @@
         alert("Kein verstecktes Cookie gefunden. Hast du Cookies akzeptiert?");
         return;
       }
-      const cookieValue = cFlag.split("=")[1];
-      if (input.value === cookieValue) {
+      const cookieValue = decodeURIComponent((cFlag.split("=").slice(1).join("=") || "")).trim();
+      if (input.value.trim() === cookieValue) {
         alert("Richtig! Du hast die versteckte Cookie-Flag gefunden.");
         collectedFlags[7] = true;
         input.disabled = true;
