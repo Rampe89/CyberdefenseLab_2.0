@@ -39,16 +39,20 @@
       gap: 20px;
       align-items: start;
     }
-    .terminal-box, .legend-box, .hint-box {
+    .terminal-box, .legend-box, .hint-box, .mission-box {
       background: #f9f9f9;
       border: 1px solid #ddd;
       border-radius: 8px;
       padding: 18px;
       margin-bottom: 20px;
     }
-    .terminal-box h3, .legend-box h3, .hint-box h3 {
+    .terminal-box h3, .legend-box h3, .hint-box h3, .mission-box h3 {
       margin-top: 0;
       color: #007bff;
+    }
+    .mission-list {
+      padding-left: 20px;
+      margin-bottom: 0;
     }
     .terminal {
       background: #07131e;
@@ -94,6 +98,7 @@
     .flag-box input[type="text"] { width:100%; box-sizing:border-box; }
     code { background:#edf6ff; padding:2px 6px; border-radius:4px; }
     ul { padding-left: 20px; }
+    .course-state { margin-top: 10px; }
     footer { text-align:center; margin:20px 0; color:#d0deec; font-size:14px; }
     footer a { color:#fff; text-decoration:none; }
     footer a:hover { text-decoration:underline; }
@@ -110,6 +115,7 @@
       <a href="about.html">Über das Lab</a>
       <a href="geheim.html">Geheime Flags</a>
       <a href="linux-lab.html">Linux Grundkurs</a>
+      <a href="expert-mode.html" id="expert-link" class="hidden-until-linux">Expert Mode</a>
     </nav>
   </header>
 
@@ -118,18 +124,29 @@
       <h2>Linux Grundkurs – Navigation im Terminal</h2>
       <p>
         Dieses Zusatz-Lab setzt einen anderen Schwerpunkt als die klassischen Web-Labs. Hier geht es nicht um einen einzelnen Angriff,
-        sondern um ein grundlegendes Werkzeugverständnis. Wer sich mit Cybersecurity beschäftigt, stößt sehr schnell auf Linux-Systeme,
-        Verzeichnisse, Konfigurationsdateien und die Arbeit im Terminal. Gerade deshalb ist es sinnvoll, dass die Schülerinnen und Schüler
-        zumindest die Grundlogik von <code>ls</code>, <code>cd</code>, <code>pwd</code> und <code>cat</code> einmal praktisch erleben.
+        sondern um grundlegendes Werkzeugverständnis. Wer sich mit Cybersecurity beschäftigt, stößt sehr schnell auf Linux-Systeme,
+        Verzeichnisse, Konfigurationsdateien und die Arbeit im Terminal.
       </p>
       <p>
-        Das Lab ist bewusst simuliert. Es geht nicht darum, ein echtes System zu bedienen, sondern ein erstes Gefühl dafür zu entwickeln,
-        wie man sich in einer Dateistruktur bewegt, Hinweise liest und Schritt für Schritt eine gesuchte Datei findet.
+        Das Lab ist bewusst simuliert. Es geht nicht darum, ein echtes System zu bedienen, sondern die Grundlogik von <code>ls</code>,
+        <code>cd</code>, <code>pwd</code>, <code>cat</code> und <code>clear</code> praktisch zu erleben. Nach erfolgreichem Abschluss wird der
+        <strong>Expert Mode</strong> freigeschaltet.
       </p>
     </div>
 
     <div class="layout">
       <div>
+        <div class="mission-box">
+          <h3>Ablauf</h3>
+          <ol class="mission-list">
+            <li>Verschaffe dir einen Überblick über das aktuelle Verzeichnis.</li>
+            <li>Bewege dich gezielt durch die Struktur.</li>
+            <li>Prüfe auch versteckte Inhalte.</li>
+            <li>Lies Hinweise in Dateien statt nur blind herumzuklicken.</li>
+            <li>Finde die Flag und schalte damit den Expert Mode frei.</li>
+          </ol>
+        </div>
+
         <div class="terminal-box">
           <h3>Fake Bash</h3>
           <div class="terminal" id="terminal"></div>
@@ -137,6 +154,7 @@
             <label for="linux-flag">Flag eingeben</label>
             <input type="text" id="linux-flag" placeholder="{Flag eingeben}">
             <button class="btn" onclick="checkLinuxFlag()">Prüfen</button>
+            <div class="terminal-status course-state" id="course-state">Status: Linux-Kurs noch nicht abgeschlossen.</div>
           </div>
         </div>
       </div>
@@ -151,14 +169,17 @@
             <li><code>cd ..</code> → eine Ebene zurück</li>
             <li><code>pwd</code> → aktuellen Pfad anzeigen</li>
             <li><code>cat DATEI</code> → Dateiinhalt anzeigen</li>
+            <li><code>clear</code> → Terminal leeren</li>
+            <li><span class="kbd">↑</span> / <span class="kbd">↓</span> → letzte Befehle durchgehen</li>
           </ul>
         </div>
 
         <div class="hint-box">
           <h3>Hinweise</h3>
-          <p>Das Ziel ist nicht, viele Befehle zu kennen, sondern die Logik zu verstehen.</p>
-          <p>Nicht alles ist sofort sichtbar. Schau deshalb genau hin und lies Hinweise in Dateien wirklich mit.</p>
-          <p>Ein paar kleine Easter Eggs gibt es auch. Sie helfen nicht direkt, sorgen aber hoffentlich für ein kurzes Grinsen.</p>
+          <p>Das Ziel ist nicht, möglichst viele Befehle zu kennen, sondern die Logik zu verstehen.</p>
+          <p>Wenn du festhängst, beginne wieder mit <code>pwd</code> und <code>ls</code>.</p>
+          <p>Nicht alles ist sofort sichtbar. <code>ls -a</code> ist hier wichtiger als auf den ersten Blick gedacht.</p>
+          <p>Ein paar kleine Easter Eggs gibt es ebenfalls. Sie helfen nicht direkt, zeigen aber typische Terminal-Gewohnheiten.</p>
         </div>
       </div>
     </div>
@@ -174,10 +195,12 @@
 
   <script>
     let currentPath = "/home/user";
+    let history = [];
+    let historyIndex = -1;
     const fs = {
       "/": ["home"],
       "/home": ["user"],
-      "/home/user": ["notes.txt", "documents", ".hidden"],
+      "/home/user": ["notes.txt", "documents", ".hidden", "readme.md"],
       "/home/user/documents": ["todo.txt", "backup"],
       "/home/user/documents/backup": ["old_config.bak", "real_final_final.txt"],
       "/home/user/.hidden": ["clue.txt", "secret"],
@@ -186,7 +209,8 @@
 
     const files = {
       "/home/user/notes.txt": "Manchmal lohnt es sich, auch unsichtbare Dinge anzuschauen.",
-      "/home/user/documents/todo.txt": "1. Kaffee\n2. Ruhig bleiben\n3. Tiefer schauen als nur bis ins erste Verzeichnis",
+      "/home/user/readme.md": "Mini-Mission: orientieren, Verzeichnisse wechseln, Hinweise lesen, Flag finden.",
+      "/home/user/documents/todo.txt": "1. Kaffee\n2. Nicht alles sofort glauben\n3. Tiefer schauen als nur bis ins erste Verzeichnis",
       "/home/user/documents/backup/old_config.bak": "debug=true\nadmin_mode=enabled\n# das hier hätte nicht öffentlich herumliegen sollen",
       "/home/user/documents/backup/real_final_final.txt": "Ja, das ist jetzt wirklich die finale Version. Ganz bestimmt.",
       "/home/user/.hidden/clue.txt": "Gut. Jetzt bist du an der Stelle, die viele übersehen. Von hier ist es nicht mehr weit.",
@@ -216,6 +240,10 @@
       return "/" + stack.join("/");
     }
 
+    function clearTerminal() {
+      terminal.innerHTML = "";
+    }
+
     function addPrompt() {
       const line = document.createElement("div");
       line.className = "line";
@@ -230,9 +258,32 @@
       input.spellcheck = false;
 
       input.addEventListener("keydown", function(e) {
+        if (e.key === "ArrowUp") {
+          e.preventDefault();
+          if (!history.length) return;
+          if (historyIndex < history.length - 1) historyIndex++;
+          input.value = history[history.length - 1 - historyIndex];
+          return;
+        }
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          if (!history.length) return;
+          if (historyIndex > 0) {
+            historyIndex--;
+            input.value = history[history.length - 1 - historyIndex];
+          } else {
+            historyIndex = -1;
+            input.value = "";
+          }
+          return;
+        }
         if (e.key === "Enter") {
           const value = input.value.trim();
           input.disabled = true;
+          if (value) {
+            history.push(value);
+            historyIndex = -1;
+          }
           handleCommand(value);
           addPrompt();
         }
@@ -268,10 +319,6 @@
           print("Wohin möchtest du wechseln?");
           return;
         }
-        if (currentPath === "/home/user/.hidden" && target === "secret") {
-          currentPath = "/home/user/.hidden/secret";
-          return;
-        }
         const next = normalisePath(currentPath, target);
         if (fs[next]) {
           currentPath = next;
@@ -305,8 +352,13 @@
         return;
       }
 
+      if (cmd === "clear") {
+        clearTerminal();
+        return;
+      }
+
       if (cmd === "help") {
-        print("Mehr als ls, cd, pwd und cat brauchst du hier nicht.");
+        print("Verfügbare Befehle: ls, ls -a, cd, pwd, cat, clear");
         return;
       }
 
@@ -323,26 +375,42 @@
       print("Befehl nicht gefunden");
     }
 
+    function syncLinuxUnlockState() {
+      const solved = localStorage.getItem("linuxLabSolved") === "true";
+      const link = document.getElementById("expert-link");
+      const state = document.getElementById("course-state");
+      if (solved) {
+        link.classList.add("is-visible");
+        state.innerHTML = 'Status: Linux-Kurs abgeschlossen. <a href="expert-mode.html">Expert Mode öffnen</a>';
+      } else {
+        link.classList.remove("is-visible");
+        state.textContent = "Status: Linux-Kurs noch nicht abgeschlossen.";
+      }
+    }
+
     function checkLinuxFlag() {
       const input = document.getElementById("linux-flag");
       const correct = atob("e0xJTlVYX0VYUExPUkVSfQ==");
       if (input.value.trim() === correct) {
-        alert("Richtig! Linux-Flag akzeptiert.");
+        alert("Richtig! Linux-Flag akzeptiert. Expert Mode wurde freigeschaltet.");
         localStorage.setItem("linuxLabSolved", "true");
         const flags = JSON.parse(localStorage.getItem("collectedFlags") || "[]");
         while (flags.length < 18) flags.push(false);
         flags[17] = true;
         localStorage.setItem("collectedFlags", JSON.stringify(flags));
+        syncLinuxUnlockState();
       } else {
         alert("Noch nicht richtig. Schau dir die Verzeichnisstruktur nochmal an.");
       }
     }
 
     print("Willkommen im Linux Grundkurs.");
-    print("Finde die Flag, indem du dich sinnvoll durch die Verzeichnisse bewegst.");
+    print("Mission: orientieren, versteckte Inhalte finden und die Flag sichern.");
     print("Tipp: Nicht alles ist sofort sichtbar.");
+    print("Optional: help zeigt dir die unterstützten Befehle.");
     print("");
     addPrompt();
+    syncLinuxUnlockState();
 
     console.log("Du bist hier nicht zufällig gelandet 👀");
     console.log("ls -a ist manchmal eine ziemlich gute Idee.");

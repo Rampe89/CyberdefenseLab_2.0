@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expert Mode</title>
+  <link rel="stylesheet" href="assets/cdl-unified.css">
+  <style>
+    body { margin: 0; font-family: Consolas, Monaco, monospace; background: #050c14; color: #9ff59f; }
+    .shell-wrap { width: min(1200px, calc(100% - 24px)); margin: 20px auto; padding: 0; border-radius: 20px; overflow: hidden; border: 1px solid rgba(124,227,255,.16); box-shadow: 0 20px 40px rgba(0,0,0,.35); }
+    .shell-top { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:14px 18px; background:#07131e; border-bottom:1px solid rgba(124,227,255,.12); color:#d7e8fb; font-family: Arial, sans-serif; }
+    .shell-top a { color:#7ce3ff; text-decoration:none; }
+    .terminal { min-height: 72vh; max-height: 80vh; overflow-y: auto; padding: 18px; background: linear-gradient(180deg, #07131e, #0a1824); }
+    .line { margin:0 0 8px 0; white-space:pre-wrap; word-break:break-word; }
+    .prompt { color:#7ce3ff; }
+    .terminal-input { background: transparent !important; border: none !important; outline: none; color: #9ff59f !important; font-family: Consolas, Monaco, monospace; font-size: 1rem; width: calc(100% - 200px); box-shadow: none !important; padding: 0 !important; }
+    .locked-card { width:min(860px, calc(100% - 24px)); margin:40px auto; background:rgba(255,255,255,.95); color:#10202f; padding:24px; border-radius:20px; border:1px solid rgba(19,61,93,.12); box-shadow:0 18px 40px rgba(0,0,0,.22); font-family: Arial, sans-serif; }
+    @media (max-width: 640px){ .terminal-input{ width:100% !important; margin-top:6px; } .terminal{ min-height:68vh; } .shell-top{ flex-direction:column; align-items:flex-start; } }
+  </style>
+</head>
+<body>
+  <div id="locked" class="locked-card" style="display:none;">
+    <h1>Expert Mode gesperrt</h1>
+    <p>Der Expert Mode wird erst freigeschaltet, wenn der Linux-Grundkurs erfolgreich abgeschlossen wurde.</p>
+    <p>Didaktische Idee: Erst Grundlogik verstehen, dann die reduzierte Terminal-Ansicht nutzen.</p>
+    <p><a href="linux-lab.html">Zum Linux-Kurs</a></p>
+  </div>
+
+  <div id="shell" class="shell-wrap" style="display:none;">
+    <div class="shell-top">
+      <div><strong>Expert Mode</strong> — reduzierte Ansicht mit Terminal-Fokus</div>
+      <div><a href="index.html">Startseite</a> · <a href="linux-lab.html">Linux Kurs</a></div>
+    </div>
+    <div class="terminal" id="terminal"></div>
+  </div>
+
+  <script>
+    const unlocked = localStorage.getItem('linuxLabSolved') === 'true';
+    const lockedCard = document.getElementById('locked');
+    const shell = document.getElementById('shell');
+    const terminal = document.getElementById('terminal');
+    let history = [];
+    let historyIndex = -1;
+    const labMap = { bruteforce: 'bruteforce.html', phishing: 'phishingquiz.html', robots: 'robots-lab.html', linux: 'linux-lab.html', sql: 'sql-lab.html', social: 'social-engineering.html', dirbuster: 'dirbuster.html', hash: 'hash.html' };
+    function print(text='') { const line = document.createElement('div'); line.className = 'line'; line.textContent = text; terminal.appendChild(line); terminal.scrollTop = terminal.scrollHeight; }
+    function clearTerminal(){ terminal.innerHTML = ''; }
+    function addPrompt(){ const line = document.createElement('div'); line.className = 'line'; const prompt = document.createElement('span'); prompt.className = 'prompt'; prompt.textContent = 'expert@cyberlab $ '; const input = document.createElement('input'); input.className = 'terminal-input'; input.autocomplete = 'off'; input.spellcheck = false; input.addEventListener('keydown', (e) => { if (e.key === 'ArrowUp') { e.preventDefault(); if (!history.length) return; if (historyIndex < history.length - 1) historyIndex++; input.value = history[history.length - 1 - historyIndex]; return; } if (e.key === 'ArrowDown') { e.preventDefault(); if (!history.length) return; if (historyIndex > 0) { historyIndex--; input.value = history[history.length - 1 - historyIndex]; } else { historyIndex = -1; input.value = ''; } return; } if (e.key === 'Enter') { const value = input.value.trim(); input.disabled = true; if (value) { history.push(value); historyIndex = -1; } handle(value); addPrompt(); } }); line.appendChild(prompt); line.appendChild(input); terminal.appendChild(line); input.focus(); }
+    function handle(cmd){ if (!cmd) return; const [base, ...rest] = cmd.split(/\s+/); if (cmd === 'help') { print('Befehle: help, labs, open <name>, status, clear, exit'); return; } if (cmd === 'labs') { print('Verfügbare Labs: ' + Object.keys(labMap).join(', ')); return; } if (base === 'open') { const target = rest[0]; if (!target) { print('Welches Lab möchtest du öffnen?'); return; } if (!labMap[target]) { print('Unbekanntes Lab. Nutze: labs'); return; } print('Öffne ' + target + ' ...'); window.location.href = labMap[target]; return; } if (cmd === 'status') { const flags = JSON.parse(localStorage.getItem('collectedFlags') || '[]'); const count = flags.filter(Boolean).length; print('Linux-Kurs: abgeschlossen'); print('Gesammelte Flags: ' + count + '/18'); return; } if (cmd === 'clear') { clearTerminal(); return; } if (cmd === 'exit') { window.location.href = 'index.html'; return; } print('Befehl nicht gefunden. Nutze help.'); }
+    if (!unlocked) { lockedCard.style.display = 'block'; } else { shell.style.display = 'block'; print('Expert Mode aktiviert.'); print('Das ist bewusst reduziert: weniger Oberfläche, mehr Orientierung.'); print('Nutze help für die verfügbaren Befehle.'); print('Mit labs siehst du die Kurzbefehle für die wichtigsten Seiten.'); print(''); addPrompt(); }
+  </script>
+</body>
+</html>

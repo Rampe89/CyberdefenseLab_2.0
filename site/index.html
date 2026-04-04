@@ -251,7 +251,7 @@
     <nav>
       <a href="about.html">Über das Lab</a>
       <a href="geheim.html">Geheime Flags</a>
-      <a href="linux-lab.html">Linux Grundkurs</a> <a href="hidden-button.html" style="opacity:.02;pointer-events:auto;">.</a>
+      <a href="linux-lab.html">Linux Grundkurs</a> <a href="expert-mode.html" id="expert-nav-link" class="hidden-until-linux">Expert Mode</a> <a href="hidden-button.html" style="opacity:.02;pointer-events:auto;">.</a>
     </nav>
   </header>
 
@@ -409,9 +409,25 @@
         <h3>Linux Basics Lab</h3>
         <p>Arbeite in einer simulierten Bash, nutze grundlegende Befehle wie <code>ls</code>, <code>cd</code>, <code>pwd</code> und <code>cat</code> und finde am Ende die Flag.</p>
         <p>Der Mehrwert liegt hier vor allem darin, dass Cybersecurity fast immer auch etwas mit Linux, Servern, Dateistrukturen und Terminalarbeit zu tun hat. Das Lab schafft dafür einen niedrigschwelligen Einstieg.</p>
+        <p class="note-soft">Nach erfolgreichem Abschluss wird der Expert Mode freigeschaltet.</p>
         <a href="linux-lab.html" class="btn">Lab öffnen</a>
         <input type="text" id="flag18" placeholder="{Flag eingeben}"/>
         <button class="btn" onclick="checkFlag(18, 'e0xJTlVYX0VYUExPUkVSfQ==', '🐧 Linux-Navigator')">Prüfen</button>
+      </div>
+    </details>
+
+    <details class="category-panel category-full" id="expert-panel" open>
+      <summary>⌨️ Expert Mode</summary>
+      <div class="task expert-card">
+        <div>
+          <h3>Reduzierte Terminal-Ansicht</h3>
+          <p>Dieser Modus blendet fast die gesamte Oberfläche aus und setzt auf Navigation per Terminal. Didaktisch ergibt das erst Sinn, wenn die Linux-Grundlagen vorher einmal praktisch durchlaufen wurden.</p>
+          <p id="expert-mode-note" class="note-soft">Status: aktuell noch gesperrt. Abschluss des Linux-Kurses erforderlich.</p>
+        </div>
+        <div>
+          <div id="expert-badge" class="expert-badge locked">🔒 Gesperrt</div>
+          <p><a href="expert-mode.html" id="expert-open-link" class="btn hidden-until-linux">Expert Mode öffnen</a></p>
+        </div>
       </div>
     </details>
 
@@ -574,6 +590,7 @@
         }
       });
       updateUI();
+      syncLinuxUnlockState();
       updateProgress();
 
       // EventHandler für Input-Felder
@@ -727,6 +744,31 @@
     /****************************
      * Fortschritt & UI Updates
      ****************************/
+    function syncLinuxUnlockState() {
+      const solved = localStorage.getItem("linuxLabSolved") === "true";
+      const navLink = document.getElementById("expert-nav-link");
+      const openLink = document.getElementById("expert-open-link");
+      const badge = document.getElementById("expert-badge");
+      const note = document.getElementById("expert-mode-note");
+      if (solved) {
+        if (navLink) navLink.classList.add("is-visible");
+        if (openLink) openLink.classList.add("is-visible");
+        if (badge) {
+          badge.classList.remove("locked");
+          badge.textContent = "✅ Freigeschaltet";
+        }
+        if (note) note.textContent = "Status: freigeschaltet. Der Expert Mode kann jetzt geöffnet werden.";
+      } else {
+        if (navLink) navLink.classList.remove("is-visible");
+        if (openLink) openLink.classList.remove("is-visible");
+        if (badge) {
+          badge.classList.add("locked");
+          badge.textContent = "🔒 Gesperrt";
+        }
+        if (note) note.textContent = "Status: aktuell noch gesperrt. Abschluss des Linux-Kurses erforderlich.";
+      }
+    }
+
     function updateProgress() {
       const count = collectedFlags.filter(Boolean).length;
       document.getElementById("progress").textContent = `Fortschritt: ${count}/18 Flags gesammelt`;

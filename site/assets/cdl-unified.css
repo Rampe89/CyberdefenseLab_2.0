@@ -958,3 +958,38 @@ details.lab-entry > summary{
     border-bottom:none;
   }
 }
+
+
+/* --- 2026 patch: mobile polish, terminal unlock UI, safer wrapping --- */
+html, body{
+  max-width:100%;
+  overflow-x:hidden;
+}
+body{ line-height:1.55; }
+header{ padding-inline:14px !important; }
+nav{ display:flex; flex-wrap:wrap; justify-content:center; gap:8px; }
+.container, .page-wrap, .quiz-container{ width:min(1180px, calc(100% - 24px)); box-sizing:border-box; }
+.page-wrap{ background:var(--surface) !important; color:var(--text) !important; border:1px solid var(--line); border-radius:24px !important; box-shadow:var(--shadow) !important; }
+p, li{ overflow-wrap:anywhere; }
+.btn, button, input[type="submit"], input[type="button"]{ min-height:44px; padding:10px 14px !important; }
+.hidden-until-linux{ display:none !important; }
+.hidden-until-linux.is-visible{ display:inline-flex !important; }
+.expert-card{ display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+.expert-badge{ display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; background:#edf6ff; color:#0f2c47; border:1px solid rgba(19,61,93,.10); font-weight:700; font-size:.95rem; }
+.expert-badge.locked{ background:#f6f7f9; color:#53687b; }
+.note-soft{ color:#587089; font-size:.96rem; }
+.terminal-status{ margin-top:14px; padding:14px 16px; border-radius:14px; background:#edf6ff; border:1px solid rgba(19,61,93,.10); color:#0f2c47; }
+.kbd{ display:inline-block; padding:2px 8px; border-radius:8px; border:1px solid rgba(19,61,93,.12); background:#fff; font-family:Consolas, Monaco, monospace; font-size:.92em; }
+@media (max-width: 900px){
+  .container, .page-wrap, .quiz-container{ width:min(100% - 16px, 1180px); margin:16px auto !important; padding:16px !important; border-radius:18px !important; }
+  header{ position:static; }
+  nav a{ margin:0 !important; padding:8px 10px !important; font-size:.95rem; }
+  .flex-container, .category-columns, .layout, .principles-grid, .note-grid{ gap:16px !important; }
+}
+@media (max-width: 640px){
+  body{ font-size:15px; }
+  .column{ min-width:0 !important; }
+  .task, .terminal-box, .legend-box, .hint-box, .toc, .section-box, .intro-box, .note-card{ padding:14px !important; }
+  .terminal{ min-height:320px !important; max-height:420px !important; font-size:.95rem; }
+  .terminal-input{ width:100% !important; margin-top:6px; }
+}

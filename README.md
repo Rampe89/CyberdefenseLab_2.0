@@ -25,3 +25,10 @@ Netlify veröffentlicht den Inhalt aus dem Ordner `site/`.
 ## Lokale Vorschau
 
 Du kannst den Inhalt aus `site/` auch direkt mit einem einfachen Static Server testen, z. B. mit VS Code Live Server.
+
+
+## Patch-Hinweis (April 2026)
+- Doppelte `site/site`-Struktur entfernt
+- Linux-Lab erweitert
+- Expert Mode wird nach Abschluss des Linux-Kurses freigeschaltet
+- Mobile-/Tablet-Polish in `assets/cdl-unified.css`
