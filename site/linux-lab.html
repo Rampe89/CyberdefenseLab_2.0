@@ -207,14 +207,20 @@
     const fs = {
       "/": ["home", "var", "etc"],
       "/home": ["user"],
-      "/home/user": ["notes.txt", "documents", ".hidden", "readme.md", "Downloads"],
-      "/home/user/documents": ["todo.txt", "backup", "logs", "script.sh"],
+      "/home/user": ["notes.txt", "documents", ".hidden", "readme.md", "Downloads", ".config"],
+      "/home/user/documents": ["todo.txt", "backup", "logs", "script.sh", "projects"],
       "/home/user/documents/backup": ["old_config.bak", "real_final_final.txt"],
-      "/home/user/documents/logs": ["audit.log", ".ops"],
+      "/home/user/documents/logs": ["audit.log", ".ops", "ops-summary.txt"],
       "/home/user/documents/logs/.ops": ["trace.txt"],
+      "/home/user/documents/projects": ["archive", "readme.txt"],
+      "/home/user/documents/projects/archive": ["inventory.csv", ".index"],
+      "/home/user/documents/projects/archive/.index": ["checkpoint.txt"],
       "/home/user/Downloads": ["wallpaper.png", "manual.txt"],
-      "/home/user/.hidden": ["clue.txt", "secret", ".bash_history"],
-      "/home/user/.hidden/secret": ["flag.txt"],
+      "/home/user/.hidden": ["clue.txt", ".bash_history", ".cache"],
+      "/home/user/.hidden/.cache": ["breadcrumbs.txt", "vault"],
+      "/home/user/.hidden/.cache/vault": ["note.txt", "deeper"],
+      "/home/user/.hidden/.cache/vault/deeper": ["flag.txt"],
+      "/home/user/.config": ["training.conf"],
       "/var": ["log"],
       "/var/log": ["auth.log"],
       "/etc": ["issue"]
@@ -222,35 +228,26 @@
 
     const files = {
       "/home/user/notes.txt": "Manchmal lohnt es sich, auch unsichtbare Dinge anzuschauen.",
-      "/home/user/readme.md": "Mini-Mission: orientieren, Nutzerkontext prüfen, History lesen, Struktur durchsuchen, Flag finden.",
-      "/home/user/documents/todo.txt": `1. Kaffee
-2. Nicht alles sofort glauben
-3. Tiefer schauen als nur bis ins erste Verzeichnis
-4. whoami und id helfen bei der Orientierung`,
-      "/home/user/documents/script.sh": `#!/bin/bash
-echo "nothing to see here"`,
-      "/home/user/documents/backup/old_config.bak": `debug=true
-admin_mode=enabled
-# das hier hätte nicht öffentlich herumliegen sollen`,
+      "/home/user/readme.md": "Mini-Mission: orientieren, Nutzerkontext prüfen, Hinweise lesen, History verstehen, Struktur durchsuchen, Flag finden.",
+      "/home/user/documents/todo.txt": `1. Kaffee\n2. Nicht alles sofort glauben\n3. Tiefer schauen als nur bis ins erste Verzeichnis\n4. whoami und id helfen bei der Orientierung\n5. Logs und Archive sind oft spannender als die Startseite`,
+      "/home/user/documents/script.sh": `#!/bin/bash\necho \"nothing to see here\"`,
+      "/home/user/documents/backup/old_config.bak": `debug=true\nadmin_mode=enabled\n# das hier hätte nicht öffentlich herumliegen sollen`,
       "/home/user/documents/backup/real_final_final.txt": "Ja, das ist jetzt wirklich die finale Version. Ganz bestimmt.",
-      "/home/user/documents/logs/audit.log": `[08:11] user opened notes.txt
-[08:12] user ran ls -a
-[08:13] Reminder: hidden folders are still folders`,
-      "/home/user/documents/logs/.ops/trace.txt": "Ops-Notiz: Wenn Verzeichnisse wachsen, nutze find statt Zufall.",
-      "/home/user/Downloads/manual.txt": "Kurzanleitung: pwd -> ls -> cd -> ls -a -> cat -> find . -name flag.txt",
-      "/home/user/.hidden/clue.txt": "Gut. Jetzt bist du an der Stelle, die viele übersehen. Von hier ist es nicht mehr weit.",
-      "/home/user/.hidden/.bash_history": `pwd
-ls
-cd documents
-ls
-cd ..
-ls -a
-cd .hidden
-find . -name flag.txt`,
-      "/home/user/.hidden/secret/flag.txt": atob("e0xJTlVYX0VYUExPUkVSfQ=="),
+      "/home/user/documents/logs/audit.log": `[08:11] user opened notes.txt\n[08:12] user ran ls -a\n[08:13] Reminder: hidden folders are still folders\n[08:14] archive index was rebuilt`,
+      "/home/user/documents/logs/ops-summary.txt": "Ops-Notiz: In größeren Strukturen lohnt sich erst Lesen, dann Suchen. Archive und Cache enthalten manchmal dieselben Hinweise in anderer Form.",
+      "/home/user/documents/logs/.ops/trace.txt": "Trace: archive/.index/checkpoint.txt wurde zuletzt aktualisiert.",
+      "/home/user/documents/projects/readme.txt": "Projektablage. Noch nichts Spannendes. Prüfe eher das unsichtbare Zeug.",
+      "/home/user/documents/projects/archive/inventory.csv": "name,status\nnotes,ok\nlogs,ok\ncache,review\nindex,hidden",
+      "/home/user/documents/projects/archive/.index/checkpoint.txt": "Checkpoint: Der direkte Weg ist selten der interessanteste. Denk an .bash_history und daran, dass aus Hinweisen manchmal ein Pfad wird.",
+      "/home/user/Downloads/manual.txt": "Kurzanleitung: pwd -> ls -> cd -> ls -a -> cat -> history -> find . -name flag.txt",
+      "/home/user/.hidden/clue.txt": "Gut. Jetzt bist du an der Stelle, die viele übersehen. Es gibt noch mindestens zwei Ebenen hinter dem ersten versteckten Ordner.",
+      "/home/user/.hidden/.bash_history": `pwd\nls\ncat notes.txt\ncd documents\nls\ncd logs\ncat audit.log\ncd ..\ncd ..\nls -a\ncd .hidden\nls -a\ncd .cache\ncat breadcrumbs.txt\nfind . -name flag.txt`,
+      "/home/user/.hidden/.cache/breadcrumbs.txt": "Brotkrumen: cache -> vault -> deeper. Und ja: find ist ab hier deutlich entspannter als Raten.",
+      "/home/user/.hidden/.cache/vault/note.txt": "Du bist fast da. Noch eine Ebene.",
+      "/home/user/.hidden/.cache/vault/deeper/flag.txt": atob("e0xJTlVYX0VYUExPUkVSfQ=="),
+      "/home/user/.config/training.conf": `course=linux-basics\nexpert_mode_unlock=linuxLabSolved\nnext_step=expert-mode.html`,
       "/var/log/auth.log": "Apr 04 08:16:44 lab sshd[123]: Failed password for admin from 10.0.0.23",
-      "/etc/issue": `CyberDefenseLab Linux Training Environment
-Unauthorized curiosity encouraged.`
+      "/etc/issue": `CyberDefenseLab Linux Training Environment\nUnauthorized curiosity encouraged.`
     };
 
     const terminal = document.getElementById("terminal");
@@ -463,12 +460,12 @@ Unauthorized curiosity encouraged.`
         localStorage.setItem("collectedFlags", JSON.stringify(flags));
         syncLinuxUnlockState();
       } else {
-        alert("Noch nicht richtig. Schau dir die Verzeichnisstruktur nochmal an.");
+        alert("Noch nicht richtig. Schau dir Hinweise, History und versteckte Pfade nochmal an.");
       }
     }
 
     print("Willkommen im Linux Grundkurs.");
-    print("Mission: orientieren, Nutzerkontext prüfen, versteckte Inhalte finden und die Flag sichern.");
+    print("Mission: orientieren, Nutzerkontext prüfen, Hinweise lesen, versteckte Inhalte finden und die Flag sichern.");
     print("Tipp: whoami, id, history und find helfen dir beim systematischen Vorgehen.");
     print("Optional: help zeigt dir die unterstützten Befehle.");
     print("");
@@ -476,7 +473,7 @@ Unauthorized curiosity encouraged.`
     syncLinuxUnlockState();
 
     console.log("Du bist hier nicht zufällig gelandet 👀");
-    console.log("ls -a und find . -name flag.txt sind manchmal ziemlich gute Ideen.");
+    console.log("history, ls -a und find . -name flag.txt sind oft eine gute Kombination.");
   </script>
 </body>
 </html>

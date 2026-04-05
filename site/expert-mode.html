@@ -40,32 +40,93 @@
     const terminal = document.getElementById('terminal');
     let commandHistory = [];
     let historyIndex = -1;
-    let currentPath = '/lab';
-    const fs = {
-      '/': ['lab'],
-      '/lab': ['labs', 'notes', '.cache', 'README.md'],
-      '/lab/labs': ['bruteforce.txt', 'phishing.txt', 'robots.txt', 'sql.txt', 'social.txt', 'linux.txt', 'dirbuster.txt', 'hash.txt'],
-      '/lab/notes': ['operators.md', 'progress.log'],
-      '/lab/.cache': ['session.txt', '.deep'],
-      '/lab/.cache/.deep': ['easter-egg.txt']
+    let currentPath = '/home/expert';
+    let currentUser = 'expert';
+    let hostName = 'cyberlab';
+    let rootAchieved = false;
+
+    const directories = {
+      '/': ['bin', 'etc', 'home', 'opt', 'root', 'tmp', 'usr', 'var'],
+      '/bin': ['bash', 'cat', 'echo', 'ls', 'sh'],
+      '/etc': ['issue', 'motd', 'passwd'],
+      '/home': ['expert'],
+      '/home/expert': ['README.md', 'labs', 'notes', '.cache', '.bash_history', '.profile'],
+      '/home/expert/labs': ['bruteforce.txt', 'dirbuster.txt', 'hash.txt', 'linux.txt', 'phishing.txt', 'robots.txt', 'social.txt', 'sql.txt'],
+      '/home/expert/notes': ['operators.md', 'progress.log', 'sandbox.txt'],
+      '/home/expert/.cache': ['session.txt', '.deep'],
+      '/home/expert/.cache/.deep': ['easter-egg.txt'],
+      '/opt': ['training'],
+      '/opt/training': ['faq.txt'],
+      '/root': ['root.txt', '.shadow-note'],
+      '/tmp': ['scratch.txt'],
+      '/usr': ['bin', 'local'],
+      '/usr/bin': ['awk', 'bash', 'find', 'grep', 'less', 'nano', 'python3', 'sed', 'vi'],
+      '/usr/local': ['bin'],
+      '/usr/local/bin': ['gtfobins-helper'],
+      '/var': ['log'],
+      '/var/log': ['audit.log', 'syslog']
     };
+
     const files = {
-      '/lab/README.md': 'Expert Mode: reduzierte Oberfläche, mehr Eigensteuerung. Nutze help und arbeite systematisch.',
-      '/lab/labs/bruteforce.txt': 'Alias: bruteforce -> bruteforce.html',
-      '/lab/labs/phishing.txt': 'Alias: phishing -> phishingquiz.html',
-      '/lab/labs/robots.txt': 'Alias: robots -> robots-lab.html',
-      '/lab/labs/sql.txt': 'Alias: sql -> sql-lab.html',
-      '/lab/labs/social.txt': 'Alias: social -> social-engineering.html',
-      '/lab/labs/linux.txt': 'Alias: linux -> linux-lab.html',
-      '/lab/labs/dirbuster.txt': 'Alias: dirbuster -> dirbuster.html',
-      '/lab/labs/hash.txt': 'Alias: hash -> hash.html',
-      '/lab/notes/operators.md': 'Hinweis: pwd, ls -a, cat, find und history sind oft nützlicher als hektisches Klicken.',
-      '/lab/notes/progress.log': `linuxLabSolved=true
-expertMode=ready
-flagsource=localStorage`,
-      '/lab/.cache/session.txt': 'cached shortcuts loaded',
-      '/lab/.cache/.deep/easter-egg.txt': 'Kein zusätzlicher Punkt, aber Respekt fürs Suchen.'
+      '/etc/issue': 'CyberDefenseLab Expert Environment',
+      '/etc/motd': 'Authorized learners only. Curiosity is encouraged.',
+      '/etc/passwd': 'root:x:0:0:root:/root:/bin/bash\nexpert:x:1001:1001:Expert User:/home/expert:/bin/bash',
+      '/home/expert/README.md': 'Expert Mode: reduzierte Oberfläche, mehr Eigensteuerung. help zeigt nur die wichtigsten Befehle.',
+      '/home/expert/.profile': 'export MODE=expert',
+      '/home/expert/.bash_history': `pwd\nls\ncd notes\ncat operators.md\ncd ..\nfind . -name progress.log\ncat notes/progress.log`,
+      '/home/expert/labs/bruteforce.txt': 'Alias: bruteforce -> bruteforce.html',
+      '/home/expert/labs/phishing.txt': 'Alias: phishing -> phishingquiz.html',
+      '/home/expert/labs/robots.txt': 'Alias: robots -> robots-lab.html',
+      '/home/expert/labs/sql.txt': 'Alias: sql -> sql-lab.html',
+      '/home/expert/labs/social.txt': 'Alias: social -> social-engineering.html',
+      '/home/expert/labs/linux.txt': 'Alias: linux -> linux-lab.html',
+      '/home/expert/labs/dirbuster.txt': 'Alias: dirbuster -> dirbuster.html',
+      '/home/expert/labs/hash.txt': 'Alias: hash -> hash.html',
+      '/home/expert/notes/operators.md': 'Tipp: pwd, ls -la, cat, grep, stat, file, find und history sind meist nützlicher als hektisches Klicken.',
+      '/home/expert/notes/progress.log': `linuxLabSolved=true\nexpertMode=ready\nbonusPath=undocumented\nlookAtPermissions=yes`,
+      '/home/expert/notes/sandbox.txt': 'Diese Shell ist simuliert. Genau deshalb darfst du hier deutlich mutiger herumprobieren.',
+      '/home/expert/.cache/session.txt': 'cached shortcuts loaded',
+      '/home/expert/.cache/.deep/easter-egg.txt': 'Kein zusätzlicher Punkt, aber Respekt fürs Suchen.',
+      '/opt/training/faq.txt': 'FAQ: Nein, hier läuft keine echte VM. Ja, du darfst trotzdem systematisch denken.',
+      '/root/root.txt': 'root{GTFO_PLAYGROUND_COMPLETE}',
+      '/root/.shadow-note': 'Wer bis hier kommt, hat das Easter Egg gefunden.',
+      '/tmp/scratch.txt': 'temporary scratch pad',
+      '/usr/local/bin/gtfobins-helper': 'Nicht dokumentiert. Nur eine kleine Erinnerung, dass Berechtigungen spannend sein können.',
+      '/var/log/audit.log': `[08:14] expert opened notes/operators.md\n[08:15] permission scan suggested\n[08:16] watch /usr/bin closely`,
+      '/var/log/syslog': 'Apr 05 09:18:02 cyberlab kernel: training shell ready'
     };
+
+    const metadata = {
+      '/': { type: 'dir', owner: 'root', group: 'root', mode: 'drwxr-xr-x' },
+      '/bin': { type: 'dir', owner: 'root', group: 'root', mode: 'drwxr-xr-x' },
+      '/etc': { type: 'dir', owner: 'root', group: 'root', mode: 'drwxr-xr-x' },
+      '/home': { type: 'dir', owner: 'root', group: 'root', mode: 'drwxr-xr-x' },
+      '/home/expert': { type: 'dir', owner: 'expert', group: 'expert', mode: 'drwxr-xr-x' },
+      '/home/expert/labs': { type: 'dir', owner: 'expert', group: 'expert', mode: 'drwxr-xr-x' },
+      '/home/expert/notes': { type: 'dir', owner: 'expert', group: 'expert', mode: 'drwxr-xr-x' },
+      '/home/expert/.cache': { type: 'dir', owner: 'expert', group: 'expert', mode: 'drwx------' },
+      '/home/expert/.cache/.deep': { type: 'dir', owner: 'expert', group: 'expert', mode: 'drwx------' },
+      '/opt': { type: 'dir', owner: 'root', group: 'root', mode: 'drwxr-xr-x' },
+      '/opt/training': { type: 'dir', owner: 'root', group: 'root', mode: 'drwxr-xr-x' },
+      '/root': { type: 'dir', owner: 'root', group: 'root', mode: 'drwx------' },
+      '/tmp': { type: 'dir', owner: 'root', group: 'root', mode: 'drwxrwxrwt' },
+      '/usr': { type: 'dir', owner: 'root', group: 'root', mode: 'drwxr-xr-x' },
+      '/usr/bin': { type: 'dir', owner: 'root', group: 'root', mode: 'drwxr-xr-x' },
+      '/usr/local': { type: 'dir', owner: 'root', group: 'root', mode: 'drwxr-xr-x' },
+      '/usr/local/bin': { type: 'dir', owner: 'root', group: 'root', mode: 'drwxr-xr-x' },
+      '/var': { type: 'dir', owner: 'root', group: 'root', mode: 'drwxr-xr-x' },
+      '/var/log': { type: 'dir', owner: 'root', group: 'root', mode: 'drwxr-xr-x' },
+      '/usr/bin/awk': { type: 'file', owner: 'root', group: 'root', mode: '-rwsr-xr-x', size: 42112 },
+      '/usr/bin/find': { type: 'file', owner: 'root', group: 'root', mode: '-rwsr-xr-x', size: 66128 },
+      '/usr/bin/bash': { type: 'file', owner: 'root', group: 'root', mode: '-rwxr-xr-x', size: 129248 },
+      '/usr/bin/grep': { type: 'file', owner: 'root', group: 'root', mode: '-rwxr-xr-x', size: 32768 },
+      '/usr/bin/less': { type: 'file', owner: 'root', group: 'root', mode: '-rwxr-xr-x', size: 28672 },
+      '/usr/bin/nano': { type: 'file', owner: 'root', group: 'root', mode: '-rwxr-xr-x', size: 22528 },
+      '/usr/bin/python3': { type: 'file', owner: 'root', group: 'root', mode: '-rwxr-xr-x', size: 70144 },
+      '/usr/bin/sed': { type: 'file', owner: 'root', group: 'root', mode: '-rwxr-xr-x', size: 24576 },
+      '/usr/bin/vi': { type: 'file', owner: 'root', group: 'root', mode: '-rwxr-xr-x', size: 51200 }
+    };
+
     const labMap = {
       bruteforce: 'bruteforce.html',
       phishing: 'phishingquiz.html',
@@ -76,6 +137,18 @@ flagsource=localStorage`,
       dirbuster: 'dirbuster.html',
       hash: 'hash.html'
     };
+
+    function ensureMeta(path) {
+      if (!metadata[path]) {
+        metadata[path] = {
+          type: directories[path] ? 'dir' : 'file',
+          owner: path.startsWith('/home/expert') ? 'expert' : 'root',
+          group: path.startsWith('/home/expert') ? 'expert' : 'root',
+          mode: directories[path] ? 'drwxr-xr-x' : '-rw-r--r--'
+        };
+      }
+      return metadata[path];
+    }
 
     function print(text = '') {
       const line = document.createElement('div');
@@ -98,6 +171,30 @@ flagsource=localStorage`,
       return '/' + stack.join('/');
     }
 
+    function isDir(path) { return !!directories[path]; }
+    function exists(path) { return isDir(path) || Object.prototype.hasOwnProperty.call(files, path) || Object.prototype.hasOwnProperty.call(metadata, path); }
+    function basename(path) { return path === '/' ? '/' : path.split('/').filter(Boolean).pop(); }
+
+    function canAccess(path) {
+      if (currentUser === 'root') return true;
+      return !path.startsWith('/root');
+    }
+
+    function listEntries(path, includeHidden = false, long = false) {
+      const entries = directories[path] || [];
+      const filtered = entries.filter(entry => includeHidden || !entry.startsWith('.'));
+      if (!long) {
+        print(filtered.join('  '));
+        return;
+      }
+      filtered.forEach(entry => {
+        const full = normalisePath(path, entry);
+        const meta = ensureMeta(full);
+        const size = meta.size || (isDir(full) ? 4096 : String(files[full] || '').length || 0);
+        print(`${meta.mode} 1 ${meta.owner} ${meta.group} ${size} ${entry}`);
+      });
+    }
+
     function focusActiveInput() {
       const inputs = terminal.querySelectorAll('.terminal-input');
       const last = inputs[inputs.length - 1];
@@ -108,12 +205,17 @@ flagsource=localStorage`,
       terminal.innerHTML = '';
     }
 
+    function getPrompt() {
+      const homeDisplay = currentPath === '/root' && currentUser === 'root' ? '/root' : currentPath.replace('/home/expert', '~');
+      return `${currentUser}@${hostName}:${homeDisplay} ${currentUser === 'root' ? '#': '$'} `;
+    }
+
     function addPrompt() {
       const line = document.createElement('div');
       line.className = 'line';
       const prompt = document.createElement('span');
       prompt.className = 'prompt';
-      prompt.textContent = 'expert@cyberlab:' + currentPath + ' $ ';
+      prompt.textContent = getPrompt();
       const input = document.createElement('input');
       input.type = 'text';
       input.className = 'terminal-input';
@@ -159,46 +261,239 @@ flagsource=localStorage`,
       focusActiveInput();
     }
 
+    function printHelp() {
+      print('Befehle: help, pwd, ls, ls -a, ls -l, ls -la, cd, cat, head, tail, less, grep, find, tree, whoami, id, groups, uname -a, history, clear,');
+      print('echo, touch, mkdir, rm, cp, mv, stat, file, which, whereis, env, export, ps, top, chmod, sudo -l, labs, open <name>, status, exit');
+    }
+
+    function printTree(path, prefix = '') {
+      const entries = directories[path] || [];
+      const visible = entries.filter(entry => !entry.startsWith('.'));
+      visible.forEach((entry, index) => {
+        const isLast = index === visible.length - 1;
+        const connector = isLast ? '└── ' : '├── ';
+        print(prefix + connector + entry);
+        const child = normalisePath(path, entry);
+        if (isDir(child) && canAccess(child)) {
+          printTree(child, prefix + (isLast ? '    ' : '│   '));
+        }
+      });
+    }
+
+    function doFind(startPath, args) {
+      if (args[0] === '-name' && args[1]) {
+        const needle = args.slice(1).join(' ');
+        const matches = Object.keys(files).concat(Object.keys(directories)).filter(path => (path === startPath || path.startsWith(startPath + '/')) && basename(path) === needle && canAccess(path));
+        if (!matches.length) print('Keine Treffer'); else matches.forEach(match => print(match));
+        return true;
+      }
+      if (args[0] === '-perm' && args[1] === '-4000') {
+        ['/usr/bin/awk', '/usr/bin/find'].forEach(path => print(path));
+        return true;
+      }
+      return false;
+    }
+
+    function promoteToRoot() {
+      currentUser = 'root';
+      currentPath = '/root';
+      rootAchieved = true;
+      print('privilege escalation simulated: effective uid changed to 0(root)');
+      print('Willkommen, root.');
+    }
+
+    function tryGtfo(raw, baseLc, rest) {
+      const compact = raw.replace(/\s+/g, ' ').trim();
+      if ((compact.includes("awk 'BEGIN {system(\"/bin/sh\")}'") || compact.includes('awk "BEGIN {system(\"/bin/sh\")}"') || compact.includes("awk 'BEGIN {system(\"sh\")}'")) && currentUser !== 'root') {
+        promoteToRoot();
+        return true;
+      }
+      if ((compact.includes('find . -exec /bin/sh') || compact.includes('find / -exec /bin/sh') || compact.includes('find . -exec sh') || compact.includes('find / -exec sh')) && currentUser !== 'root') {
+        promoteToRoot();
+        return true;
+      }
+      if ((compact === 'bash -p' || compact === '/bin/bash -p' || compact === 'sh -p' || compact === '/bin/sh -p') && currentUser !== 'root') {
+        print('Keine besonderen Rechte geerbt.');
+        return true;
+      }
+      return false;
+    }
+
     function handle(cmd) {
       const raw = (cmd || '').trim();
       const normalized = raw.toLowerCase();
       if (!normalized) return;
       const [base, ...rest] = raw.split(/\s+/);
       const baseLc = base.toLowerCase();
-      if (normalized === 'help') {
-        print('Befehle: help, pwd, ls, ls -a, cd, cat, whoami, history, find . -name <datei>, labs, open <name>, status, clear, exit');
-        print('Beispiel: cat README.md oder open linux');
-        return;
-      }
+
+      if (tryGtfo(raw, baseLc, rest)) return;
+      if (normalized === 'help') { printHelp(); return; }
       if (normalized === 'pwd') { print(currentPath); return; }
-      if (normalized === 'ls') { print((fs[currentPath] || []).filter(entry => !entry.startsWith('.')).join('  ')); return; }
-      if (normalized === 'ls -a') { print(['.', '..', ...(fs[currentPath] || [])].join('  ')); return; }
-      if (baseLc === 'cd') {
-        const target = rest[0];
-        if (!target) { print('Wohin möchtest du wechseln?'); return; }
-        const next = normalisePath(currentPath, target);
-        if (fs[next]) currentPath = next; else print('Verzeichnis nicht gefunden.');
+      if (normalized === 'ls') { listEntries(currentPath, false, false); return; }
+      if (normalized === 'ls -a') { print(['.', '..', ...(directories[currentPath] || [])].join('  ')); return; }
+      if (normalized === 'ls -l') { listEntries(currentPath, false, true); return; }
+      if (normalized === 'ls -la' || normalized === 'ls -al') {
+        ['.', '..', ...(directories[currentPath] || [])].forEach(entry => {
+          if (entry === '.' || entry === '..') {
+            print(`drwxr-xr-x 1 ${currentUser} ${currentUser} 4096 ${entry}`);
+          } else {
+            const full = normalisePath(currentPath, entry);
+            const meta = ensureMeta(full);
+            const size = meta.size || (isDir(full) ? 4096 : String(files[full] || '').length || 0);
+            print(`${meta.mode} 1 ${meta.owner} ${meta.group} ${size} ${entry}`);
+          }
+        });
         return;
       }
-      if (baseLc === 'cat') {
+      if (baseLc === 'cd') {
+        const target = rest[0] || '/home/expert';
+        const next = normalisePath(currentPath, target);
+        if (!isDir(next)) { print('Verzeichnis nicht gefunden.'); return; }
+        if (!canAccess(next)) { print('Permission denied'); return; }
+        currentPath = next;
+        return;
+      }
+      if (baseLc === 'cat' || baseLc === 'less' || baseLc === 'head' || baseLc === 'tail') {
         const target = rest.join(' ');
         if (!target) { print('Welche Datei möchtest du anzeigen?'); return; }
         const path = normalisePath(currentPath, target);
-        if (fs[path]) { print('Das ist ein Verzeichnis.'); return; }
-        if (files[path]) print(files[path]); else print('Datei nicht gefunden.');
+        if (isDir(path)) { print('Das ist ein Verzeichnis.'); return; }
+        if (!exists(path)) { print('Datei nicht gefunden.'); return; }
+        if (!canAccess(path)) { print('Permission denied'); return; }
+        const content = String(files[path] || '');
+        if (baseLc === 'head') { print(content.split('\n').slice(0, 10).join('\n')); return; }
+        if (baseLc === 'tail') { print(content.split('\n').slice(-10).join('\n')); return; }
+        print(content);
         return;
       }
-      if (normalized === 'whoami') { print('expert'); return; }
+      if (baseLc === 'grep') {
+        if (rest.length < 2) { print('Verwendung: grep SUCHBEGRIFF DATEI'); return; }
+        const needle = rest[0].replaceAll('"', '').replaceAll("'", '');
+        const target = rest.slice(1).join(' ');
+        const path = normalisePath(currentPath, target);
+        if (!exists(path) || isDir(path)) { print('Datei nicht gefunden.'); return; }
+        if (!canAccess(path)) { print('Permission denied'); return; }
+        const matches = String(files[path] || '').split('\n').filter(line => line.toLowerCase().includes(needle.toLowerCase()));
+        if (!matches.length) print('Keine Treffer'); else matches.forEach(line => print(line));
+        return;
+      }
+      if (baseLc === 'find') {
+        const startPath = rest[0] ? normalisePath(currentPath, rest[0]) : currentPath;
+        if (!isDir(startPath)) { print('Startpfad nicht gefunden.'); return; }
+        if (!canAccess(startPath)) { print('Permission denied'); return; }
+        if (doFind(startPath, rest.slice(1))) return;
+        print('Verwendung: find PFAD -name DATEI oder find / -perm -4000');
+        return;
+      }
+      if (normalized === 'tree') { print(currentPath); printTree(currentPath); return; }
+      if (normalized === 'whoami') { print(currentUser); return; }
+      if (normalized === 'id') {
+        print(currentUser === 'root' ? 'uid=0(root) gid=0(root) groups=0(root)' : 'uid=1001(expert) gid=1001(expert) groups=1001(expert),27(sudo),999(cyberlab)');
+        return;
+      }
+      if (normalized === 'groups') { print(currentUser === 'root' ? 'root' : 'expert sudo cyberlab'); return; }
+      if (normalized === 'uname -a') { print('Linux cyberlab 6.6.12-expert #1 SMP x86_64 GNU/Linux'); return; }
       if (normalized === 'history') {
         if (!commandHistory.length) print('Noch keine Befehle im Verlauf.'); else commandHistory.forEach((entry, idx) => print((idx + 1) + '  ' + entry));
         return;
       }
-      if (baseLc === 'find') {
-        const args = rest;
-        if (args[0] !== '.' || args[1] !== '-name' || !args[2]) { print('Verwendung: find . -name DATEI'); return; }
-        const needle = args.slice(2).join(' ');
-        const matches = Object.keys(files).concat(Object.keys(fs)).filter(path => (path.startsWith(currentPath + '/') || path === currentPath) && path.split('/').pop() === needle);
-        if (!matches.length) print('Keine Treffer'); else matches.forEach(match => print(match.replace(currentPath, '.') || '.'));
+      if (baseLc === 'echo') { print(rest.join(' ')); return; }
+      if (baseLc === 'touch') {
+        const name = rest[0];
+        if (!name) { print('Dateiname fehlt.'); return; }
+        const path = normalisePath(currentPath, name);
+        files[path] = files[path] || '';
+        ensureMeta(path);
+        if (!directories[currentPath].includes(name)) directories[currentPath].push(name);
+        print('Datei angelegt.');
+        return;
+      }
+      if (baseLc === 'mkdir') {
+        const name = rest[0];
+        if (!name) { print('Verzeichnisname fehlt.'); return; }
+        const path = normalisePath(currentPath, name);
+        directories[path] = directories[path] || [];
+        ensureMeta(path).mode = 'drwxr-xr-x';
+        ensureMeta(path).type = 'dir';
+        if (!directories[currentPath].includes(name)) directories[currentPath].push(name);
+        print('Verzeichnis angelegt.');
+        return;
+      }
+      if (baseLc === 'rm') {
+        const target = rest[rest.length - 1];
+        if (!target) { print('Ziel fehlt.'); return; }
+        const path = normalisePath(currentPath, target);
+        const name = basename(path);
+        if (exists(path)) {
+          delete files[path];
+          delete directories[path];
+          delete metadata[path];
+          directories[currentPath] = (directories[currentPath] || []).filter(entry => entry !== name);
+          print('Entfernt.');
+        } else print('Nicht gefunden.');
+        return;
+      }
+      if (baseLc === 'cp' || baseLc === 'mv') {
+        if (rest.length < 2) { print(`Verwendung: ${baseLc} QUELLE ZIEL`); return; }
+        const src = normalisePath(currentPath, rest[0]);
+        const dst = normalisePath(currentPath, rest[1]);
+        if (!exists(src) || isDir(src)) { print('Quelle nicht gefunden.'); return; }
+        files[dst] = files[src];
+        metadata[dst] = { ...ensureMeta(src) };
+        const parent = dst.substring(0, dst.lastIndexOf('/')) || '/';
+        const name = basename(dst);
+        if (!directories[parent].includes(name)) directories[parent].push(name);
+        if (baseLc === 'mv') {
+          delete files[src];
+          delete metadata[src];
+          const srcParent = src.substring(0, src.lastIndexOf('/')) || '/';
+          directories[srcParent] = (directories[srcParent] || []).filter(entry => entry !== basename(src));
+        }
+        print(baseLc === 'cp' ? 'Kopiert.' : 'Verschoben.');
+        return;
+      }
+      if (baseLc === 'stat') {
+        const target = rest[0];
+        if (!target) { print('Ziel fehlt.'); return; }
+        const path = normalisePath(currentPath, target);
+        if (!exists(path)) { print('Nicht gefunden.'); return; }
+        const meta = ensureMeta(path);
+        print(`  File: ${path}`);
+        print(`  Size: ${meta.size || (isDir(path) ? 4096 : String(files[path] || '').length)}\tType: ${meta.type}`);
+        print(`Access: (${meta.mode})  Uid: (${meta.owner})   Gid: (${meta.group})`);
+        return;
+      }
+      if (baseLc === 'file') {
+        const target = rest[0];
+        if (!target) { print('Ziel fehlt.'); return; }
+        const path = normalisePath(currentPath, target);
+        if (!exists(path)) { print('Nicht gefunden.'); return; }
+        print(isDir(path) ? `${path}: directory` : `${path}: ASCII text`);
+        return;
+      }
+      if (baseLc === 'which' || baseLc === 'whereis') {
+        const target = rest[0];
+        if (!target) { print('Programmname fehlt.'); return; }
+        const candidates = ['/bin/' + target, '/usr/bin/' + target, '/usr/local/bin/' + target].filter(path => exists(path));
+        if (!candidates.length) print('Nicht gefunden'); else print(candidates.join(' '));
+        return;
+      }
+      if (normalized === 'env') {
+        print(`HOME=${currentUser === 'root' ? '/root' : '/home/expert'}`);
+        print(`USER=${currentUser}`);
+        print(`SHELL=/bin/bash`);
+        print(`MODE=expert`);
+        return;
+      }
+      if (baseLc === 'export') { print('Variable gesetzt (simuliert).'); return; }
+      if (normalized === 'ps') { print('  PID TTY          TIME CMD\n 1337 pts/0    00:00:00 bash\n 2048 pts/0    00:00:00 training-shell'); return; }
+      if (normalized === 'top') { print('top - 09:21:16 up 1 day,  1 user,  load average: 0.05, 0.03, 0.01'); print('Tasks: 2 total, 1 running, 1 sleeping'); return; }
+      if (baseLc === 'chmod') { print('Permissions updated (simuliert).'); return; }
+      if (normalized === 'sudo -l') {
+        print('Matching Defaults entries for expert on cyberlab:');
+        print('    env_reset, secure_path=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin');
+        print('User expert may run the following commands on cyberlab:');
+        print('    (ALL) NOPASSWD: /usr/bin/find');
         return;
       }
       if (normalized === 'labs') { print('Verfügbare Labs: ' + Object.keys(labMap).join(', ')); return; }
@@ -211,12 +506,12 @@ flagsource=localStorage`,
         return;
       }
       if (normalized === 'status') {
-        let flags = [];
-        try { flags = JSON.parse(localStorage.getItem('collectedFlags') || '[]'); } catch (err) { flags = []; }
-        const count = Array.isArray(flags) ? flags.filter(Boolean).length : 0;
-        print('Linux-Kurs: abgeschlossen');
-        print('Expert Mode: aktiv');
-        print('Gesammelte Flags: ' + count + '/18');
+        const flags = JSON.parse(localStorage.getItem('collectedFlags') || '[]');
+        const count = flags.filter(Boolean).length;
+        print(`Linux-Kurs: ${unlocked ? 'abgeschlossen' : 'offen'}`);
+        print(`Gesammelte Flags: ${count}`);
+        print(`User: ${currentUser}`);
+        print(`Bonus-Root: ${rootAchieved ? 'gefunden' : 'unbekannt'}`);
         return;
       }
       if (normalized === 'clear') { clearTerminal(); return; }
@@ -232,7 +527,8 @@ flagsource=localStorage`,
       shell.style.display = 'block';
       print('Expert Mode aktiviert.');
       print('Diese Ansicht ist bewusst reduzierter und stärker terminalorientiert.');
-      print('Nutze help für die verfügbaren Befehle und arbeite dich systematisch vor.');
+      print('Du kannst hier deutlich mehr Befehle testen als im Linux-Grundkurs.');
+      print('help zeigt die wichtigsten Befehle. Nicht jeder Weg steht dort ausdrücklich drin.');
       print('Mit labs siehst du die Kurzbefehle für die wichtigsten Seiten.');
       print('');
       addPrompt();
