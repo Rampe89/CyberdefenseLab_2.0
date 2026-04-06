@@ -261,6 +261,15 @@
       Dieses Lab dient ausschließlich Bildungszwecken. Der Einsatz der hier erlernten Techniken für illegale Zwecke ist strengstens untersagt. Es handelt sich um Simulationen, keine echten Angriffe.
     </p>
 
+    <div class="device-note desktop-required">
+      <p><strong>Geräte-Hinweis:</strong> Einige Labs sind bewusst eher für <strong>PC oder Laptop</strong> gebaut. Auf Mobilgeräten fehlen oft Quelltextansicht, DevTools oder komfortable Browserfunktionen.</p>
+      <div class="device-chip-row">
+        <span class="device-chip mobile">Mobil gut geeignet</span>
+        <span class="device-chip mixed">Mobil eingeschränkt</span>
+        <span class="device-chip desktop">PC empfohlen</span>
+      </div>
+    </div>
+
     <!-- Fortschrittsanzeige & Fortschrittsbalken -->
     <div id="progress">Fortschritt: 0/18 Flags gesammelt</div>
     <div id="progress-bar">
@@ -284,6 +293,7 @@
           <h3>Quelltext & Kommentare</h3>
           <p>Ein geführter Einstieg in HTML-Kommentare: Verstehe den Unterschied zwischen sichtbar im Browser und trotzdem im Quelltext vorhanden.</p>
           <a href="comments-lab.html" class="btn">Aufgabe öffnen</a>
+          <div class="device-chip-row"><span class="device-chip desktop">PC empfohlen</span></div>
           <input type="text" id="flag15" placeholder="{Flag eingeben}"/>
           <button class="btn" onclick="checkFlag(15, 'e1NPVVJDRV9DT0RFX0lTX1NUSUxMX0NPREV9', '📝 Kommentar-Leser')">Prüfen</button>
         </div>
@@ -300,6 +310,7 @@
           <h3>robots.txt Recon</h3>
           <p>Finde heraus, warum „Disallow“ kein echter Schutz ist, und folge der Spur zu einer versteckten Seite.</p>
           <a href="robots-lab.html" class="btn">Aufgabe öffnen</a>
+          <div class="device-chip-row"><span class="device-chip desktop">PC empfohlen</span></div>
           <input type="text" id="flag14" placeholder="{Flag eingeben}"/>
           <button class="btn" onclick="checkFlag(14, 'e1JPQk9UU19BUkVfSElOVFNfTk9UX1NISUVMRFN9', '🤖 robots.txt Scout')">Prüfen</button>
         </div>
@@ -326,7 +337,7 @@
         <p class="top-info">Dieser Bereich wird per Passwort freigeschaltet. Das Passwort soll über das Brute-Force-Lab erschlossen werden.</p>
 
         <div id="analysis-password-container" class="lock-box">
-          <p>Gib das User-Passwort ein, um diese Kategorie freizuschalten:</p>
+          <p>Gib das Passwort ein, um diese Kategorie freizuschalten:</p>
           <input type="password" id="analysis-password" placeholder="Passwort eingeben"/>
           <button class="btn" onclick="unlockAnalysis()">Freischalten</button>
           <p class="error-message hidden" id="analysis-error-message">Das passt noch nicht.</p>
@@ -353,6 +364,7 @@
             <h3>Gobuster-Simulation</h3>
             <p>Finde versteckte Verzeichnisse auf einem Server durch einen Directory Busting Scan.</p>
             <a href="dirbuster.html" class="btn">Aufgabe öffnen</a>
+            <div class="device-chip-row"><span class="device-chip desktop">PC empfohlen</span></div>
             <input type="text" id="flag6" placeholder="{Flag eingeben}"/>
             <button class="btn" onclick="checkFlag(6, 'e0ZPVU5EX1NFQ1JFVF9GTEFHfQ==', '🔍 Directory Detective')">Prüfen</button>
           </div>
@@ -411,6 +423,7 @@
         <p>Der Mehrwert liegt hier vor allem darin, dass Cybersecurity fast immer auch etwas mit Linux, Servern, Dateistrukturen und Terminalarbeit zu tun hat. Das Lab schafft dafür einen niedrigschwelligen Einstieg.</p>
         <p class="note-soft">Nach erfolgreichem Abschluss wird der Expert Mode freigeschaltet.</p>
         <a href="linux-lab.html" class="btn">Lab öffnen</a>
+        <div class="device-chip-row"><span class="device-chip mixed">Mobil eingeschränkt</span></div>
         <input type="text" id="flag18" placeholder="{Flag eingeben}"/>
         <button class="btn" onclick="checkFlag(18, 'e0xJTlVYX0VYUExPUkVSfQ==', '🐧 Linux-Navigator')">Prüfen</button>
       </div>
@@ -427,6 +440,7 @@
         <div>
           <div id="expert-badge" class="expert-badge locked">🔒 Gesperrt</div>
           <p><a href="expert-mode.html" id="expert-open-link" class="btn hidden-until-linux">Expert Mode öffnen</a></p>
+          <div class="device-chip-row"><span class="device-chip desktop">PC empfohlen</span></div>
         </div>
       </div>
     </details>

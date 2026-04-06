@@ -993,3 +993,16 @@ p, li{ overflow-wrap:anywhere; }
   .terminal{ min-height:320px !important; max-height:420px !important; font-size:.95rem; }
   .terminal-input{ width:100% !important; margin-top:6px; }
 }
+
+
+.device-note{margin:0 0 18px 0;padding:14px 16px;border-radius:14px;border:1px solid rgba(16,35,58,.12);background:linear-gradient(180deg,#f7fbff,#eef6ff);color:#17314c}
+.device-note strong{color:#0b63bd}
+.device-note.desktop-required{border-left:5px solid #0f8cff}
+.device-note.mobile-ok{border-left:5px solid #1f9d5c}
+.device-note p{margin:.2rem 0}
+.device-chip-row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 0}
+.device-chip{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;font-size:.85rem;font-weight:700;border:1px solid rgba(16,35,58,.1);background:#f3f7fb;color:#17314c}
+.device-chip.desktop{background:#eef6ff;color:#0b63bd}
+.device-chip.mixed{background:#fff4e5;color:#9a5a00}
+.device-chip.mobile{background:#ebfff5;color:#0e6b3f}
+@media (max-width:760px){.device-note{padding:12px 14px;margin-bottom:14px}.device-chip{font-size:.8rem}}
