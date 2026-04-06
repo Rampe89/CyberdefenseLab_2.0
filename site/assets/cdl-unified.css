@@ -11,7 +11,7 @@
   --primary:#3ba1ff;
   --primary-2:#1877f2;
   --accent:#7ce3ff;
-  --success:#1faa63;
+  --success:#0f5132;
   --danger:#d9534f;
   --shadow:0 16px 48px rgba(0,0,0,.22);
   --radius:18px;
@@ -995,14 +995,17 @@ p, li{ overflow-wrap:anywhere; }
 }
 
 
-.device-note{margin:0 0 18px 0;padding:14px 16px;border-radius:14px;border:1px solid rgba(16,35,58,.12);background:linear-gradient(180deg,#f7fbff,#eef6ff);color:#17314c}
-.device-note strong{color:#0b63bd}
-.device-note.desktop-required{border-left:5px solid #0f8cff}
-.device-note.mobile-ok{border-left:5px solid #1f9d5c}
-.device-note p{margin:.2rem 0}
-.device-chip-row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 0}
-.device-chip{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;font-size:.85rem;font-weight:700;border:1px solid rgba(16,35,58,.1);background:#f3f7fb;color:#17314c}
-.device-chip.desktop{background:#eef6ff;color:#0b63bd}
-.device-chip.mixed{background:#fff4e5;color:#9a5a00}
-.device-chip.mobile{background:#ebfff5;color:#0e6b3f}
-@media (max-width:760px){.device-note{padding:12px 14px;margin-bottom:14px}.device-chip{font-size:.8rem}}
+.device-note{margin:0 0 20px 0;padding:16px 18px;border-radius:18px;border:1px solid rgba(15,140,255,.14);background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(240,247,255,.98));box-shadow:0 10px 24px rgba(11,34,54,.06);color:#18344f}
+.device-note strong{color:#0c63c7}
+.device-note.desktop-required{border-left:4px solid #0f8cff}
+.device-note.mobile-ok{border-left:4px solid #1f9d5c}
+.device-note p{margin:.2rem 0;line-height:1.6}
+.device-chip-row{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0}
+.device-chip{display:inline-flex;align-items:center;padding:6px 12px;border-radius:999px;font-size:.82rem;font-weight:700;letter-spacing:.01em;border:1px solid transparent}
+.device-chip.desktop{background:rgba(15,140,255,.12);color:#0b63bd;border-color:rgba(15,140,255,.18)}
+.device-chip.mixed{background:rgba(243,168,59,.14);color:#8f5700;border-color:rgba(243,168,59,.22)}
+.device-chip.mobile{background:rgba(31,157,92,.12);color:#0e6b3f;border-color:rgba(31,157,92,.18)}
+.terminal-status{ margin-top:14px; padding:14px 16px; border-radius:14px; background:#edf6ff; border:1px solid rgba(19,61,93,.10); color:#0f2c47; }
+.terminal-status.is-success{background:#eef8f1;border-color:rgba(15,81,50,.18);color:#0f5132;font-weight:600}
+.terminal-status.is-success a{color:#0c63c7;font-weight:700}
+@media (max-width:760px){.device-note{padding:14px 15px;margin-bottom:16px}.device-chip{font-size:.79rem;padding:6px 10px}}
