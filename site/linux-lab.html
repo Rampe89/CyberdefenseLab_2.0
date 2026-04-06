@@ -444,12 +444,10 @@
       const state = document.getElementById("course-state");
       if (solved) {
         link.classList.add("is-visible");
-        state.classList.add('is-success');
         state.innerHTML = 'Status: Linux-Kurs abgeschlossen. <a href="expert-mode.html">Expert Mode öffnen</a>';
       } else {
         link.classList.remove("is-visible");
-        state.classList.remove('is-success');
-        state.textContent = 'Status: Linux-Kurs noch nicht abgeschlossen.';
+        state.textContent = "Status: Linux-Kurs noch nicht abgeschlossen.";
       }
     }
 
