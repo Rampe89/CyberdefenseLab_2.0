@@ -331,9 +331,9 @@ function setStep(n){
 function insecureQuery(input){
   const sql = "SELECT * FROM students WHERE username = '" + input + "';";
   qs("#sql2").textContent = sql;
-  const low = input.toLowerCase;
+  const low = input.toLowerCase();
   const reAlwaysTrue = /(\bor\b).*?(['"]?\s*1\s*['"]?\s*=\s*['"]?\s*1|true)/i;
-  if(reAlwaysTrue.test(low)) return DB.slice;
+  if(reAlwaysTrue.test(low)) return DB.slice();
   const reDanger = /(drop\s+table|;|--|\/\*)/i;
   if(reDanger.test(input)) return { error:"Gefährliche Anweisung erkannt. In dieser Simulation nichts ausführen." };
   return DB.filter(r => r.username === input);
@@ -346,7 +346,7 @@ function secureQuery(input){
 
 /* -------- Teacher login (client demo) -------- */
 const PW = "lehrer";
-function openModal{
+function openModal(){
   const root = qs("#modal-root");
   root.classList.remove("hidden");
   root.innerHTML = `
@@ -363,22 +363,22 @@ function openModal{
         </div>
       </div>
     </div>`;
-  qs("#pw").focus;
+  qs("#pw").focus();
   qs("#pw-cancel").onclick = closeModal;
-  qs("#pw-ok").onclick = =>{
-    const v = qs("#pw").value | "";
+  qs("#pw-ok").onclick = ()=>{
+    const v = qs("#pw").value || "";
     if(v === PW){
       sessionStorage.setItem("teacher","1");
-      closeModal;
+      closeModal();
       setTeacher(true);
     } else {
       alert("Falsches Passwort.");
       qs("#pw").value = "";
-      qs("#pw").focus;
+      qs("#pw").focus();
     }
   };
 }
-function closeModal{ qs("#modal-root").innerHTML = ""; qs("#modal-root").classList.add("hidden"); }
+function closeModal(){ qs("#modal-root").innerHTML = ""; qs("#modal-root").classList.add("hidden"); }
 function setTeacher(on){
   qs("#teacher-controls").style.display = on ? "flex" : "none";
   qs("#teacher-state").textContent = on ? "(angemeldet)" : "(nicht angemeldet)";
@@ -387,16 +387,16 @@ function setTeacher(on){
 
 /* -------- Phase logic and checks -------- */
 let cur = 1;
-function allowNext{ qs("#btn-next").disabled = false; }
+function allowNext(){ qs("#btn-next").disabled = false; }
 
-document.addEventListener("DOMContentLoaded", =>{
+document.addEventListener("DOMContentLoaded", ()=>{
   const logged = sessionStorage.getItem("teacher")==="1";
   setTeacher(logged);
   renderDB(!logged);
   setStep(1);
 
   qsa(".sample").forEach(b=>{
-    b.addEventListener("click", =>{
+    b.addEventListener("click", ()=>{
       const v = b.getAttribute("data-val");
       if(cur === 1) qs("#q1").value = v;
       if(cur === 2) qs("#q2").value = v;
@@ -405,77 +405,77 @@ document.addEventListener("DOMContentLoaded", =>{
   });
 
   // Phase 1 run
-  qs("#run1").addEventListener("click", =>{
-    const v = qs("#q1").value.trim;
+  qs("#run1").addEventListener("click", ()=>{
+    const v = qs("#q1").value.trim();
     const rows = DB.filter(r => r.username === v);
     qs("#sql1").textContent = `SELECT * FROM students WHERE username = '${v}';`;
     renderRows(rows, "#out1");
-    if(rows.length === 1){ qs("#phase1-ok").classList.remove("hidden"); allowNext; }
+    if(rows.length === 1){ qs("#phase1-ok").classList.remove("hidden"); allowNext(); }
   });
 
   // Phase 2 run
-  qs("#run2").addEventListener("click", =>{
-    const v = qs("#q2").value.trim;
+  qs("#run2").addEventListener("click", ()=>{
+    const v = qs("#q2").value.trim();
     const rows = insecureQuery(v);
     renderRows(rows, "#out2");
     if(Array.isArray(rows) && rows.length === DB.length){
       qs("#phase2-ok").classList.remove("hidden");
-      allowNext;
+      allowNext();
     }
   });
 
   // Phase 3 checkbox
-  qs("#chk-why").addEventListener("change", =>{
-    if(qs("#chk-why").checked) allowNext;
+  qs("#chk-why").addEventListener("change", ()=>{
+    if(qs("#chk-why").checked) allowNext();
   });
 
   // Phase 4 run
-  qs("#run4").addEventListener("click", =>{
-    const v = qs("#q4").value.trim;
+  qs("#run4").addEventListener("click", ()=>{
+    const v = qs("#q4").value.trim();
     const rows = secureQuery(v);
     renderRows(rows, "#out4");
     if(!(Array.isArray(rows) && rows.length === DB.length)){
       qs("#phase4-ok").classList.remove("hidden");
-      allowNext;
+      allowNext();
     }
   });
 
   // Step navigation
-  qs("#btn-next").addEventListener("click", =>{
+  qs("#btn-next").addEventListener("click", ()=>{
     cur = Math.min(4, cur + 1);
     setStep(cur);
   });
-  qs("#btn-prev").addEventListener("click", =>{
+  qs("#btn-prev").addEventListener("click", ()=>{
     cur = Math.max(1, cur - 1);
     setStep(cur);
   });
 
   // Teacher controls
   qs("#btn-teacher-login").addEventListener("click", openModal);
-  qs("#btn-teacher-logout").addEventListener("click", =>{
+  qs("#btn-teacher-logout").addEventListener("click", ()=>{
     sessionStorage.removeItem("teacher");
     setTeacher(false);
   });
-  qs("#btn-show-sensitive").addEventListener("click", =>{
+  qs("#btn-show-sensitive").addEventListener("click", ()=>{
     renderDB(false);
     qs("#btn-show-sensitive").classList.add("hidden");
     qs("#btn-hide-sensitive").classList.remove("hidden");
   });
-  qs("#btn-hide-sensitive").addEventListener("click", =>{
+  qs("#btn-hide-sensitive").addEventListener("click", ()=>{
     renderDB(true);
     qs("#btn-hide-sensitive").classList.add("hidden");
     qs("#btn-show-sensitive").classList.remove("hidden");
   });
 
   // Quick check + Flag
-  qs("#check").addEventListener("click", =>{
+  qs("#check").addEventListener("click", ()=>{
     const res = qs("#out2 table");
     const count = res ? Math.max(0, res.querySelectorAll("tbody tr").length) : 0;
     let s = 0; const fb = [];
     if(count === DB.length){ s++; fb.push("1) Phase 2: alle Zeilen angezeigt."); } else fb.push("1) Phase 2: noch nicht alle Zeilen.");
     if(qs("#chk-why").checked){ s++; fb.push("2) Ursache bestätigt."); } else fb.push("2) Ursache noch nicht bestätigt.");
-    const sql4 = qs("#sql4").textContent.toLowerCase;
-    if(sql4.includes("?") | sql4.includes("bind")){ s++; fb.push("3) Parameterbindung erkannt."); } else fb.push("3) Parameterbindung prüfen.");
+    const sql4 = qs("#sql4").textContent.toLowerCase();
+    if(sql4.includes("?") || sql4.includes("bind")){ s++; fb.push("3) Parameterbindung erkannt."); } else fb.push("3) Parameterbindung prüfen.");
 
     const percent = Math.round(s/3*100);
     let html = `<strong>Ergebnis: ${percent}% (${s}/3)</strong><ul><li>${fb.join("</li><li>")}</li></ul>`;
@@ -488,7 +488,7 @@ document.addEventListener("DOMContentLoaded", =>{
     qs("#check-out").innerHTML = html;
   });
 
-  qs("#reset-check").addEventListener("click", =>{ qs("#check-out").innerHTML = ""; });
+  qs("#reset-check").addEventListener("click", ()=>{ qs("#check-out").innerHTML = ""; });
 
 });
 </script>

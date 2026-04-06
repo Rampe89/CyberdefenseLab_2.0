@@ -85,7 +85,7 @@
     let index = 0;
 
     // Tippt den Binärcode Zeichen für Zeichen
-    function typeBinary {
+    function typeBinary() {
       if (index < binaryString.length) {
         consoleDiv.innerText += binaryString.charAt(index);
         index++;
@@ -97,7 +97,7 @@
     }
 
     // Starte den Prozess nach dem Laden
-    window.onload =  => {
+    window.onload = () => {
       // Erst mal nichts, nur leere Konsole – 
       // nach 1 Sekunde fangen wir an, den Binärcode zu tippen
       setTimeout(typeBinary, 1000);

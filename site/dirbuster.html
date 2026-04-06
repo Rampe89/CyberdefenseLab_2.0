@@ -147,7 +147,7 @@
       <h2>Schritt 1: Gobuster-Befehl eingeben</h2>
       <p>Gib den Gobuster-Befehl ein, um den Scan zu starten:</p>
       <input type="text" id="gobuster-command" placeholder="Befehl eingeben..." style="width: 100%; padding: 10px; font-family: monospace;">
-      <button class="btn" onclick="validateCommand">Befehl ausführen</button>
+      <button class="btn" onclick="validateCommand()">Befehl ausführen</button>
       <p class="error-message hidden" id="error-message">Ungültiger Befehl! Überprüfe die Syntax und versuche es erneut.</p>
       <p class="success-message hidden" id="success-message">Befehl korrekt! Starte den Scan...</p>
     </div>
@@ -192,8 +192,8 @@
     const correctCommand = "gobuster dir -u http://192.168.0.10 -w wordlist.txt";
 
     // Funktion zur Überprüfung des eingegebenen Befehls
-    function validateCommand {
-      const inputCommand = document.getElementById("gobuster-command").value.trim;
+    function validateCommand() {
+      const inputCommand = document.getElementById("gobuster-command").value.trim();
       const errorMessage = document.getElementById("error-message");
       const successMessage = document.getElementById("success-message");
       const step1 = document.getElementById("step-1");
@@ -202,11 +202,11 @@
       if (inputCommand === correctCommand) {
         errorMessage.classList.add("hidden");
         successMessage.classList.remove("hidden");
-        setTimeout( => {
+        setTimeout(() => {
           successMessage.classList.add("hidden");
           step1.classList.add("hidden");
           step2.classList.remove("hidden");
-          startGobuster;
+          startGobuster();
         }, 1000);
       } else {
         errorMessage.classList.remove("hidden");
@@ -215,7 +215,7 @@
     }
 
     // Funktion zur Simulation des Gobuster-Scans
-    function startGobuster {
+    function startGobuster() {
       const consoleOutput = document.getElementById("console-output");
       let index = 0;
 
@@ -236,11 +236,11 @@
         appendLine(line);
       });
 
-      const interval = setInterval( => {
+      const interval = setInterval(() => {
         if (index < directories.length) {
           const dir = directories[index];
           const statusColor = dir.status === 200 ? "#0f0" : "#f00";
-          const lineText = `[${new Date.toLocaleTimeString}] /${dir.path} [Status: ${dir.status}]`;
+          const lineText = `[${new Date().toLocaleTimeString()}] /${dir.path} [Status: ${dir.status}]`;
           appendLine(lineText, statusColor);
           index++;
         } else {

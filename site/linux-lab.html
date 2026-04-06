@@ -157,7 +157,7 @@
           <div class="flag-box">
             <label for="linux-flag">Flag eingeben</label>
             <input type="text" id="linux-flag" placeholder="{Flag eingeben}">
-            <button class="btn" onclick="checkLinuxFlag">Prüfen</button>
+            <button class="btn" onclick="checkLinuxFlag()">Prüfen</button>
             <div class="terminal-status course-state" id="course-state">Status: Linux-Kurs noch nicht abgeschlossen.</div>
           </div>
         </div>
@@ -197,7 +197,10 @@
 
   <footer>
     Lizenziert unter der MIT-Lizenz von Ramon Berghorn, 2025 | Bildungszwecke |
-    <a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutzerklärung</a><a href="sources.html">Quellen</a><a href="contact.html">Kontakt</a>
+    <a href="impressum.html">Impressum</a> |
+    <a href="datenschutz.html">Datenschutzerklärung</a> |
+    <a href="sources.html">Quellen</a> |
+    <a href="contact.html">Kontakt</a>
   </footer>
 
   <script>
@@ -266,19 +269,19 @@
       let parts = (target.startsWith("/") ? target : (base === "/" ? "/" + target : base + "/" + target)).split("/");
       const stack = [];
       for (const part of parts) {
-        if (!part | part === ".") continue;
-        if (part === "..") stack.pop;
+        if (!part || part === ".") continue;
+        if (part === "..") stack.pop();
         else stack.push(part);
       }
       return "/" + stack.join("/");
     }
 
-    function clearTerminal {
+    function clearTerminal() {
       terminal.innerHTML = "";
     }
 
     function renderTree(path, prefix = "") {
-      const entries = fs[path] | [];
+      const entries = fs[path] || [];
       entries.forEach((entry, index) => {
         const isLast = index === entries.length - 1;
         const connector = isLast ? "└── " : "├── ";
@@ -290,7 +293,7 @@
       });
     }
 
-    function addPrompt {
+    function addPrompt() {
       const line = document.createElement("div");
       line.className = "line";
       const prompt = document.createElement("span");
@@ -302,14 +305,14 @@
       input.spellcheck = false;
       input.addEventListener("keydown", function(e) {
         if (e.key === "ArrowUp") {
-          e.preventDefault;
+          e.preventDefault();
           if (!history.length) return;
           if (historyIndex < history.length - 1) historyIndex++;
           input.value = history[history.length - 1 - historyIndex];
           return;
         }
         if (e.key === "ArrowDown") {
-          e.preventDefault;
+          e.preventDefault();
           if (!history.length) return;
           if (historyIndex > 0) {
             historyIndex--;
@@ -321,20 +324,20 @@
           return;
         }
         if (e.key === "Enter") {
-          const value = input.value.trim;
+          const value = input.value.trim();
           input.disabled = true;
           if (value) {
             history.push(value);
             historyIndex = -1;
           }
           handleCommand(value);
-          addPrompt;
+          addPrompt();
         }
       });
       line.appendChild(prompt);
       line.appendChild(input);
       terminal.appendChild(line);
-      input.focus;
+      input.focus();
       terminal.scrollTop = terminal.scrollHeight;
     }
 
@@ -343,12 +346,12 @@
       const parts = cmd.split(/\s+/);
       const base = parts[0];
       if (cmd === "ls") {
-        const entries = fs[currentPath] | [];
+        const entries = fs[currentPath] || [];
         print(entries.filter(entry => !entry.startsWith('.')).join("  "));
         return;
       }
       if (cmd === "ls -a") {
-        const entries = fs[currentPath] | [];
+        const entries = fs[currentPath] || [];
         print([".", "..", ...entries].join("  "));
         return;
       }
@@ -383,7 +386,7 @@
         return;
       }
       if (cmd === "clear") {
-        clearTerminal;
+        clearTerminal();
         return;
       }
       if (cmd === "help") {
@@ -418,14 +421,14 @@
       }
       if (base === "find") {
         const args = parts.slice(1);
-        if (args[0] !== '.' | args[1] !== '-name' | !args[2]) {
+        if (args[0] !== '.' || args[1] !== '-name' || !args[2]) {
           print("Verwendung: find . -name DATEI");
           return;
         }
         const needle = args.slice(2).join(" ");
-        const matches = Object.keys(files).concat(Object.keys(fs)).filter(path => (path.startsWith(currentPath + '/') | path === currentPath) && path.split('/').pop === needle);
+        const matches = Object.keys(files).concat(Object.keys(fs)).filter(path => (path.startsWith(currentPath + '/') || path === currentPath) && path.split('/').pop() === needle);
         if (!matches.length) print("Keine Treffer");
-        else matches.forEach(match => print(match.replace(currentPath, '.') | '.'));
+        else matches.forEach(match => print(match.replace(currentPath, '.') || '.'));
         return;
       }
       if (base === "echo") {
@@ -435,7 +438,7 @@
       print("Befehl nicht gefunden");
     }
 
-    function syncLinuxUnlockState {
+    function syncLinuxUnlockState() {
       const solved = localStorage.getItem("linuxLabSolved") === "true";
       const link = document.getElementById("expert-link");
       const state = document.getElementById("course-state");
@@ -448,17 +451,17 @@
       }
     }
 
-    function checkLinuxFlag {
+    function checkLinuxFlag() {
       const input = document.getElementById("linux-flag");
       const correct = atob("e0xJTlVYX0VYUExPUkVSfQ==");
-      if (input.value.trim === correct) {
+      if (input.value.trim() === correct) {
         alert("Richtig! Linux-Flag akzeptiert. Expert Mode wurde freigeschaltet.");
         localStorage.setItem("linuxLabSolved", "true");
-        const flags = JSON.parse(localStorage.getItem("collectedFlags") | "[]");
+        const flags = JSON.parse(localStorage.getItem("collectedFlags") || "[]");
         while (flags.length < 18) flags.push(false);
         flags[17] = true;
         localStorage.setItem("collectedFlags", JSON.stringify(flags));
-        syncLinuxUnlockState;
+        syncLinuxUnlockState();
       } else {
         alert("Noch nicht richtig. Schau dir Hinweise, History und versteckte Pfade nochmal an.");
       }
@@ -469,8 +472,8 @@
     print("Tipp: whoami, id, history und find helfen dir beim systematischen Vorgehen.");
     print("Optional: help zeigt dir die unterstützten Befehle.");
     print("");
-    addPrompt;
-    syncLinuxUnlockState;
+    addPrompt();
+    syncLinuxUnlockState();
 
     console.log("Du bist hier nicht zufällig gelandet 👀");
     console.log("history, ls -a und find . -name flag.txt sind oft eine gute Kombination.");

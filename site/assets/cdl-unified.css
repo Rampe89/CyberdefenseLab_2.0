@@ -1054,3 +1054,53 @@ p, li{ overflow-wrap:anywhere; }
   font-weight:700;
   text-decoration:underline;
 }
+
+
+/* 2026-04 restrained device notes + linux success readability */
+.device-note{
+  margin:0 0 12px 0 !important;
+  padding:9px 11px !important;
+  border-radius:6px !important;
+  border:1px solid #dce3ea !important;
+  border-left:3px solid #a9bfd6 !important;
+  background:#f7f9fb !important;
+  color:#4d5f72 !important;
+  box-shadow:none !important;
+}
+.device-note strong{
+  color:#26384a !important;
+  font-weight:600 !important;
+}
+.device-note p{
+  margin:0 !important;
+  line-height:1.45 !important;
+  font-size:.92rem !important;
+}
+.device-note.desktop-required{border-left-color:#8fb0cf !important;}
+.device-note.mobile-limited{border-left-color:#c7ab72 !important;}
+.device-note.mobile-ok{border-left-color:#8db69a !important;}
+.device-chip-row{display:none !important;}
+
+/* overview page: even quieter */
+body > .container > .device-note,
+.container > .device-note:first-of-type{
+  margin-bottom:10px !important;
+}
+
+/* linux course state/status readability */
+#course-state,
+.terminal-status.course-state,
+.terminal-status.success-box{
+  background:#162634 !important;
+  color:#eef4f8 !important;
+  border:1px solid #29465c !important;
+  border-left:4px solid #4c9a6d !important;
+  font-weight:600 !important;
+}
+#course-state a,
+.terminal-status.course-state a,
+.terminal-status.success-box a{
+  color:#9fd0ff !important;
+  text-decoration:underline !important;
+  font-weight:700 !important;
+}
