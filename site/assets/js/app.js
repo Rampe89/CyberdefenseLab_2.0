@@ -1,6 +1,6 @@
 
-(function(){
-  const path = window.location.pathname.split('/').pop() || 'index.html';
+(function{
+  const path = window.location.pathname.split('/').pop | 'index.html';
   const navItems = [
     ['index.html', 'Start'],
     ['about.html', 'Über'],
@@ -8,7 +8,7 @@
     ['unterrichtsbeispiele.html', 'Unterricht'],
     ['contact.html', 'Kontakt']
   ];
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded',  => {
     document.body.classList.add('has-global-topbar');
     if (!document.querySelector('.cdl-topbar')) {
       const topbar = document.createElement('div');
@@ -42,4 +42,4 @@
       document.body.appendChild(footer);
     }
   });
-})();
+});

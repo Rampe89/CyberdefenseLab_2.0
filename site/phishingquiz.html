@@ -248,7 +248,7 @@
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function {
       const emailPool = [
         {
           sender: "support@am4zon-security-alert.de",
@@ -349,18 +349,18 @@
 
       function shuffle(array) {
         for (let i = array.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
+          const j = Math.floor(Math.random * (i + 1));
           [array[i], array[j]] = [array[j], array[i]];
         }
       }
       
-      function setupQuiz() {
+      function setupQuiz {
         shuffle(emailPool);
         userAnswers = new Array(emailPool.length).fill(null);
-        loadEmail();
+        loadEmail;
       }
       
-      function updateProgressBar() {
+      function updateProgressBar {
         const answeredCount = userAnswers.filter(a => a !== null).length;
         const progress = ((answeredCount / emailPool.length) * 100).toFixed(0);
         const bar = document.getElementById("progress-bar");
@@ -368,9 +368,9 @@
         bar.textContent = `${progress}%`;
       }
       
-      function loadEmail() {
+      function loadEmail {
         if (currentEmailIndex >= emailPool.length) {
-          endQuiz();
+          endQuiz;
           return;
         }
         const email = emailPool[currentEmailIndex];
@@ -394,7 +394,7 @@
           notPhishingBtn.disabled = false;
         }
 
-        updateProgressBar();
+        updateProgressBar;
       }
       
       function checkAnswer(isPhishing) {
@@ -424,7 +424,7 @@
 
         const questionIndex = currentEmailIndex;
         
-        setTimeout(() => {
+        setTimeout( => {
           if (currentEmailIndex !== questionIndex) {
             return;
           }
@@ -432,31 +432,31 @@
           explanationDiv.style.display = "none";
           currentEmailIndex++;
           if (currentEmailIndex < emailPool.length) {
-            loadEmail();
+            loadEmail;
           } else {
-            endQuiz();
+            endQuiz;
           }
           phishingBtn.disabled = false;
           notPhishingBtn.disabled = false;
         }, 4000);
       }
 
-      function showPreviousEmail() {
+      function showPreviousEmail {
         if (currentEmailIndex > 0) {
           currentEmailIndex--;
-          loadEmail();
+          loadEmail;
         }
       }
 
-      function showNextEmail() {
+      function showNextEmail {
         if (currentEmailIndex < emailPool.length - 1) {
           currentEmailIndex++;
-          loadEmail();
+          loadEmail;
         }
       }
       
-      function endQuiz() {
-        updateProgressBar();
+      function endQuiz {
+        updateProgressBar;
         document.getElementById("quiz-content").style.display = "none";
         const result = document.getElementById("result");
         result.textContent = correctAnswers === emailPool.length 
@@ -467,10 +467,10 @@
         document.getElementById("home-button").style.display = "block";
       }
       
-      setupQuiz();
+      setupQuiz;
       
-      document.getElementById("phishing-btn").addEventListener("click", () => checkAnswer(true));
-      document.getElementById("not-phishing-btn").addEventListener("click", () => checkAnswer(false));
+      document.getElementById("phishing-btn").addEventListener("click",  => checkAnswer(true));
+      document.getElementById("not-phishing-btn").addEventListener("click",  => checkAnswer(false));
       document.getElementById("prev-email-btn").addEventListener("click", showPreviousEmail);
       document.getElementById("next-email-btn").addEventListener("click", showNextEmail);
     });

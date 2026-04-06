@@ -431,7 +431,7 @@
     const additionalInfo = document.getElementById("additional-info");
     const backButtonContainer = document.getElementById("back-button-container");
     
-    function clearChat() {
+    function clearChat {
       chatWindow.innerHTML = "";
       choicesContainer.innerHTML = "";
     }
@@ -448,16 +448,16 @@
     // Zeigt Antwortmöglichkeiten an und mischt diese zufällig.
     function displayChoices(choices) {
       choicesContainer.innerHTML = "";
-      let shuffledChoices = choices.slice();
+      let shuffledChoices = choices.slice;
       for (let i = shuffledChoices.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
+        const j = Math.floor(Math.random * (i + 1));
         [shuffledChoices[i], shuffledChoices[j]] = [shuffledChoices[j], shuffledChoices[i]];
       }
       shuffledChoices.forEach(choice => {
         const btn = document.createElement("button");
         btn.className = "choice-button";
         btn.textContent = choice.text;
-        btn.onclick = () => handleChoice(choice);
+        btn.onclick =  => handleChoice(choice);
         choicesContainer.appendChild(btn);
       });
     }
@@ -467,7 +467,7 @@
       appendMessage("Du", choice.text, "message du");
       choicesContainer.innerHTML = "";
       appendMessage("System", choice.feedback, "message system-message");
-      setTimeout(() => {
+      setTimeout( => {
         const scenario = scenarios[currentScenarioIndex];
         const sender = scenario.conversation[0].sender;
         appendMessage(sender, choice.finalMessage, "message other");
@@ -476,7 +476,7 @@
     }
     
     // Verarbeitet die nächsten Schritte im aktuellen Szenario.
-    function processStep() {
+    function processStep {
       const scenario = scenarios[currentScenarioIndex];
       if (currentStepIndex >= scenario.conversation.length) return;
       const step = scenario.conversation[currentStepIndex];
@@ -491,12 +491,12 @@
     }
     
     // Wechselt zum nächsten Szenario oder zeigt am Ende die Flag und den Back-Button.
-    function nextScenario() {
+    function nextScenario {
       currentScenarioIndex++;
       currentStepIndex = 0;
       if (currentScenarioIndex < scenarios.length) {
-        clearChat();
-        processStep();
+        clearChat;
+        processStep;
       } else {
         chatWindow.innerHTML = "";
         flagContainer.innerHTML = '<div class="flag">Flag: {DEFENDER_OF_TRUST}</div>';
@@ -507,9 +507,9 @@
       }
     }
     
-    function loadScenario() {
-      clearChat();
-      processStep();
+    function loadScenario {
+      clearChat;
+      processStep;
     }
     
     window.onload = loadScenario;

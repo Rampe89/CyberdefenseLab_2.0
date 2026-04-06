@@ -172,7 +172,7 @@ Hashing-Methode: MD5
         Kannst du auch diesen neuen Hash mit <a href="https://crackstation.net" target="_blank">Crackstation</a> knacken?
       </p>
       <input type="text" id="flag2" placeholder="MD5 Hash eingeben">
-      <button class="btn" onclick="checkBonusFlag()">Prüfen</button>
+      <button class="btn" onclick="checkBonusFlag">Prüfen</button>
     </div>
   </div>
 
@@ -183,7 +183,7 @@ Hashing-Methode: MD5
 
   <script>
     function checkFlag(correctPassword, flag) {
-      const input = document.getElementById('flag1').value.trim();
+      const input = document.getElementById('flag1').value.trim;
       if (input === correctPassword) {
         alert(`Richtig! Hier ist deine Flag: ${flag}`);
         document.getElementById('bonus-task').classList.remove('hidden');
@@ -192,8 +192,8 @@ Hashing-Methode: MD5
       }
     }
 
-    function checkBonusFlag() {
-      const input = document.getElementById('flag2').value.trim();
+    function checkBonusFlag {
+      const input = document.getElementById('flag2').value.trim;
       const correctHash = "e6f875eb15000fad443f9a207bdebdc1"; // Hash von password1232023
 
       if (input === correctHash) {

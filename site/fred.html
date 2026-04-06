@@ -106,7 +106,7 @@
         <h2>Bildanalyse</h2>
         <img src="assets/images/fred.jpg" alt="Bild von Fred der Ratte" style="width:100%; margin-bottom: 20px;">
         
-        <button class="btn" onclick="runExifTool()">Exif-Daten anzeigen</button>
+        <button class="btn" onclick="runExifTool">Exif-Daten anzeigen</button>
 
         <div class="console" id="console-output"></div>
 
@@ -156,11 +156,11 @@
             question6: false
         };
 
-        function runExifTool() {
+        function runExifTool {
             const consoleOutput = document.getElementById("console-output");
             consoleOutput.innerHTML = "Starte ExifTool...<br><br>";
 
-            setTimeout(() => {
+            setTimeout( => {
                 const metadata = `
 Filename: fred.jpg
 File Size: 4.7 MB
@@ -286,7 +286,7 @@ History Software Agent: GIMP 2.10
                 let index = 0;
                 const intervalTime = 50; // Verzögerung in Millisekunden pro Zeile
 
-                const interval = setInterval(() => {
+                const interval = setInterval( => {
                     if (index < lines.length) {
                         // Zeile zur Konsole hinzufügen und scrollen
                         consoleOutput.innerHTML += lines[index] + '<br>';
@@ -300,22 +300,22 @@ History Software Agent: GIMP 2.10
         }
 
         function checkAnswer(correctAnswer, questionId) {
-            const input = document.getElementById(questionId).value.trim();
-            if (input.toLowerCase() === correctAnswer.toLowerCase()) {
+            const input = document.getElementById(questionId).value.trim;
+            if (input.toLowerCase === correctAnswer.toLowerCase) {
                 alert("Richtig! Gute Arbeit.");
                 document.getElementById(questionId).disabled = true;
                 correctAnswers[questionId] = true;
-                if (allAnswersCorrect()) showFlag();
+                if (allAnswersCorrect) showFlag;
             } else {
                 alert("Falsch! Versuche es erneut.");
             }
         }
 
-        function allAnswersCorrect() {
+        function allAnswersCorrect {
             return Object.values(correctAnswers).every(answer => answer);
         }
 
-        function showFlag() {
+        function showFlag {
             document.getElementById("flag-container").innerHTML = `
                 <div class="flag">Flag: {WHERE_IS_FRED?}</div>
             `;

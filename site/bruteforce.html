@@ -106,7 +106,7 @@
     
     <h2>Simulation starten</h2>
     <input type="text" id="targetUsername" placeholder="Gib admin oder user ein">
-    <button onclick="startSimulation()">Simulation starten</button>
+    <button onclick="startSimulation">Simulation starten</button>
     <div class="shell" id="simulation"></div>
     
     <h2>Login</h2>
@@ -146,8 +146,8 @@
       "dragon123", "hackme", "password2023", "mysecurepass", "letmein1", "admin123", "user123", "rockyou123"
     ];
 
-    function startSimulation() {
-      const targetUsername = document.getElementById("targetUsername").value.trim();
+    function startSimulation {
+      const targetUsername = document.getElementById("targetUsername").value.trim;
       const simulation = document.getElementById("simulation");
       const isKnownUser = correctPasswords.hasOwnProperty(targetUsername);
 
@@ -161,7 +161,7 @@ Dieses Tool dient zu Demonstrationszwecken.
 
       let index = 0, attemptCount = 0, passwordFound = false;
       const delay = 150;
-      const interval = setInterval(() => {
+      const interval = setInterval( => {
         if (index < rockyouSample.length) {
           const pass = rockyouSample[index];
           simulation.textContent += `[ATTEMPT] Versuche Passwort: ${pass}\n`;
@@ -190,9 +190,9 @@ Dieses Tool dient zu Demonstrationszwecken.
     }
 
     function handleLogin(event) {
-      event.preventDefault();
-      const username = document.getElementById("loginUsername").value.trim();
-      const password = document.getElementById("loginPassword").value.trim();
+      event.preventDefault;
+      const username = document.getElementById("loginUsername").value.trim;
+      const password = document.getElementById("loginPassword").value.trim;
       const flag = document.getElementById("flag");
 
       if (correctPasswords[username] && correctPasswords[username] === password) {

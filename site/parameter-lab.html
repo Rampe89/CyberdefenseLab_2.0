@@ -75,7 +75,7 @@ Frage dich dann: Welche andere Rolle wäre hier naheliegend?</div>
 
   <script>
     const params = new URLSearchParams(window.location.search);
-    const role = params.get('role') || 'user';
+    const role = params.get('role') | 'user';
     const statusBox = document.getElementById('statusBox');
     const flagBox = document.getElementById('flagBox');
 

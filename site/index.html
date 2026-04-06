@@ -338,7 +338,7 @@
         <div id="analysis-password-container" class="lock-box">
           <p>Gib das Passwort ein, um diese Kategorie freizuschalten:</p>
           <input type="password" id="analysis-password" placeholder="Passwort eingeben"/>
-          <button class="btn" onclick="unlockAnalysis()">Freischalten</button>
+          <button class="btn" onclick="unlockAnalysis">Freischalten</button>
           <p class="error-message hidden" id="analysis-error-message">Das passt noch nicht.</p>
         </div>
 
@@ -375,7 +375,7 @@
             <p class="note">Gib beide Flags ein:</p>
             <input type="text" id="flag7a" placeholder="{Flag 1}"/>
             <input type="text" id="flag7b" placeholder="{Flag 2}"/>
-            <button class="btn" onclick="checkHashFlags()">Prüfen</button>
+            <button class="btn" onclick="checkHashFlags">Prüfen</button>
           </div>
 
           <div class="task">
@@ -384,7 +384,7 @@
             <a href="cookies.html" class="btn">Info-Material</a>
             <div class="device-chip-row"><span class="device-chip desktop">PC empfohlen</span></div>
             <input type="text" id="flag8" placeholder="{Flag eingeben}"/>
-            <button class="btn" onclick="checkCookie()">Prüfen</button>
+            <button class="btn" onclick="checkCookie">Prüfen</button>
           </div>
 </div>
       </details>
@@ -397,7 +397,7 @@
       <div id="advanced-password-container" class="lock-box">
         <p>Gib das Passwort für die erweiterten Labs ein:</p>
         <input type="password" id="advanced-password" placeholder="Passwort eingeben"/>
-        <button class="btn" onclick="unlockAdvanced()">Freischalten</button>
+        <button class="btn" onclick="unlockAdvanced">Freischalten</button>
         <p class="error-message hidden" id="advanced-error-message">Das passt noch nicht.</p>
       </div>
 
@@ -452,7 +452,7 @@
       <div id="teacher-password-container" class="lock-box">
         <p>Gib das Lehrkräfte-Passwort ein:</p>
         <input type="password" id="teacher-password" placeholder="Lehrkräfte-Passwort eingeben"/>
-        <button class="btn" onclick="unlockTeacher()">Freischalten</button>
+        <button class="btn" onclick="unlockTeacher">Freischalten</button>
         <p class="error-message hidden" id="teacher-error-message">Das passt noch nicht.</p>
       </div>
 
@@ -530,19 +530,15 @@
   <!-- Footer -->
   <footer>
     Lizenziert unter der MIT-Lizenz von Ramon Berghorn, 2025 | Bildungszwecke |
-    <a href="impressum.html">Impressum</a> |
-    <a href="datenschutz.html">Datenschutzerklärung</a> |
-    <a href="sources.html">Quellen</a> |
-    <a href="fred.html">🐭</a> |
-    <a href="contact.html">Kontakt</a>
+    <a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutzerklärung</a><a href="sources.html">Quellen</a><a href="fred.html">🐭</a><a href="contact.html">Kontakt</a>
   </footer>
 
 
   <!-- Cookie-Banner -->
   <div class="cookie-banner" id="cookie-banner">
     🍪 Diese Website verwendet kaum Cookies – außer vielleicht ein paar Versteckte...  
-    <button onclick="acceptCookies()">Akzeptieren</button>
-    <button onclick="rejectCookies()">Ablehnen (leider keine Flag für dich)</button>
+    <button onclick="acceptCookies">Akzeptieren</button>
+    <button onclick="rejectCookies">Ablehnen (leider keine Flag für dich)</button>
   </div>
 
   <script>
@@ -550,8 +546,7 @@
      * Globale Variablen & Konfiguration
      ***********************************/
     // Insgesamt 18 Flags (Index 0-17)
-    let collectedFlags = JSON.parse(localStorage.getItem("collectedFlags")) || 
-      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
+    let collectedFlags = JSON.parse(localStorage.getItem("collectedFlags")) | [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
     while (collectedFlags.length < 18) collectedFlags.push(false);
     // Base64-String für das Cookie {COOKIES_REVEAL_SECRETS}
     const cookieEncoded = "e0NPT0tJRVNfUkVWRUFMX1NFQ1JFVFN9";
@@ -582,19 +577,19 @@
     /*****************************
      * Initialisierung beim Laden
      *****************************/
-    window.onload = function() {
+    window.onload = function {
       // Cookie-Handling: Akzeptiert oder nicht
       if (localStorage.getItem('cookiesAccepted') === 'true') {
-        setCookie();
-        hideCookieBanner();
+        setCookie;
+        hideCookieBanner;
       } else if (localStorage.getItem('cookiesAccepted') === 'false') {
-        hideCookieBanner();
+        hideCookieBanner;
       }
       // Geheime Flags ausklappbar machen
       const secretHeader = document.getElementById("secret-header");
       const secretFlags = document.getElementById("secret-flags");
       const secretToggle = document.getElementById("secret-toggle");
-      secretHeader.addEventListener("click", function() {
+      secretHeader.addEventListener("click", function {
         if (secretFlags.style.display === "none") {
           secretFlags.style.display = "block";
           secretToggle.textContent = "[-]";
@@ -603,9 +598,9 @@
           secretToggle.textContent = "[+]";
         }
       });
-      updateUI();
-      syncLinuxUnlockState();
-      updateProgress();
+      updateUI;
+      syncLinuxUnlockState;
+      updateProgress;
 
       // EventHandler für Input-Felder
       const inputs = document.querySelectorAll('.task input[type="text"], #lab-password');
@@ -615,36 +610,36 @@
           if (event.key === 'Enter') {
             const checkButton = input.parentElement.querySelector('button[onclick]');
             if (checkButton) {
-              checkButton.click();
+              checkButton.click;
             }
           }
         });
       });
     
       // Rekonstruiere Achievements unten aus localStorage
-      renderAchievementsFromStorage();
+      renderAchievementsFromStorage;
     };
 
     /****************************
      * Cookie-Handling Funktionen
      ****************************/
-    function setCookie() {
+    function setCookie {
       document.cookie = "cyberFlag=" + atob(cookieEncoded) + "; path=/; max-age=3600";
     }
-    function acceptCookies() {
+    function acceptCookies {
       localStorage.setItem('cookiesAccepted', 'true');
-      setCookie();
-      hideCookieBanner();
+      setCookie;
+      hideCookieBanner;
     }
-    function rejectCookies() {
+    function rejectCookies {
       localStorage.setItem('cookiesAccepted', 'false');
       deleteCookie("cyberFlag");
-      hideCookieBanner();
+      hideCookieBanner;
     }
     function deleteCookie(name) {
       document.cookie = name + "=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     }
-    function hideCookieBanner() {
+    function hideCookieBanner {
       document.getElementById('cookie-banner').style.display = 'none';
     }
 
@@ -655,52 +650,52 @@
     function checkFlag(taskNumber, encodedFlag, displayTitle) {
       const input = document.getElementById(`flag${taskNumber}`);
       if (!input) return;
-      const decoded = atob(encodedFlag).trim();
-      if (input.value.trim() === decoded) {
+      const decoded = atob(encodedFlag).trim;
+      if (input.value.trim === decoded) {
         alert(`Richtig! Flag für Aufgabe ${taskNumber} akzeptiert: ${decoded}`);
         collectedFlags[taskNumber - 1] = true;
         input.disabled = true;
         displayAchievement(displayTitle);
-        saveFlags();
-        updateProgress();
+        saveFlags;
+        updateProgress;
       } else {
         alert("Falsch! Versuche es erneut.");
       }
     }
     // Spezielle Funktion für das Hashing Lab (zwei Flags)
-    function checkHashFlags() {
-      const flag7a = document.getElementById("flag7a").value.trim();
-      const flag7b = document.getElementById("flag7b").value.trim();
+    function checkHashFlags {
+      const flag7a = document.getElementById("flag7a").value.trim;
+      const flag7b = document.getElementById("flag7b").value.trim;
       const correctA = atob("e0xFVF9ISU1fQ09PS30=");  // {LET_HIM_COOK}
       const correctB = atob("e0FERF9BX1BJTkNIX09GX1NBTFR9");  // {ADD_A_PINCH_OF_SALT}
       if (flag7a === correctA && flag7b === correctB) {
         alert("Richtig! Beide Flags akzeptiert.");
         collectedFlags[6] = true; // Index 6
         displayAchievement("🍲 Let Him Cook + Add A Pinch of Salt");
-        saveFlags();
-        updateProgress();
+        saveFlags;
+        updateProgress;
       } else {
         alert("Falsch! Versuche es erneut.");
       }
     }
     // Funktion zum Prüfen des Cookie-Flags (Task 8)
-    function checkCookie() {
+    function checkCookie {
       const input = document.getElementById("flag8");
       if (!input) return;
-      const allCookies = document.cookie.split("; ").map(x => x.trim());
+      const allCookies = document.cookie.split("; ").map(x => x.trim);
       const cFlag = allCookies.find(c => c.startsWith("cyberFlag="));
       if (!cFlag) {
         alert("Kein verstecktes Cookie gefunden. Hast du Cookies akzeptiert?");
         return;
       }
-      const cookieValue = decodeURIComponent((cFlag.split("=").slice(1).join("=") || "")).trim();
-      if (input.value.trim() === cookieValue) {
+      const cookieValue = decodeURIComponent((cFlag.split("=").slice(1).join("=") | "")).trim;
+      if (input.value.trim === cookieValue) {
         alert("Richtig! Du hast die versteckte Cookie-Flag gefunden.");
         collectedFlags[7] = true;
         input.disabled = true;
         displayAchievement("🍪 Cookie-Jäger");
-        saveFlags();
-        updateProgress();
+        saveFlags;
+        updateProgress;
       } else {
         alert("Falsch! Prüfe die Cookies nochmal.");
       }
@@ -709,12 +704,12 @@
     /****************************
      * Passwortgeschützte Aufgaben
      ****************************/
-    function unlockTasks() {
-      unlockAnalysis();
+    function unlockTasks {
+      unlockAnalysis;
     }
 
-    function unlockAnalysis() {
-      const inputPassword = document.getElementById("analysis-password").value.trim();
+    function unlockAnalysis {
+      const inputPassword = document.getElementById("analysis-password").value.trim;
       const correct = atob("dXNlcjEyMw==");
       const errorMsg = document.getElementById("analysis-error-message");
       const protectedArea = document.getElementById("analysis-tasks");
@@ -727,8 +722,8 @@
       }
     }
 
-    function unlockAdvanced() {
-      const inputPassword = document.getElementById("advanced-password").value.trim();
+    function unlockAdvanced {
+      const inputPassword = document.getElementById("advanced-password").value.trim;
       const correct = atob("QXJjaGl2ZURlbHRhMjc=");
       const errorMsg = document.getElementById("advanced-error-message");
       const protectedArea = document.getElementById("advanced-tasks");
@@ -741,8 +736,8 @@
       }
     }
 
-    function unlockTeacher() {
-      const inputPassword = document.getElementById("teacher-password").value.trim();
+    function unlockTeacher {
+      const inputPassword = document.getElementById("teacher-password").value.trim;
       const correct = atob("VGVhY2hlcnMxeDE=");
       const errorMsg = document.getElementById("teacher-error-message");
       const protectedArea = document.getElementById("teacher-content");
@@ -758,7 +753,7 @@
     /****************************
      * Fortschritt & UI Updates
      ****************************/
-    function syncLinuxUnlockState() {
+    function syncLinuxUnlockState {
       const solved = localStorage.getItem("linuxLabSolved") === "true";
       const navLink = document.getElementById("expert-nav-link");
       const openLink = document.getElementById("expert-open-link");
@@ -783,22 +778,22 @@
       }
     }
 
-    function updateProgress() {
+    function updateProgress {
       const count = collectedFlags.filter(Boolean).length;
       document.getElementById("progress").textContent = `Fortschritt: ${count}/18 Flags gesammelt`;
       const percentage = (count / 18) * 100;
       document.getElementById("progress-fill").style.width = percentage + '%';
       if (count === 18 && !confettiShown) {
-        confetti();
+        confetti;
         confettiShown = true;
         alert("Flag: {Mission_accomplished}");
       }
     }
-    function saveFlags() {
+    function saveFlags {
       localStorage.setItem("collectedFlags", JSON.stringify(collectedFlags));
-      renderAchievementsFromStorage();
+      renderAchievementsFromStorage;
     }
-    function updateUI() {
+    function updateUI {
       for (let i = 1; i <= 18; i++) {
         const el = document.getElementById(`flag${i}`);
         if (el && collectedFlags[i - 1]) {
@@ -806,19 +801,19 @@
         }
       }
     }
-    function renderAchievementsFromStorage() {
+    function renderAchievementsFromStorage {
       const wrap = document.getElementById('achievements');
       if (!wrap) return;
       const any = collectedFlags.some(Boolean);
       if (!any) {
         wrap.classList.add('hidden');
         const listNodes = wrap.querySelectorAll('.achievement');
-        listNodes.forEach(n => n.remove());
+        listNodes.forEach(n => n.remove);
         return;
       }
       wrap.classList.remove('hidden');
       const listNodes = wrap.querySelectorAll('.achievement');
-      listNodes.forEach(n => n.remove());
+      listNodes.forEach(n => n.remove);
       collectedFlags.forEach((done, idx) => {
         if (!done) return;
         const title = ACHIEVEMENTS[idx + 1];
@@ -837,7 +832,7 @@
       div.className = "achievement";
       div.textContent = title;
       achievements.appendChild(div);
-      renderAchievementsFromStorage();
+      renderAchievementsFromStorage;
     }
   </script>
   <script src="assets/stability-patch.js"></script>

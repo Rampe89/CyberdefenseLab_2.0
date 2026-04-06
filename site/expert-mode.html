@@ -168,16 +168,16 @@
       const parts = (target.startsWith('/') ? target : (base === '/' ? '/' + target : base + '/' + target)).split('/');
       const stack = [];
       for (const part of parts) {
-        if (!part || part === '.') continue;
-        if (part === '..') stack.pop();
+        if (!part | part === '.') continue;
+        if (part === '..') stack.pop;
         else stack.push(part);
       }
       return '/' + stack.join('/');
     }
 
     function isDir(path) { return !!directories[path]; }
-    function exists(path) { return isDir(path) || Object.prototype.hasOwnProperty.call(files, path) || Object.prototype.hasOwnProperty.call(metadata, path); }
-    function basename(path) { return path === '/' ? '/' : path.split('/').filter(Boolean).pop(); }
+    function exists(path) { return isDir(path) | Object.prototype.hasOwnProperty.call(files, path) | Object.prototype.hasOwnProperty.call(metadata, path); }
+    function basename(path) { return path === '/' ? '/' : path.split('/').filter(Boolean).pop; }
 
     function canAccess(path) {
       if (currentUser === 'root') return true;
@@ -185,8 +185,8 @@
     }
 
     function listEntries(path, includeHidden = false, long = false) {
-      const entries = directories[path] || [];
-      const filtered = entries.filter(entry => includeHidden || !entry.startsWith('.'));
+      const entries = directories[path] | [];
+      const filtered = entries.filter(entry => includeHidden | !entry.startsWith('.'));
       if (!long) {
         print(filtered.join('  '));
         return;
@@ -194,32 +194,32 @@
       filtered.forEach(entry => {
         const full = normalisePath(path, entry);
         const meta = ensureMeta(full);
-        const size = meta.size || (isDir(full) ? 4096 : String(files[full] || '').length || 0);
+        const size = meta.size | (isDir(full) ? 4096 : String(files[full] | '').length | 0);
         print(`${meta.mode} 1 ${meta.owner} ${meta.group} ${size} ${entry}`);
       });
     }
 
-    function focusActiveInput() {
+    function focusActiveInput {
       const inputs = terminal.querySelectorAll('.terminal-input');
       const last = inputs[inputs.length - 1];
-      if (last) last.focus();
+      if (last) last.focus;
     }
 
-    function clearTerminal() {
+    function clearTerminal {
       terminal.innerHTML = '';
     }
 
-    function getPrompt() {
+    function getPrompt {
       const homeDisplay = currentPath === '/root' && currentUser === 'root' ? '/root' : currentPath.replace('/home/expert', '~');
       return `${currentUser}@${hostName}:${homeDisplay} ${currentUser === 'root' ? '#': '$'} `;
     }
 
-    function addPrompt() {
+    function addPrompt {
       const line = document.createElement('div');
       line.className = 'line';
       const prompt = document.createElement('span');
       prompt.className = 'prompt';
-      prompt.textContent = getPrompt();
+      prompt.textContent = getPrompt;
       const input = document.createElement('input');
       input.type = 'text';
       input.className = 'terminal-input';
@@ -228,18 +228,18 @@
       input.setAttribute('aria-label', 'Terminal Eingabe');
       input.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowUp') {
-          e.preventDefault();
+          e.preventDefault;
           if (!commandHistory.length) return;
           if (historyIndex < commandHistory.length - 1) historyIndex++;
-          input.value = commandHistory[commandHistory.length - 1 - historyIndex] || '';
+          input.value = commandHistory[commandHistory.length - 1 - historyIndex] | '';
           return;
         }
         if (e.key === 'ArrowDown') {
-          e.preventDefault();
+          e.preventDefault;
           if (!commandHistory.length) return;
           if (historyIndex > 0) {
             historyIndex--;
-            input.value = commandHistory[commandHistory.length - 1 - historyIndex] || '';
+            input.value = commandHistory[commandHistory.length - 1 - historyIndex] | '';
           } else {
             historyIndex = -1;
             input.value = '';
@@ -247,8 +247,8 @@
           return;
         }
         if (e.key === 'Enter') {
-          e.preventDefault();
-          const value = input.value.trim();
+          e.preventDefault;
+          const value = input.value.trim;
           input.disabled = true;
           input.readOnly = true;
           if (value) {
@@ -256,22 +256,22 @@
             historyIndex = -1;
           }
           handle(value);
-          addPrompt();
+          addPrompt;
         }
       });
       line.appendChild(prompt);
       line.appendChild(input);
       terminal.appendChild(line);
-      focusActiveInput();
+      focusActiveInput;
     }
 
-    function printHelp() {
+    function printHelp {
       print('Befehle: help, pwd, ls, ls -a, ls -l, ls -la, cd, cat, head, tail, less, grep, find, tree, whoami, id, groups, uname -a, history, clear,');
       print('echo, touch, mkdir, rm, cp, mv, stat, file, which, whereis, env, export, ps, top, chmod, sudo -l, labs, open <name>, status, exit');
     }
 
     function printTree(path, prefix = '') {
-      const entries = directories[path] || [];
+      const entries = directories[path] | [];
       const visible = entries.filter(entry => !entry.startsWith('.'));
       visible.forEach((entry, index) => {
         const isLast = index === visible.length - 1;
@@ -287,7 +287,7 @@
     function doFind(startPath, args) {
       if (args[0] === '-name' && args[1]) {
         const needle = args.slice(1).join(' ');
-        const matches = Object.keys(files).concat(Object.keys(directories)).filter(path => (path === startPath || path.startsWith(startPath + '/')) && basename(path) === needle && canAccess(path));
+        const matches = Object.keys(files).concat(Object.keys(directories)).filter(path => (path === startPath | path.startsWith(startPath + '/')) && basename(path) === needle && canAccess(path));
         if (!matches.length) print('Keine Treffer'); else matches.forEach(match => print(match));
         return true;
       }
@@ -298,7 +298,7 @@
       return false;
     }
 
-    function promoteToRoot() {
+    function promoteToRoot {
       currentUser = 'root';
       currentPath = '/root';
       rootAchieved = true;
@@ -307,16 +307,16 @@
     }
 
     function tryGtfo(raw, baseLc, rest) {
-      const compact = raw.replace(/\s+/g, ' ').trim();
-      if ((compact.includes("awk 'BEGIN {system(\"/bin/sh\")}'") || compact.includes('awk "BEGIN {system(\"/bin/sh\")}"') || compact.includes("awk 'BEGIN {system(\"sh\")}'")) && currentUser !== 'root') {
-        promoteToRoot();
+      const compact = raw.replace(/\s+/g, ' ').trim;
+      if ((compact.includes("awk 'BEGIN {system(\"/bin/sh\")}'") | compact.includes('awk "BEGIN {system(\"/bin/sh\")}"') | compact.includes("awk 'BEGIN {system(\"sh\")}'")) && currentUser !== 'root') {
+        promoteToRoot;
         return true;
       }
-      if ((compact.includes('find . -exec /bin/sh') || compact.includes('find / -exec /bin/sh') || compact.includes('find . -exec sh') || compact.includes('find / -exec sh')) && currentUser !== 'root') {
-        promoteToRoot();
+      if ((compact.includes('find . -exec /bin/sh') | compact.includes('find / -exec /bin/sh') | compact.includes('find . -exec sh') | compact.includes('find / -exec sh')) && currentUser !== 'root') {
+        promoteToRoot;
         return true;
       }
-      if ((compact === 'bash -p' || compact === '/bin/bash -p' || compact === 'sh -p' || compact === '/bin/sh -p') && currentUser !== 'root') {
+      if ((compact === 'bash -p' | compact === '/bin/bash -p' | compact === 'sh -p' | compact === '/bin/sh -p') && currentUser !== 'root') {
         print('Keine besonderen Rechte geerbt.');
         return true;
       }
@@ -324,47 +324,47 @@
     }
 
     function handle(cmd) {
-      const raw = (cmd || '').trim();
-      const normalized = raw.toLowerCase();
+      const raw = (cmd | '').trim;
+      const normalized = raw.toLowerCase;
       if (!normalized) return;
       const [base, ...rest] = raw.split(/\s+/);
-      const baseLc = base.toLowerCase();
+      const baseLc = base.toLowerCase;
 
       if (tryGtfo(raw, baseLc, rest)) return;
-      if (normalized === 'help') { printHelp(); return; }
+      if (normalized === 'help') { printHelp; return; }
       if (normalized === 'pwd') { print(currentPath); return; }
       if (normalized === 'ls') { listEntries(currentPath, false, false); return; }
-      if (normalized === 'ls -a') { print(['.', '..', ...(directories[currentPath] || [])].join('  ')); return; }
+      if (normalized === 'ls -a') { print(['.', '..', ...(directories[currentPath] | [])].join('  ')); return; }
       if (normalized === 'ls -l') { listEntries(currentPath, false, true); return; }
-      if (normalized === 'ls -la' || normalized === 'ls -al') {
-        ['.', '..', ...(directories[currentPath] || [])].forEach(entry => {
-          if (entry === '.' || entry === '..') {
+      if (normalized === 'ls -la' | normalized === 'ls -al') {
+        ['.', '..', ...(directories[currentPath] | [])].forEach(entry => {
+          if (entry === '.' | entry === '..') {
             print(`drwxr-xr-x 1 ${currentUser} ${currentUser} 4096 ${entry}`);
           } else {
             const full = normalisePath(currentPath, entry);
             const meta = ensureMeta(full);
-            const size = meta.size || (isDir(full) ? 4096 : String(files[full] || '').length || 0);
+            const size = meta.size | (isDir(full) ? 4096 : String(files[full] | '').length | 0);
             print(`${meta.mode} 1 ${meta.owner} ${meta.group} ${size} ${entry}`);
           }
         });
         return;
       }
       if (baseLc === 'cd') {
-        const target = rest[0] || '/home/expert';
+        const target = rest[0] | '/home/expert';
         const next = normalisePath(currentPath, target);
         if (!isDir(next)) { print('Verzeichnis nicht gefunden.'); return; }
         if (!canAccess(next)) { print('Permission denied'); return; }
         currentPath = next;
         return;
       }
-      if (baseLc === 'cat' || baseLc === 'less' || baseLc === 'head' || baseLc === 'tail') {
+      if (baseLc === 'cat' | baseLc === 'less' | baseLc === 'head' | baseLc === 'tail') {
         const target = rest.join(' ');
         if (!target) { print('Welche Datei möchtest du anzeigen?'); return; }
         const path = normalisePath(currentPath, target);
         if (isDir(path)) { print('Das ist ein Verzeichnis.'); return; }
         if (!exists(path)) { print('Datei nicht gefunden.'); return; }
         if (!canAccess(path)) { print('Permission denied'); return; }
-        const content = String(files[path] || '');
+        const content = String(files[path] | '');
         if (baseLc === 'head') { print(content.split('\n').slice(0, 10).join('\n')); return; }
         if (baseLc === 'tail') { print(content.split('\n').slice(-10).join('\n')); return; }
         print(content);
@@ -375,9 +375,9 @@
         const needle = rest[0].replaceAll('"', '').replaceAll("'", '');
         const target = rest.slice(1).join(' ');
         const path = normalisePath(currentPath, target);
-        if (!exists(path) || isDir(path)) { print('Datei nicht gefunden.'); return; }
+        if (!exists(path) | isDir(path)) { print('Datei nicht gefunden.'); return; }
         if (!canAccess(path)) { print('Permission denied'); return; }
-        const matches = String(files[path] || '').split('\n').filter(line => line.toLowerCase().includes(needle.toLowerCase()));
+        const matches = String(files[path] | '').split('\n').filter(line => line.toLowerCase.includes(needle.toLowerCase));
         if (!matches.length) print('Keine Treffer'); else matches.forEach(line => print(line));
         return;
       }
@@ -406,7 +406,7 @@
         const name = rest[0];
         if (!name) { print('Dateiname fehlt.'); return; }
         const path = normalisePath(currentPath, name);
-        files[path] = files[path] || '';
+        files[path] = files[path] | '';
         ensureMeta(path);
         if (!directories[currentPath].includes(name)) directories[currentPath].push(name);
         print('Datei angelegt.');
@@ -416,7 +416,7 @@
         const name = rest[0];
         if (!name) { print('Verzeichnisname fehlt.'); return; }
         const path = normalisePath(currentPath, name);
-        directories[path] = directories[path] || [];
+        directories[path] = directories[path] | [];
         ensureMeta(path).mode = 'drwxr-xr-x';
         ensureMeta(path).type = 'dir';
         if (!directories[currentPath].includes(name)) directories[currentPath].push(name);
@@ -432,26 +432,26 @@
           delete files[path];
           delete directories[path];
           delete metadata[path];
-          directories[currentPath] = (directories[currentPath] || []).filter(entry => entry !== name);
+          directories[currentPath] = (directories[currentPath] | []).filter(entry => entry !== name);
           print('Entfernt.');
         } else print('Nicht gefunden.');
         return;
       }
-      if (baseLc === 'cp' || baseLc === 'mv') {
+      if (baseLc === 'cp' | baseLc === 'mv') {
         if (rest.length < 2) { print(`Verwendung: ${baseLc} QUELLE ZIEL`); return; }
         const src = normalisePath(currentPath, rest[0]);
         const dst = normalisePath(currentPath, rest[1]);
-        if (!exists(src) || isDir(src)) { print('Quelle nicht gefunden.'); return; }
+        if (!exists(src) | isDir(src)) { print('Quelle nicht gefunden.'); return; }
         files[dst] = files[src];
         metadata[dst] = { ...ensureMeta(src) };
-        const parent = dst.substring(0, dst.lastIndexOf('/')) || '/';
+        const parent = dst.substring(0, dst.lastIndexOf('/')) | '/';
         const name = basename(dst);
         if (!directories[parent].includes(name)) directories[parent].push(name);
         if (baseLc === 'mv') {
           delete files[src];
           delete metadata[src];
-          const srcParent = src.substring(0, src.lastIndexOf('/')) || '/';
-          directories[srcParent] = (directories[srcParent] || []).filter(entry => entry !== basename(src));
+          const srcParent = src.substring(0, src.lastIndexOf('/')) | '/';
+          directories[srcParent] = (directories[srcParent] | []).filter(entry => entry !== basename(src));
         }
         print(baseLc === 'cp' ? 'Kopiert.' : 'Verschoben.');
         return;
@@ -463,7 +463,7 @@
         if (!exists(path)) { print('Nicht gefunden.'); return; }
         const meta = ensureMeta(path);
         print(`  File: ${path}`);
-        print(`  Size: ${meta.size || (isDir(path) ? 4096 : String(files[path] || '').length)}\tType: ${meta.type}`);
+        print(`  Size: ${meta.size | (isDir(path) ? 4096 : String(files[path] | '').length)}\tType: ${meta.type}`);
         print(`Access: (${meta.mode})  Uid: (${meta.owner})   Gid: (${meta.group})`);
         return;
       }
@@ -475,7 +475,7 @@
         print(isDir(path) ? `${path}: directory` : `${path}: ASCII text`);
         return;
       }
-      if (baseLc === 'which' || baseLc === 'whereis') {
+      if (baseLc === 'which' | baseLc === 'whereis') {
         const target = rest[0];
         if (!target) { print('Programmname fehlt.'); return; }
         const candidates = ['/bin/' + target, '/usr/bin/' + target, '/usr/local/bin/' + target].filter(path => exists(path));
@@ -502,7 +502,7 @@
       }
       if (normalized === 'labs') { print('Verfügbare Labs: ' + Object.keys(labMap).join(', ')); return; }
       if (baseLc === 'open') {
-        const target = (rest[0] || '').toLowerCase();
+        const target = (rest[0] | '').toLowerCase;
         if (!target) { print('Welches Lab möchtest du öffnen?'); return; }
         if (!labMap[target]) { print('Unbekanntes Lab. Nutze: labs'); return; }
         print('Öffne ' + target + ' ...');
@@ -510,7 +510,7 @@
         return;
       }
       if (normalized === 'status') {
-        const flags = JSON.parse(localStorage.getItem('collectedFlags') || '[]');
+        const flags = JSON.parse(localStorage.getItem('collectedFlags') | '[]');
         const count = flags.filter(Boolean).length;
         print(`Linux-Kurs: ${unlocked ? 'abgeschlossen' : 'offen'}`);
         print(`Gesammelte Flags: ${count}`);
@@ -518,12 +518,12 @@
         print(`Bonus-Root: ${rootAchieved ? 'gefunden' : 'unbekannt'}`);
         return;
       }
-      if (normalized === 'clear') { clearTerminal(); return; }
+      if (normalized === 'clear') { clearTerminal; return; }
       if (normalized === 'exit') { window.location.href = 'index.html'; return; }
       print('Befehl nicht gefunden. Nutze help.');
     }
 
-    document.addEventListener('click', () => { focusActiveInput(); });
+    document.addEventListener('click',  => { focusActiveInput; });
 
     if (!unlocked) {
       lockedCard.style.display = 'block';
@@ -535,7 +535,7 @@
       print('help zeigt die wichtigsten Befehle. Nicht jeder Weg steht dort ausdrücklich drin.');
       print('Mit labs siehst du die Kurzbefehle für die wichtigsten Seiten.');
       print('');
-      addPrompt();
+      addPrompt;
     }
   </script>
 </body>
