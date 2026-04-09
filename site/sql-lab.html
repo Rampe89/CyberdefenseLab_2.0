@@ -74,7 +74,7 @@
 
     .sql-layout {
       display: grid;
-      grid-template-columns: 1.7fr 1fr;
+      grid-template-columns: minmax(0, 1fr);
       gap: 22px;
       padding: 24px 28px 30px;
       align-items: start;
@@ -116,7 +116,7 @@
 
     .sql-grid-2 {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(0, 1fr);
       gap: 16px;
     }
 
@@ -298,6 +298,39 @@
       min-height: 80px;
     }
 
+    .sql-output-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .sql-output-item {
+      border: 1px solid #dce6ee;
+      border-radius: 8px;
+      background: #fbfdff;
+      padding: 12px 14px;
+    }
+
+    .sql-output-item strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #17344c;
+    }
+
+    .sql-output-meta {
+      margin: 0;
+      color: #455a6b;
+      line-height: 1.5;
+      font-size: 0.96rem;
+    }
+
+    .sql-bottom-notes {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+
     .sql-compare {
       display: grid;
       gap: 12px;
@@ -363,7 +396,8 @@
 
     @media (max-width: 920px) {
       .sql-layout,
-      .sql-grid-2 {
+      .sql-grid-2,
+      .sql-bottom-notes {
         grid-template-columns: 1fr;
       }
 
@@ -551,39 +585,28 @@ WHERE username = ?
               </div>
             </div>
           </section>
+          <section class="sql-bottom-notes">
+            <section class="sql-note">
+              <h3>Merksatz</h3>
+              <p><strong>Unsicher</strong> heißt: Die Eingabe landet direkt im Befehl.</p>
+              <p><strong>Sicher</strong> heißt: Die Eingabe bleibt nur ein Wert.</p>
+            </section>
+
+            <section class="sql-note">
+              <h3>Worauf man schauen soll</h3>
+              <ul class="sql-steps">
+                <li>Wann erscheint genau ein Datensatz?</li>
+                <li>Wann erscheinen plötzlich alle?</li>
+                <li>Welche Stelle in der Query kippt die Logik?</li>
+              </ul>
+            </section>
+
+            <section class="sql-note">
+              <h3>Gute Unterrichtsfrage</h3>
+              <p>Warum darf eine Anwendung Eingaben übernehmen, aber nicht die Struktur ihres Befehls verändern lassen?</p>
+            </section>
+          </section>
         </div>
-
-        <aside class="sql-stack">
-          <section class="sql-note">
-            <h3>So kann man es sich merken</h3>
-            <ol class="sql-steps">
-              <li><strong>Normale Suche:</strong> Ich gebe einen Namen ein.</li>
-              <li><strong>Unsichere Suche:</strong> Die Anwendung baut meinen Text direkt in den Befehl ein.</li>
-              <li><strong>Problem:</strong> Mein Text verändert plötzlich die Logik der Abfrage.</li>
-              <li><strong>Schutz:</strong> Eingaben müssen als Werte behandelt werden, nicht als Teil des Befehls.</li>
-            </ol>
-          </section>
-
-          <section class="sql-note">
-            <h3>Worauf Lernende achten sollen</h3>
-            <ul class="sql-steps">
-              <li>Welche Eingabe führt zu genau einem Treffer?</li>
-              <li>Welche Eingabe verändert die Abfrage?</li>
-              <li>Wo sieht man in der Query, dass die Logik gekippt ist?</li>
-              <li>Warum funktioniert dieselbe Eingabe in der sicheren Variante nicht mehr?</li>
-            </ul>
-          </section>
-
-          <section class="sql-note">
-            <h3>Mögliche Unterrichtsfrage</h3>
-            <p>
-              Erkläre mit eigenen Worten den Unterschied zwischen diesen beiden Sätzen:<br><br>
-              <code>Die Anwendung übernimmt einen Wert.</code><br>
-              <code>Die Anwendung übernimmt einen Befehlsteil.</code>
-            </p>
-            <p class="sql-small">Wenn das verstanden ist, sitzt die eigentliche Idee hinter SQL-Injection.</p>
-          </section>
-        </aside>
       </section>
     </div>
   </main>
@@ -643,27 +666,15 @@ WHERE username = ?
         }
 
         const wrap = document.createElement("div");
-        wrap.className = "sql-table-wrap";
-        const table = document.createElement("table");
-        table.innerHTML = `
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Username</th>
-              <th>Klasse</th>
-              <th>Note</th>
-            </tr>
-          </thead>`;
-
-        const tbody = document.createElement("tbody");
+        wrap.className = "sql-output-list";
         rows.forEach(r => {
-          const tr = document.createElement("tr");
-          tr.innerHTML = `<td>${esc(r.id)}</td><td>${esc(r.username)}</td><td>${esc(r.class)}</td><td>${esc(r.grade)}</td>`;
-          tbody.appendChild(tr);
+          const item = document.createElement("div");
+          item.className = "sql-output-item";
+          item.innerHTML = `
+            <strong>${esc(r.username)}</strong>
+            <p class="sql-output-meta">ID: ${esc(r.id)} · Klasse: ${esc(r.class)} · Note: ${esc(r.grade)}</p>`;
+          wrap.appendChild(item);
         });
-
-        table.appendChild(tbody);
-        wrap.appendChild(table);
         el.appendChild(wrap);
         return;
       }
