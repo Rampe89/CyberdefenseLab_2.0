@@ -3,294 +3,675 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>SQL Injection – Schritt-für-Schritt mit Grafik (Simulation)</title>
+<title>SQL Injection – Schritt für Schritt (Simulation)</title>
+<link rel="stylesheet" href="assets/cdl-unified.css">
 <style>
-:root{
-  --bg:#061426;
-  --card:#0c1b26;
-  --muted:#9fb4c8;
-  --accent:#2ea6ff;
-  --danger:#f44336;
-  --ok:#16a34a;
-  --panel:#071b2a;
-  --box:#0b2430;
+body.sql-lab-page{
+  color:#e8f3ff !important;
 }
-*{box-sizing:border-box}
-body{font-family:Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#041022,#0b2233);color:#e6eef6;margin:0}
-.wrap{max-width:1000px;margin:0 auto;padding:20px}
-.card{background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:16px;margin:12px 0}
-h1{margin:0 0 6px 0;font-size:1.5rem}
-h2{margin:6px 0 8px 0;font-size:1.1rem}
-h3{margin:6px 0 6px 0;font-size:1.05rem}
-p{margin:6px 0;color:var(--muted)}
-label{display:block;margin:6px 0 4px 0}
-input[type=text]{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);background:var(--panel);color:#e6eef6}
-button{padding:8px 12px;border:0;border-radius:8px;background:var(--accent);color:#022;font-weight:700;cursor:pointer}
-button.alt{background:#334155;color:#cfe6ff}
-button.danger{background:var(--danger);color:#fff}
-.btn-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-pre{background:#071524;border-radius:8px;padding:10px;overflow:auto;color:#d9f4ff}
-table{width:100%;border-collapse:collapse;margin-top:8px}
-th,td{padding:8px;border-bottom:1px solid rgba(255,255,255,0.06);text-align:left}
-.muted{color:var(--muted)}
-.notice{padding:8px;border-radius:8px}
-.info{background:#072033;border-left:4px solid #2ea6ff}
-.warn{background:#2a0b09;color:#ffdede;border-left:4px solid #f44336}
-.good{background:#0b2916;color:#c9f5d2;border-left:4px solid #16a34a}
-.badge{display:inline-block;padding:4px 8px;border-radius:6px;background:#123;color:#9fd;font-size:0.85rem}
-.sensitive{color:transparent;text-shadow:0 0 6px rgba(0,0,0,0.6)}
-.hidden{display:none}
-.small{font-size:0.9rem;color:var(--muted)}
-.kbd{font-family:monospace;background:#102235;border-radius:6px;padding:2px 6px}
 
-/* Stepper */
-.stepper{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
-.step{padding:6px 10px;border-radius:999px;background:#0b2030;color:#9fc9ff}
-.step.active{background:#2ea6ff;color:#012}
-.step.done{background:#10936b;color:#012}
+.sql-lab-page .wrap{
+  max-width:1100px;
+  margin:0 auto;
+  padding:28px 18px 40px;
+}
 
-/* Modal */
-.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:60}
-.modal{background:var(--card);padding:16px;border-radius:10px;width:340px;box-shadow:0 10px 30px rgba(0,0,0,0.6)}
-.modal h3{margin:0 0 8px 0}
-.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sql-lab-page .hero-card,
+.sql-lab-page .lab-card,
+.sql-lab-page .mini-card,
+.sql-lab-page .diagram-box,
+.sql-lab-page .status-box,
+.sql-lab-page .result-shell,
+.sql-lab-page .modal{
+  background:linear-gradient(180deg, rgba(8,21,34,.96), rgba(10,28,43,.96)) !important;
+  border:1px solid rgba(124,227,255,.14) !important;
+  border-radius:20px !important;
+  box-shadow:0 18px 40px rgba(0,0,0,.22);
+}
 
-/* Mini-graphic */
-.diagram{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-top:12px}
-.box{background:var(--box);padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);min-width:250px}
-.arrow{width:40px;height:2px;background:#8fbfe6;position:relative}
-.arrow:after{content:"";position:absolute;right:-6px;top:-6px;border:6px solid transparent;border-left-color:#8fbfe6}
-.label-small{font-size:0.9rem;color:var(--muted);margin-top:8px}
-.highlight{background:#223b12;padding:2px 6px;border-radius:4px;color:#dff4c6}
+.sql-lab-page .hero-card,
+.sql-lab-page .lab-card{
+  padding:20px;
+  margin:14px 0;
+}
+
+.sql-lab-page h1,
+.sql-lab-page h2,
+.sql-lab-page h3,
+.sql-lab-page strong,
+.sql-lab-page th,
+.sql-lab-page label,
+.sql-lab-page .step,
+.sql-lab-page .diagram-title,
+.sql-lab-page .metric-value,
+.sql-lab-page .result-title{
+  color:#ecf6ff !important;
+}
+
+.sql-lab-page p,
+.sql-lab-page li,
+.sql-lab-page .muted,
+.sql-lab-page .small,
+.sql-lab-page .label-small,
+.sql-lab-page .teacher-hint,
+.sql-lab-page .step-help{
+  color:#a9bfd3 !important;
+}
+
+.sql-lab-page .eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:.84rem;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#7ce3ff;
+  background:rgba(46,166,255,.12);
+  border:1px solid rgba(124,227,255,.14);
+  padding:8px 12px;
+  border-radius:999px;
+}
+
+.sql-lab-page .hero-grid,
+.sql-lab-page .two-col{
+  display:grid;
+  gap:16px;
+}
+
+.sql-lab-page .hero-grid{
+  grid-template-columns:1.65fr .95fr;
+  align-items:start;
+}
+
+.sql-lab-page .two-col{
+  grid-template-columns:1.2fr .8fr;
+}
+
+.sql-lab-page .mini-card{
+  padding:14px;
+}
+
+.sql-lab-page .mini-card p{
+  margin:.35rem 0;
+}
+
+.sql-lab-page .stepper{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:18px 0 8px;
+}
+
+.sql-lab-page .step{
+  padding:9px 14px;
+  border-radius:999px;
+  border:1px solid rgba(124,227,255,.14);
+  background:rgba(255,255,255,.04);
+  font-weight:700;
+}
+
+.sql-lab-page .step.active{
+  background:linear-gradient(135deg, #2ea6ff, #7ce3ff) !important;
+  color:#04111f !important;
+  border-color:transparent;
+}
+
+.sql-lab-page .step.done{
+  background:rgba(22,163,74,.18) !important;
+  border-color:rgba(22,163,74,.28);
+  color:#d9ffe4 !important;
+}
+
+.sql-lab-page .toolbar,
+.sql-lab-page .row,
+.sql-lab-page .btn-row,
+.sql-lab-page .teacher-strip{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+.sql-lab-page .toolbar{
+  justify-content:space-between;
+  margin-top:14px;
+}
+
+.sql-lab-page button,
+.sql-lab-page .btn,
+.sql-lab-page input[type="submit"],
+.sql-lab-page input[type="button"]{
+  background:linear-gradient(135deg, #2ea6ff, #1877f2) !important;
+  color:#fff !important;
+  border:none !important;
+  border-radius:12px !important;
+  padding:10px 14px;
+  font-weight:700;
+}
+
+.sql-lab-page button.alt{
+  background:linear-gradient(135deg, #1b3348, #27465f) !important;
+  color:#d9efff !important;
+}
+
+.sql-lab-page button.danger{
+  background:linear-gradient(135deg, #d9534f, #b91c1c) !important;
+}
+
+.sql-lab-page button:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+  transform:none !important;
+}
+
+.sql-lab-page input[type="text"],
+.sql-lab-page input[type="password"]{
+  width:100%;
+  padding:12px 14px;
+  border-radius:12px !important;
+  border:1px solid rgba(124,227,255,.18) !important;
+  background:rgba(5,14,24,.9) !important;
+  color:#ecf6ff !important;
+}
+
+.sql-lab-page input::placeholder{
+  color:#7f98ad !important;
+}
+
+.sql-lab-page .status-box,
+.sql-lab-page .notice{
+  padding:12px 14px;
+  border-radius:16px !important;
+  margin-top:10px;
+}
+
+.sql-lab-page .info{
+  background:rgba(46,166,255,.10) !important;
+  border-left:4px solid #2ea6ff !important;
+}
+
+.sql-lab-page .warn{
+  background:rgba(217,83,79,.14) !important;
+  border-left:4px solid #d9534f !important;
+  color:#ffe2df !important;
+}
+
+.sql-lab-page .good{
+  background:rgba(22,163,74,.14) !important;
+  border-left:4px solid #16a34a !important;
+  color:#d9ffe4 !important;
+}
+
+.sql-lab-page .badge,
+.sql-lab-page .chip{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 10px;
+  border-radius:999px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(124,227,255,.12);
+  color:#dcefff;
+  font-size:.88rem;
+}
+
+.sql-lab-page .teacher-strip{
+  justify-content:space-between;
+  padding:12px 14px;
+  border-radius:16px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(124,227,255,.12);
+  margin-top:14px;
+}
+
+.sql-lab-page .db-shell,
+.sql-lab-page .result-shell{
+  overflow:auto;
+  margin-top:10px;
+}
+
+.sql-lab-page table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  min-width:720px;
+  overflow:hidden;
+  border-radius:16px;
+}
+
+.sql-lab-page table thead th{
+  background:#102335 !important;
+  color:#eaf6ff !important;
+  font-size:.92rem;
+  letter-spacing:.02em;
+}
+
+.sql-lab-page table tbody tr:nth-child(odd){
+  background:rgba(255,255,255,.03);
+}
+
+.sql-lab-page table tbody tr:nth-child(even){
+  background:rgba(255,255,255,.05);
+}
+
+.sql-lab-page table td,
+.sql-lab-page table th{
+  border:1px solid rgba(124,227,255,.10) !important;
+  padding:12px 14px;
+}
+
+.sql-lab-page table td{
+  color:#eef7ff !important;
+}
+
+.sql-lab-page pre,
+.sql-lab-page code,
+.sql-lab-page .kbd{
+  font-family:Consolas, "Courier New", monospace;
+}
+
+.sql-lab-page pre{
+  background:linear-gradient(180deg, #06111a, #091724) !important;
+  color:#bff9b8 !important;
+  border:1px solid rgba(124,227,255,.14) !important;
+  border-radius:16px !important;
+  padding:14px;
+  white-space:pre-wrap;
+  word-break:break-word;
+  overflow:auto;
+}
+
+.sql-lab-page .kbd{
+  display:inline-block;
+  background:#12273a;
+  border:1px solid rgba(124,227,255,.16);
+  color:#dff3ff;
+  padding:2px 7px;
+  border-radius:8px;
+}
+
+.sql-lab-page .sensitive{
+  color:#7d92a5 !important;
+  text-shadow:none;
+  letter-spacing:.08em;
+}
+
+.sql-lab-page .hidden{display:none !important;}
+
+.sql-lab-page .diagram{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  gap:16px;
+  align-items:stretch;
+  margin-top:14px;
+}
+
+.sql-lab-page .diagram-box{
+  padding:16px;
+  min-width:0;
+}
+
+.sql-lab-page .diagram-arrow{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  min-width:80px;
+}
+
+.sql-lab-page .arrow-line{
+  width:56px;
+  height:2px;
+  background:#8fd3ff;
+  position:relative;
+}
+
+.sql-lab-page .arrow-line::after{
+  content:"";
+  position:absolute;
+  right:-6px;
+  top:-5px;
+  border:6px solid transparent;
+  border-left-color:#8fd3ff;
+}
+
+.sql-lab-page .highlight{
+  background:rgba(22,163,74,.20);
+  color:#dcffd8;
+  padding:2px 6px;
+  border-radius:6px;
+}
+
+.sql-lab-page .metric-grid{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:12px;
+  margin-top:16px;
+}
+
+.sql-lab-page .metric-card{
+  padding:14px;
+  border-radius:16px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(124,227,255,.12);
+}
+
+.sql-lab-page .metric-label{
+  font-size:.82rem;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  color:#8ea7bb;
+}
+
+.sql-lab-page .metric-value{
+  display:block;
+  margin-top:6px;
+  font-size:1.4rem;
+  font-weight:800;
+}
+
+.sql-lab-page .modal-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.62);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:60;
+}
+
+.sql-lab-page .modal{
+  width:min(420px, 100%);
+  padding:18px;
+}
+
+.sql-lab-page .checklist ol,
+.sql-lab-page .status-box ol{
+  margin:.25rem 0 .25rem 1.1rem;
+}
+
+@media (max-width: 900px){
+  .sql-lab-page .hero-grid,
+  .sql-lab-page .two-col,
+  .sql-lab-page .diagram,
+  .sql-lab-page .metric-grid{
+    grid-template-columns:1fr;
+  }
+
+  .sql-lab-page .diagram-arrow{
+    min-width:0;
+  }
+
+  .sql-lab-page .arrow-line{
+    width:2px;
+    height:42px;
+  }
+
+  .sql-lab-page .arrow-line::after{
+    right:-5px;
+    top:auto;
+    bottom:-6px;
+    border:6px solid transparent;
+    border-top-color:#8fd3ff;
+    border-left-color:transparent;
+  }
+
+  .sql-lab-page .wrap{
+    padding:18px 12px 32px;
+  }
+
+  .sql-lab-page table{
+    min-width:620px;
+  }
+}
 </style>
-
-  <link rel="stylesheet" href="assets/cdl-unified.css">
 </head>
-<body>
+<body class="sql-lab-page">
 <div class="wrap">
-
-  <div class="card">
-    <h1>SQL Injection – Schritt für Schritt</h1>
-    <p class="muted">Vier Phasen: normale Abfrage, Manipulation ausprobieren, Ursache verstehen, sichere Variante vergleichen.</p>
-    <div class="stepper" id="stepper">
-      <div class="step active" data-step="1">1 Normal</div>
-      <div class="step" data-step="2">2 Manipulation</div>
-      <div class="step" data-step="3">3 Warum</div>
-      <div class="step" data-step="4">4 Sicher</div>
-    </div>
-    <div class="row" style="justify-content:space-between">
+  <section class="hero-card">
+    <div class="hero-grid">
       <div>
-        <button id="btn-prev" class="alt" disabled>Zurück</button>
-        <button id="btn-next" disabled>Weiter</button>
+        <span class="eyebrow">CyberDefense Lab · SQL-Lab</span>
+        <h1>SQL Injection – Schritt für Schritt</h1>
+        <p class="muted">Dieses Lab führt kontrolliert durch vier Phasen: normale Abfrage, Manipulation, Erklärung der Ursache und sichere Lösung mit Parameterbindung.</p>
+        <div class="stepper" id="stepper">
+          <div class="step active" data-step="1">1 Normal</div>
+          <div class="step" data-step="2">2 Manipulation</div>
+          <div class="step" data-step="3">3 Warum</div>
+          <div class="step" data-step="4">4 Sicher</div>
+        </div>
+        <div class="toolbar">
+          <div class="btn-row">
+            <button id="btn-prev" class="alt" disabled>Zurück</button>
+            <button id="btn-next" disabled>Weiter</button>
+          </div>
+          <div class="chip step-help">Weiter wird jeweils erst nach dem passenden Schritt freigegeben.</div>
+        </div>
       </div>
-      <div class="row">
+      <aside class="mini-card">
+        <h2>Lab-Ziel</h2>
+        <p>Am Ende soll klar sein, <strong>warum</strong> eine unsichere Zeichenkette alle Datensätze liefern kann und <strong>warum</strong> Parameterbindung das verhindert.</p>
+        <div class="metric-grid">
+          <div class="metric-card">
+            <span class="metric-label">Phasen</span>
+            <span class="metric-value">4</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Datensätze</span>
+            <span class="metric-value">5</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Modus</span>
+            <span class="metric-value">Sim</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="teacher-strip">
+      <div class="btn-row">
         <button id="btn-teacher-login" class="alt">Lehrkraft: Login</button>
-        <span id="teacher-state" class="small">(nicht angemeldet)</span>
-        <span class="small">Passwort: <span class="badge">lehrer</span></span>
+        <span id="teacher-state" class="teacher-hint">(nicht angemeldet)</span>
+      </div>
+      <div class="teacher-hint">Demo-Zugang für das Lab: <span class="badge">lehrer</span></div>
+    </div>
+  </section>
+
+  <section class="lab-card">
+    <div class="two-col">
+      <div>
+        <h2>Mini-Glossar</h2>
+        <div class="status-box info small">
+          <p><strong>Datenbank</strong>: eine strukturierte Sammlung von Daten, zum Beispiel zu Schüler:innen.</p>
+          <p><strong>DBMS</strong>: das Programm, das diese Daten verwaltet, etwa MySQL, PostgreSQL oder SQLite.</p>
+          <p><strong>SQL</strong>: die Sprache, mit der Daten abgefragt oder verändert werden.</p>
+          <p><strong>Tabelle</strong>: Daten in Zeilen und Spalten.</p>
+          <p><strong>WHERE</strong>: der Teil einer Abfrage, der eine Bedingung setzt.</p>
+        </div>
+      </div>
+      <div>
+        <h2>Worum es hier geht</h2>
+        <div class="status-box info small">
+          <ol>
+            <li>normale Suche durchführen,</li>
+            <li>Manipulation beobachten,</li>
+            <li>Ursache sprachlich erklären,</li>
+            <li>sichere Lösung vergleichen.</li>
+          </ol>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
-
-  <!-- Mini-Glossar -->
-  <div class="card">
-    <h2>Mini-Glossar</h2>
-    <div class="notice info small">
-      <p><strong>Datenbank</strong>: Eine strukturierte Sammlung von Daten – zum Beispiel eine Tabelle mit Schülernamen, Klassen und Noten.</p>
-      <p><strong>Datenbankmanagementsystem (DBMS)</strong>: Das Programm, das die Datenbank verwaltet. Es speichert, sucht und schützt die Daten. Beispiele: <em>MySQL</em>, <em>PostgreSQL</em>, <em>SQLite</em>.</p>
-      <p><strong>SQL (Structured Query Language)</strong>: Die Sprache, mit der man dem DBMS Anweisungen gibt – also sagt, welche Daten man sehen, einfügen oder löschen möchte.</p>
-      <p><strong>Tabelle</strong>: Eine geordnete Form, um Daten darzustellen. Zeilen heißen <em>Datensätze</em>, Spalten heißen <em>Felder</em> oder <em>Attribute</em>.</p>
-      <p><strong>WHERE</strong>: Ein Teil eines SQL-Befehls, der eine Bedingung festlegt. Beispiel: „Zeig mir nur die Zeilen, wo der Name gleich <em>alice</em> ist.“</p>
-    </div>
-  </div>
-
-
-  <!-- DB-Ansicht -->
-  <div class="card">
+  <section class="lab-card">
     <h2>Schülerdaten (Simulation)</h2>
-    <p class="muted">Keine echte Datenbank. Alles läuft im Browser. Noten und Kommentare sind standardmäßig verborgen.</p>
-    <div class="btn-row" id="teacher-controls" style="display:none">
+    <p class="muted">Keine echte Datenbank. Alles passiert lokal im Browser. Noten und Kommentare bleiben standardmäßig verborgen.</p>
+    <div class="btn-row hidden" id="teacher-controls">
       <button id="btn-show-sensitive" class="alt">Sensible Felder zeigen</button>
       <button id="btn-hide-sensitive" class="alt hidden">Sensible Felder verbergen</button>
       <button id="btn-teacher-logout" class="danger">Logout</button>
     </div>
-    <div class="notice info small">Die Tabelle ist nur die Datenbasis. Darauf wenden wir Abfragen an.</div>
-    <div style="overflow:auto">
-      <table id="db-table" style="min-width:700px">
+    <div class="status-box info small">Die Tabelle ist die gemeinsame Datenbasis. In den Phasen darunter wird nur die Art der Abfrage verändert.</div>
+    <div class="db-shell">
+      <table id="db-table" aria-label="Simulierte Schülerdatenbank">
         <thead>
           <tr>
-            <th>ID</th><th>Username</th><th>Klasse</th><th>Durchschnitt (Note)</th><th>Kommentar</th>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Klasse</th>
+            <th>Durchschnitt</th>
+            <th>Kommentar</th>
           </tr>
         </thead>
         <tbody></tbody>
       </table>
     </div>
-  </div>
+  </section>
 
-  <!-- Phase 1 -->
-  <section class="card" id="phase-1">
+  <section class="lab-card" id="phase-1">
     <h2>Phase 1: Normale Abfrage</h2>
-    <h3>1a) Tabelle lesen</h3>
     <p>Suche dir einen Namen aus der Tabelle. Beispiel: <span class="kbd">alice</span>.</p>
-
-    <h3>1b) Abfrage in Worten</h3>
-    <div class="notice info small">
-      <p>„Hole alle Spalten aus <code>students</code>, aber nur die Zeile, wo <code>username</code> gleich <em>alice</em> ist.“</p>
+    <div class="status-box info small">
+      <p><strong>Abfrage in Worten:</strong> Hole alle Spalten aus <code>students</code>, aber nur die Zeile, deren <code>username</code> gleich <em>alice</em> ist.</p>
       <pre id="sql1">SELECT * FROM students WHERE username = 'alice';</pre>
     </div>
 
-    <h3>1c) Abfrage ausführen</h3>
     <label for="q1">Eingabe (username)</label>
     <input id="q1" type="text" placeholder="alice" />
-    <div class="btn-row" style="margin-top:8px">
+    <div class="btn-row" style="margin-top:10px">
       <button id="run1">Ausführen</button>
       <button class="alt sample" data-val="alice">alice</button>
       <button class="alt sample" data-val="bob">bob</button>
     </div>
-    <div id="out1" style="margin-top:8px"></div>
-    <div id="phase1-ok" class="notice good hidden"><strong>Gut.</strong> Du hast eine normale Abfrage erfolgreich ausgeführt.</div>
+    <div class="result-shell" id="out1" style="margin-top:10px"></div>
+    <div id="phase1-ok" class="status-box good hidden"><strong>Gut.</strong> Die normale Abfrage liefert genau einen passenden Datensatz.</div>
   </section>
 
-  <!-- Phase 2 -->
-  <section class="card hidden" id="phase-2">
+  <section class="lab-card hidden" id="phase-2">
     <h2>Phase 2: Manipulation ausprobieren</h2>
-    <p>Gib jetzt etwas ein, das kein Name ist. Beispiel: <span class="kbd">' OR '1'='1' --</span>.</p>
+    <p>Jetzt wird absichtlich kein echter Name eingegeben. Beispiel: <span class="kbd">' OR '1'='1' --</span>.</p>
     <label for="q2">Eingabe (username)</label>
     <input id="q2" type="text" placeholder="' OR '1'='1' --" />
-    <div class="btn-row" style="margin-top:8px">
+    <div class="btn-row" style="margin-top:10px">
       <button id="run2">Ausführen (unsicher)</button>
       <button class="alt sample" data-val="' OR '1'='1' --">' OR '1'='1' --</button>
       <button class="alt sample" data-val="'; DROP TABLE students; --">'; DROP TABLE students; --</button>
     </div>
-
-    <div class="notice warn" style="margin-top:8px">
+    <div class="status-box warn">
       <strong>Generierte Query (unsicher)</strong>
       <pre id="sql2">SELECT * FROM students WHERE username = '...';</pre>
-      <p class="small">Die Anwendung fügt die Eingabe direkt in die Abfrage ein. So kann die Eingabe die Bedingung verändern.</p>
+      <p class="small">Hier wird die Eingabe direkt in die Zeichenkette eingebaut. Genau das macht die Manipulation möglich.</p>
     </div>
-
-    <div id="out2"></div>
-    <div id="phase2-ok" class="notice good hidden"><strong>Richtig.</strong> Alle Zeilen wurden angezeigt. Das ist die Wirkung einer SQL-Injection.</div>
+    <div class="result-shell" id="out2"></div>
+    <div id="phase2-ok" class="status-box good hidden"><strong>Richtig.</strong> Alle Zeilen wurden angezeigt. Genau das ist die typische Wirkung der Injection in dieser Simulation.</div>
   </section>
 
-  <!-- Phase 3 -->
-  <section class="card hidden" id="phase-3">
-    <h2>Phase 3: Warum funktioniert das</h2>
-    <div class="notice info">
+  <section class="lab-card hidden" id="phase-3">
+    <h2>Phase 3: Warum funktioniert das?</h2>
+    <div class="status-box info">
       <ol>
-        <li>Die Anwendung baut den Text der Abfrage, indem sie die Eingabe hineinschreibt.</li>
-        <li>Die Eingabe kann eine zusätzliche Bedingung einfügen, zum Beispiel <code>OR '1'='1'</code>.</li>
-        <li>Diese Bedingung ist immer wahr, deshalb liefert die Abfrage alle Zeilen.</li>
+        <li>Die Anwendung baut den SQL-Text, indem sie die Eingabe einfach hineinschreibt.</li>
+        <li>Die Eingabe fügt eine neue Bedingung ein, zum Beispiel <code>OR '1'='1'</code>.</li>
+        <li>Diese Bedingung ist immer wahr. Deshalb werden alle Zeilen zurückgegeben.</li>
       </ol>
     </div>
-
-    <div class="notice good" style="margin-top:8px">
-      <strong>So sieht die manipulierte Abfrage aus</strong>
+    <div class="status-box good">
+      <strong>Manipulierte Abfrage</strong>
       <pre id="viz3">SELECT * FROM students WHERE username = '' <span class="highlight">OR '1'='1'</span>;</pre>
-      <p class="small">Der grün markierte Teil stammt aus der Eingabe und ändert die Logik.</p>
+      <p class="small">Der markierte Teil stammt aus der Eingabe und verändert die Logik der Abfrage.</p>
     </div>
-
-    <label class="row" style="margin-top:8px"><input type="checkbox" id="chk-why"> Ich habe verstanden, warum alle Zeilen erscheinen.</label>
+    <label class="row" style="margin-top:10px"><input type="checkbox" id="chk-why"> Ich habe verstanden, warum alle Zeilen erscheinen.</label>
   </section>
 
-  <!-- Phase 4 with graphic -->
-  <section class="card hidden" id="phase-4">
+  <section class="lab-card hidden" id="phase-4">
     <h2>Phase 4: Sichere Variante (Parameterbindung)</h2>
-
-    <p class="muted">Jetzt führen wir dieselbe Eingabe noch einmal aus, aber die Anwendung behandelt die Eingabe als reinen Wert. Die Struktur der Abfrage bleibt unverändert.</p>
+    <p class="muted">Die gleiche Eingabe wird jetzt noch einmal verwendet. Diesmal bleibt die Struktur der Abfrage unverändert, weil die Eingabe nur als Wert gebunden wird.</p>
 
     <div class="diagram" aria-hidden="true">
-      <div class="box">
-        <strong>Unsicher</strong>
-        <p class="small">Eingabe wird in den SQL-Text eingefügt</p>
+      <div class="diagram-box">
+        <div class="diagram-title"><strong>Unsicher</strong></div>
+        <p class="small">Eingabe wird in den SQL-Text eingesetzt.</p>
         <pre>SQL-Text: SELECT * FROM students WHERE username = '<span class="highlight">EINGABE</span>';</pre>
-        <p class="label-small">Eingabe kann SQL-Logik ändern</p>
+        <p class="label-small">Die Eingabe kann die Logik der Abfrage verändern.</p>
       </div>
-
-      <div style="text-align:center">
-        <div class="arrow" aria-hidden="true"></div>
-        <div class="label-small">versucht zu ändern</div>
+      <div class="diagram-arrow">
+        <div class="arrow-line"></div>
+        <div class="label-small">wird eingebaut</div>
       </div>
-
-      <div class="box">
-        <strong>Sicher</strong>
-        <p class="small">Eingabe wird getrennt übergeben</p>
-        <pre>SQL-Text: SELECT * FROM students WHERE username = ?  
+      <div class="diagram-box">
+        <div class="diagram-title"><strong>Sicher</strong></div>
+        <p class="small">Eingabe und SQL-Struktur bleiben getrennt.</p>
+        <pre>SQL-Text: SELECT * FROM students WHERE username = ?
 bind: ['<span class="highlight">EINGABE</span>']</pre>
-        <p class="label-small">Eingabe bleibt reiner Datenwert</p>
+        <p class="label-small">Die Eingabe bleibt Datenwert und wird nicht zu SQL-Logik.</p>
       </div>
     </div>
 
-    <div class="notice info small" style="margin-top:12px">
-      <p><strong>In Worten:</strong></p>
-      <p>Bei der sicheren Variante bleibt der SQL-Text immer gleich. Die Eingabe wird als Wert gebunden. Deshalb kann die Eingabe nicht die Struktur der Abfrage ändern.</p>
-      <p class="good"><strong>Merksatz:</strong> Eingaben sind Daten, nie Befehle.</p>
+    <div class="status-box info small">
+      <p><strong>Merksatz:</strong> Eingaben sind Daten, nie Befehle.</p>
+      <p>Bei der sicheren Variante bleibt der SQL-Text gleich. Nur der gebundene Wert ändert sich.</p>
     </div>
 
     <label for="q4">Eingabe wiederverwenden</label>
     <input id="q4" type="text" placeholder="' OR '1'='1' --" />
-    <div class="btn-row" style="margin-top:8px">
+    <div class="btn-row" style="margin-top:10px">
       <button id="run4">Ausführen (sicher)</button>
       <button class="alt sample" data-val="' OR '1'='1' --">' OR '1'='1' --</button>
     </div>
-
-    <div class="notice info" style="margin-top:8px">
+    <div class="status-box info">
       <strong>Generierte Query (sicher)</strong>
       <pre id="sql4">SELECT * FROM students WHERE username = ?  -- bind: ['...']</pre>
-      <p class="small">Die Abfrage bleibt unveränderlich, die Eingabe ist nur ein Parameter.</p>
+      <p class="small">Die Abfrage bleibt unverändert. Die Eingabe wird nur als Parameter gebunden.</p>
     </div>
-
-    <div id="out4"></div>
-    <div id="phase4-ok" class="notice good hidden"><strong>Gut.</strong> Im sicheren Modus erscheinen nicht alle Zeilen. Die Eingabe wurde nur als Wert behandelt.</div>
+    <div class="result-shell" id="out4"></div>
+    <div id="phase4-ok" class="status-box good hidden"><strong>Gut.</strong> Im sicheren Modus erscheinen nicht alle Zeilen, obwohl dieselbe Eingabe verwendet wurde.</div>
   </section>
 
-  <!-- Aufgaben -->
-  <section class="card">
+  <section class="lab-card checklist">
     <h2>Aufgaben</h2>
     <ol>
-      <li>Phase 2: Notiere die Eingabe, die alle Zeilen anzeigt.</li>
-      <li>Schreibe in einem Satz, warum die Eingabe wirkt.</li>
-      <li>Phase 4: Was ändert sich und warum?</li>
-      <li>Nenne zwei Schutzmaßnahmen.</li>
+      <li>Notiere die Eingabe, die in Phase 2 alle Zeilen zeigt.</li>
+      <li>Erkläre in einem Satz, warum diese Eingabe wirkt.</li>
+      <li>Beschreibe, was sich in Phase 4 ändert.</li>
+      <li>Nenne zwei Schutzmaßnahmen gegen SQL Injection.</li>
     </ol>
-    <div class="btn-row" style="margin-top:8px">
+    <div class="btn-row" style="margin-top:10px">
       <button id="check">Kurz-Check</button>
       <button id="reset-check" class="alt">Zurücksetzen</button>
     </div>
-    <div id="check-out" class="notice info" style="margin-top:8px"></div>
+    <div id="check-out" class="status-box info" style="margin-top:10px">Noch kein Check ausgeführt.</div>
   </section>
-
 </div>
 
-<!-- Modal -->
 <div id="modal-root" class="hidden"></div>
 
 <script>
-/* -------- Datenbasis (simuliert) -------- */
 const DB = [
   { id:1, username:"alice", class:"7a", grade:2.1, comment:"hilft anderen" },
   { id:2, username:"bob",   class:"8b", grade:3.4, comment:"schreibt gut" },
   { id:3, username:"carol", class:"9a", grade:1.7, comment:"Klassenvertretung" },
   { id:4, username:"dave",  class:"7a", grade:2.9, comment:"unregelmäßig" },
-  { id:5, username:"eva",   class:"10c",grade:1.3, comment:"Tutor" }
+  { id:5, username:"eva",   class:"10c", grade:1.3, comment:"Tutor" }
 ];
 
-/* -------- Helpers -------- */
 const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 const qs = sel => document.querySelector(sel);
 const qsa = sel => Array.from(document.querySelectorAll(sel));
 
-function renderDB(mask=true){
+function renderDB(mask = true){
   const tb = qs("#db-table tbody");
   tb.innerHTML = "";
-  DB.forEach(r=>{
+  DB.forEach(r => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${esc(r.id)}</td>
       <td>${esc(r.username)}</td>
       <td>${esc(r.class)}</td>
-      <td>${mask ? '<span class="sensitive">••</span>' : esc(r.grade)}</td>
-      <td>${mask ? '<span class="sensitive">—</span>' : esc(r.comment)}</td>`;
+      <td>${mask ? '<span class="sensitive">•• verborgen ••</span>' : esc(r.grade)}</td>
+      <td>${mask ? '<span class="sensitive">•• verborgen ••</span>' : esc(r.comment)}</td>`;
     tb.appendChild(tr);
   });
 }
@@ -298,36 +679,46 @@ function renderDB(mask=true){
 function renderRows(rows, mount){
   const el = typeof mount === "string" ? qs(mount) : mount;
   el.innerHTML = "";
+
   if(Array.isArray(rows)){
-    if(rows.length === 0){ el.innerHTML = '<p class="muted">Keine Ergebnisse</p>'; return; }
+    if(rows.length === 0){
+      el.innerHTML = '<div class="status-box info"><strong>Keine Ergebnisse.</strong> Für diese Eingabe wurde kein passender Datensatz gefunden.</div>';
+      return;
+    }
+
+    const shell = document.createElement("div");
+    shell.className = "status-box info";
+    shell.innerHTML = `<div class="result-title"><strong>Ergebnis: ${rows.length} Datensatz${rows.length === 1 ? '' : 'e'}</strong></div>`;
+
     const t = document.createElement("table");
     t.innerHTML = "<thead><tr><th>ID</th><th>Username</th><th>Klasse</th><th>Note</th></tr></thead>";
     const tb = document.createElement("tbody");
-    rows.forEach(r=>{
+
+    rows.forEach(r => {
       const tr = document.createElement("tr");
       tr.innerHTML = `<td>${esc(r.id)}</td><td>${esc(r.username)}</td><td>${esc(r.class)}</td><td>${esc(r.grade)}</td>`;
       tb.appendChild(tr);
     });
+
     t.appendChild(tb);
-    el.appendChild(t);
-  } else if(rows && rows.error){
-    el.innerHTML = `<div class="notice warn">${esc(rows.error)}</div>`;
+    shell.appendChild(t);
+    el.appendChild(shell);
+  } else if(rows && rows.error) {
+    el.innerHTML = `<div class="status-box warn"><strong>Hinweis:</strong> ${esc(rows.error)}</div>`;
   }
 }
 
-/* -------- Steps UI -------- */
 function setStep(n){
-  [1,2,3,4].forEach(s=>{
-    const chip = qs('.step[data-step="'+s+'"]');
-    chip.classList.toggle("active", s===n);
-    chip.classList.toggle("done", s<n);
-    qs("#phase-"+s).classList.toggle("hidden", s!==n);
+  [1,2,3,4].forEach(s => {
+    const chip = qs('.step[data-step="' + s + '"]');
+    chip.classList.toggle("active", s === n);
+    chip.classList.toggle("done", s < n);
+    qs("#phase-" + s).classList.toggle("hidden", s !== n);
   });
-  qs("#btn-prev").disabled = (n===1);
-  qs("#btn-next").disabled = true; // freischalten durch Phase-Logik
+  qs("#btn-prev").disabled = (n === 1);
+  qs("#btn-next").disabled = true;
 }
 
-/* -------- Queries -------- */
 function insecureQuery(input){
   const sql = "SELECT * FROM students WHERE username = '" + input + "';";
   qs("#sql2").textContent = sql;
@@ -335,40 +726,40 @@ function insecureQuery(input){
   const reAlwaysTrue = /(\bor\b).*?(['"]?\s*1\s*['"]?\s*=\s*['"]?\s*1|true)/i;
   if(reAlwaysTrue.test(low)) return DB.slice();
   const reDanger = /(drop\s+table|;|--|\/\*)/i;
-  if(reDanger.test(input)) return { error:"Gefährliche Anweisung erkannt. In dieser Simulation nichts ausführen." };
+  if(reDanger.test(input)) return { error: "Gefährliche Anweisung erkannt. In dieser Simulation wird nichts ausgeführt." };
   return DB.filter(r => r.username === input);
 }
+
 function secureQuery(input){
   const sql = "SELECT * FROM students WHERE username = ?  -- bind: [" + esc(input) + "]";
   qs("#sql4").textContent = sql;
   return DB.filter(r => r.username === input);
 }
 
-/* -------- Teacher login (client demo) -------- */
 const PW = "lehrer";
 function openModal(){
   const root = qs("#modal-root");
   root.classList.remove("hidden");
   root.innerHTML = `
     <div class="modal-backdrop">
-      <div class="modal" role="dialog" aria-modal="true">
-        <h3>Lehrkraft-Login</h3>
-        <p class="small">Bitte Passwort eingeben.</p>
-        <div class="row" style="margin:8px 0">
-          <input id="pw" type="password" style="flex:1;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);background:var(--panel);color:#e6eef6">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="teacher-login-title">
+        <h3 id="teacher-login-title">Lehrkraft-Login</h3>
+        <p class="small">Bitte Passwort für die Demofunktion eingeben.</p>
+        <div class="row" style="margin:10px 0">
+          <input id="pw" type="password" placeholder="Passwort" style="flex:1">
           <button id="pw-ok" class="alt">Anmelden</button>
         </div>
-        <div class="row">
+        <div class="btn-row">
           <button id="pw-cancel" class="alt">Abbrechen</button>
         </div>
       </div>
     </div>`;
   qs("#pw").focus();
   qs("#pw-cancel").onclick = closeModal;
-  qs("#pw-ok").onclick = ()=>{
+  qs("#pw-ok").onclick = () => {
     const v = qs("#pw").value || "";
     if(v === PW){
-      sessionStorage.setItem("teacher","1");
+      sessionStorage.setItem("teacher", "1");
       closeModal();
       setTeacher(true);
     } else {
@@ -378,25 +769,34 @@ function openModal(){
     }
   };
 }
-function closeModal(){ qs("#modal-root").innerHTML = ""; qs("#modal-root").classList.add("hidden"); }
-function setTeacher(on){
-  qs("#teacher-controls").style.display = on ? "flex" : "none";
-  qs("#teacher-state").textContent = on ? "(angemeldet)" : "(nicht angemeldet)";
-  renderDB(!on);
+
+function closeModal(){
+  qs("#modal-root").innerHTML = "";
+  qs("#modal-root").classList.add("hidden");
 }
 
-/* -------- Phase logic and checks -------- */
+function setTeacher(on){
+  qs("#teacher-controls").classList.toggle("hidden", !on);
+  qs("#teacher-state").textContent = on ? "(angemeldet)" : "(nicht angemeldet)";
+  renderDB(!on);
+  qs("#btn-show-sensitive").classList.toggle("hidden", false);
+  qs("#btn-hide-sensitive").classList.add("hidden");
+}
+
 let cur = 1;
 function allowNext(){ qs("#btn-next").disabled = false; }
 
-document.addEventListener("DOMContentLoaded", ()=>{
-  const logged = sessionStorage.getItem("teacher")==="1";
+function resetStepFeedback(){
+  ["#phase1-ok", "#phase2-ok", "#phase4-ok"].forEach(sel => qs(sel).classList.add("hidden"));
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const logged = sessionStorage.getItem("teacher") === "1";
   setTeacher(logged);
-  renderDB(!logged);
   setStep(1);
 
-  qsa(".sample").forEach(b=>{
-    b.addEventListener("click", ()=>{
+  qsa(".sample").forEach(b => {
+    b.addEventListener("click", () => {
       const v = b.getAttribute("data-val");
       if(cur === 1) qs("#q1").value = v;
       if(cur === 2) qs("#q2").value = v;
@@ -404,17 +804,20 @@ document.addEventListener("DOMContentLoaded", ()=>{
     });
   });
 
-  // Phase 1 run
-  qs("#run1").addEventListener("click", ()=>{
+  qs("#run1").addEventListener("click", () => {
+    resetStepFeedback();
     const v = qs("#q1").value.trim();
     const rows = DB.filter(r => r.username === v);
     qs("#sql1").textContent = `SELECT * FROM students WHERE username = '${v}';`;
     renderRows(rows, "#out1");
-    if(rows.length === 1){ qs("#phase1-ok").classList.remove("hidden"); allowNext(); }
+    if(rows.length === 1){
+      qs("#phase1-ok").classList.remove("hidden");
+      allowNext();
+    }
   });
 
-  // Phase 2 run
-  qs("#run2").addEventListener("click", ()=>{
+  qs("#run2").addEventListener("click", () => {
+    resetStepFeedback();
     const v = qs("#q2").value.trim();
     const rows = insecureQuery(v);
     renderRows(rows, "#out2");
@@ -424,13 +827,12 @@ document.addEventListener("DOMContentLoaded", ()=>{
     }
   });
 
-  // Phase 3 checkbox
-  qs("#chk-why").addEventListener("change", ()=>{
+  qs("#chk-why").addEventListener("change", () => {
     if(qs("#chk-why").checked) allowNext();
   });
 
-  // Phase 4 run
-  qs("#run4").addEventListener("click", ()=>{
+  qs("#run4").addEventListener("click", () => {
+    resetStepFeedback();
     const v = qs("#q4").value.trim();
     const rows = secureQuery(v);
     renderRows(rows, "#out4");
@@ -440,60 +842,60 @@ document.addEventListener("DOMContentLoaded", ()=>{
     }
   });
 
-  // Step navigation
-  qs("#btn-next").addEventListener("click", ()=>{
+  qs("#btn-next").addEventListener("click", () => {
     cur = Math.min(4, cur + 1);
     setStep(cur);
   });
-  qs("#btn-prev").addEventListener("click", ()=>{
+
+  qs("#btn-prev").addEventListener("click", () => {
     cur = Math.max(1, cur - 1);
     setStep(cur);
   });
 
-  // Teacher controls
   qs("#btn-teacher-login").addEventListener("click", openModal);
-  qs("#btn-teacher-logout").addEventListener("click", ()=>{
+  qs("#btn-teacher-logout").addEventListener("click", () => {
     sessionStorage.removeItem("teacher");
     setTeacher(false);
   });
-  qs("#btn-show-sensitive").addEventListener("click", ()=>{
+
+  qs("#btn-show-sensitive").addEventListener("click", () => {
     renderDB(false);
     qs("#btn-show-sensitive").classList.add("hidden");
     qs("#btn-hide-sensitive").classList.remove("hidden");
   });
-  qs("#btn-hide-sensitive").addEventListener("click", ()=>{
+
+  qs("#btn-hide-sensitive").addEventListener("click", () => {
     renderDB(true);
     qs("#btn-hide-sensitive").classList.add("hidden");
     qs("#btn-show-sensitive").classList.remove("hidden");
   });
 
-  // Quick check + Flag
-  qs("#check").addEventListener("click", ()=>{
+  qs("#check").addEventListener("click", () => {
     const res = qs("#out2 table");
     const count = res ? Math.max(0, res.querySelectorAll("tbody tr").length) : 0;
-    let s = 0; const fb = [];
-    if(count === DB.length){ s++; fb.push("1) Phase 2: alle Zeilen angezeigt."); } else fb.push("1) Phase 2: noch nicht alle Zeilen.");
-    if(qs("#chk-why").checked){ s++; fb.push("2) Ursache bestätigt."); } else fb.push("2) Ursache noch nicht bestätigt.");
+    let s = 0;
+    const fb = [];
+
+    if(count === DB.length){ s++; fb.push("Phase 2 zeigt alle Zeilen."); }
+    else fb.push("Phase 2 wurde noch nicht vollständig erkannt.");
+
+    if(qs("#chk-why").checked){ s++; fb.push("Die Ursache wurde bestätigt."); }
+    else fb.push("Die Erklärung in Phase 3 wurde noch nicht bestätigt.");
+
     const sql4 = qs("#sql4").textContent.toLowerCase();
-    if(sql4.includes("?") || sql4.includes("bind")){ s++; fb.push("3) Parameterbindung erkannt."); } else fb.push("3) Parameterbindung prüfen.");
+    if(sql4.includes("?") || sql4.includes("bind")){ s++; fb.push("Parameterbindung wurde erkannt."); }
+    else fb.push("Die sichere Variante sollte noch einmal geprüft werden.");
 
-    const percent = Math.round(s/3*100);
+    const percent = Math.round(s / 3 * 100);
     let html = `<strong>Ergebnis: ${percent}% (${s}/3)</strong><ul><li>${fb.join("</li><li>")}</li></ul>`;
-
-    // Flag nur bei vollem Verständnis
-    if(s === 3){
-      html += `<p><strong>Flag:</strong> {YOUDIDWHAT?}</p>`;
-    }
-
+    if(s === 3){ html += `<p><strong>Flag:</strong> {YOUDIDWHAT?}</p>`; }
     qs("#check-out").innerHTML = html;
   });
 
-  qs("#reset-check").addEventListener("click", ()=>{ qs("#check-out").innerHTML = ""; });
-
+  qs("#reset-check").addEventListener("click", () => {
+    qs("#check-out").innerHTML = "Noch kein Check ausgeführt.";
+  });
 });
 </script>
 </body>
 </html>
-
-
-
