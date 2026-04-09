@@ -3,120 +3,203 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SQL-Lab – Eingaben, Abfragen und Schutz</title>
+  <title>SQL-Lab – Eingaben prüfen, Abfragen verstehen</title>
   <link rel="stylesheet" href="assets/cdl-unified.css">
   <style>
-    .sqllab,
-    .sqllab * { box-sizing: border-box; }
+    .sql-page,
+    .sql-page * { box-sizing: border-box; }
 
-    body.sqllab-body {
+    body.sql-body {
       margin: 0;
       font-family: Arial, sans-serif;
-      color: #fff;
       background: linear-gradient(135deg, #2c3e50, #4ca1af);
+      color: #1f2d38;
     }
 
-    .sqllab-body header {
-      background: rgba(31, 44, 56, 0.8);
+    .sql-body header {
+      background: rgba(31, 44, 56, 0.82);
       padding: 15px;
       text-align: center;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.28);
     }
 
-    .sqllab-body header h1 {
+    .sql-body header h1 {
       margin: 0;
       color: #f0f0f0;
       font-size: 1.8rem;
     }
 
-    .sqllab-body nav { margin-top: 10px; }
-    .sqllab-body nav a {
+    .sql-body nav { margin-top: 10px; }
+    .sql-body nav a {
       color: #ddd;
       margin: 0 10px;
       text-decoration: none;
     }
-    .sqllab-body nav a:hover {
+    .sql-body nav a:hover {
       color: #fff;
       text-decoration: underline;
     }
 
-    .sqllab {
-      max-width: 1200px;
+    .sql-page {
+      max-width: 1120px;
       margin: 24px auto;
-      background: #fff;
-      color: #2f3a45;
+      padding: 0 16px;
+    }
+
+    .sql-shell {
+      background: #ffffff;
       border-radius: 8px;
-      padding: 24px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.26);
+      overflow: hidden;
     }
 
-    .sqllab .intro {
-      margin-bottom: 20px;
+    .sql-hero {
+      padding: 26px 28px 18px;
+      border-bottom: 1px solid #e3ebf1;
+      background: #fbfdff;
     }
 
-    .sqllab .intro h2,
-    .sqllab .panel h3,
-    .sqllab .sidebox h3,
-    .sqllab .phase-card h3,
-    .sqllab .result-card h3,
-    .sqllab .check-card h3,
-    .sqllab .modal h3 {
-      margin-top: 0;
-      color: #007bff;
+    .sql-hero h2 {
+      margin: 0 0 10px;
+      color: #17344c;
+      font-size: 1.7rem;
     }
 
-    .sqllab .lead {
-      color: #4c5b68;
-      max-width: 900px;
+    .sql-hero p {
+      margin: 0;
+      color: #475b6d;
+      max-width: 860px;
+      line-height: 1.6;
     }
 
-    .sqllab .meta-row {
+    .sql-layout {
       display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 20px;
-      margin-bottom: 22px;
+      grid-template-columns: 1.7fr 1fr;
+      gap: 22px;
+      padding: 24px 28px 30px;
       align-items: start;
     }
 
-    .sqllab .panel,
-    .sqllab .sidebox,
-    .sqllab .phase-card,
-    .sqllab .result-card,
-    .sqllab .check-card,
-    .sqllab .teacher-banner {
-      background: #f9f9f9;
-      border: 1px solid #ddd;
+    .sql-card,
+    .sql-note,
+    .sql-demo,
+    .sql-results,
+    .sql-auth-box {
+      background: #fff;
+      border: 1px solid #dce6ee;
       border-radius: 8px;
       padding: 18px;
     }
 
-    .sqllab .teacher-banner {
-      margin-bottom: 20px;
-      display: flex;
-      justify-content: space-between;
+    .sql-card h3,
+    .sql-note h3,
+    .sql-demo h3,
+    .sql-auth-box h3 {
+      margin: 0 0 10px;
+      color: #17344c;
+      font-size: 1.08rem;
+    }
+
+    .sql-card p,
+    .sql-note p,
+    .sql-demo p,
+    .sql-auth-box p {
+      margin: 0 0 10px;
+      line-height: 1.56;
+      color: #455a6b;
+    }
+
+    .sql-stack {
+      display: grid;
       gap: 16px;
-      align-items: center;
-      flex-wrap: wrap;
-      background: #f6fbff;
-      border-color: #cfe1f3;
     }
 
-    .sqllab .teacher-state {
-      color: #586977;
-      font-size: 0.95rem;
+    .sql-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
     }
 
-    .sqllab .btn-row,
-    .sqllab .row {
+    .sql-steps {
+      margin: 0;
+      padding-left: 20px;
+      color: #455a6b;
+      line-height: 1.55;
+    }
+
+    .sql-steps li { margin-bottom: 8px; }
+
+    .sql-table-wrap {
+      overflow: auto;
+      border: 1px solid #dce6ee;
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .sql-page table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 680px;
+      color: #1f2d38;
+      background: #fff;
+    }
+
+    .sql-page th,
+    .sql-page td {
+      text-align: left;
+      padding: 11px 12px;
+      border-bottom: 1px solid #e7eef4;
+      vertical-align: top;
+      color: #1f2d38;
+    }
+
+    .sql-page thead th {
+      background: #f3f7fb;
+      color: #17344c;
+      font-weight: 700;
+    }
+
+    .sql-page tbody tr:nth-child(even) td {
+      background: #fbfdff;
+    }
+
+    .sql-page tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .sql-muted { color: #617282; }
+    .sql-small { font-size: 0.94rem; color: #617282; }
+
+    .sql-hidden,
+    .hidden { display: none; }
+
+    .sql-sensitive {
+      color: #7c8b98;
+      letter-spacing: .08em;
+    }
+
+    .sql-pill {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #edf4fa;
+      color: #38556d;
+      font-size: 0.86rem;
+      margin-bottom: 10px;
+    }
+
+    .sql-example-row,
+    .sql-action-row,
+    .sql-auth-actions {
       display: flex;
       gap: 8px;
-      align-items: center;
       flex-wrap: wrap;
+      align-items: center;
     }
 
-    .sqllab .btn {
-      padding: 8px 12px;
-      background-color: #007bff;
+    .sql-btn {
+      padding: 9px 12px;
+      background: #1f6fb2;
       color: #fff;
       border: none;
       border-radius: 4px;
@@ -124,230 +207,122 @@
       font-weight: 600;
     }
 
-    .sqllab .btn:hover { filter: brightness(0.96); }
-    .sqllab .btn.alt {
-      background: #eef3f8;
+    .sql-btn:hover { filter: brightness(.97); }
+
+    .sql-btn.alt {
+      background: #eef3f7;
       color: #17344c;
-      border: 1px solid #d5e0ea;
+      border: 1px solid #d7e1ea;
     }
-    .sqllab .btn.danger {
-      background: #c62828;
+
+    .sql-btn.danger {
+      background: #b93333;
       color: #fff;
     }
-    .sqllab .btn:disabled {
-      opacity: .45;
-      cursor: not-allowed;
-    }
 
-    .sqllab .stepper {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin: 16px 0 0;
-    }
-
-    .sqllab .step {
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: #eef3f8;
-      color: #4e6173;
-      border: 1px solid #d6e0ea;
-      font-size: 0.95rem;
-    }
-
-    .sqllab .step.active {
-      background: #dff0ff;
-      color: #0f4f86;
-      border-color: #b8dbfb;
-      font-weight: 700;
-    }
-
-    .sqllab .step.done {
-      background: #e8f7ee;
-      color: #1d6c3c;
-      border-color: #bee1ca;
-    }
-
-    .sqllab .grid {
-      display: grid;
-      grid-template-columns: 1.6fr 1fr;
-      gap: 20px;
-      align-items: start;
-    }
-
-    .sqllab label {
+    .sql-page label {
       display: block;
       margin: 0 0 6px;
       font-weight: 700;
       color: #253949;
     }
 
-    .sqllab input[type="text"],
-    .sqllab input[type="password"] {
+    .sql-page input[type="text"],
+    .sql-page input[type="password"] {
       width: 100%;
       padding: 10px 12px;
       border-radius: 6px;
-      border: 1px solid #cfd8e2;
+      border: 1px solid #cfd9e2;
       background: #fff;
-      color: #2f3a45;
-      box-shadow: none;
+      color: #1f2d38;
     }
 
-    .sqllab .small {
-      font-size: 0.94rem;
-      color: #647484;
-    }
-
-    .sqllab .muted {
-      color: #667786;
-    }
-
-    .sqllab .notice {
+    .sql-notice {
       border-radius: 8px;
       padding: 12px 14px;
-      margin-top: 12px;
-      line-height: 1.5;
+      line-height: 1.55;
+      border: 1px solid #d5e2ee;
+      background: #f8fbfe;
+      color: #223a50;
     }
 
-    .sqllab .notice.info {
+    .sql-notice.info {
       background: #eef6ff;
-      border: 1px solid #cfe1f3;
+      border-color: #cfe1f3;
       color: #17344c;
     }
 
-    .sqllab .notice.warn {
-      background: #fff4f1;
-      border: 1px solid #f1c7be;
+    .sql-notice.warn {
+      background: #fff3ef;
+      border-color: #efcbc1;
       color: #6f2b20;
     }
 
-    .sqllab .notice.good {
+    .sql-notice.good {
       background: #edf8f0;
-      border: 1px solid #c8e6cf;
+      border-color: #c8e6cf;
       color: #1f5d34;
     }
 
-    .sqllab pre,
-    .sqllab code,
-    .sqllab .kbd {
+    .sql-notice strong { color: inherit; }
+
+    .sql-page pre,
+    .sql-page code {
       font-family: Consolas, Monaco, monospace;
     }
 
-    .sqllab pre {
-      margin: 10px 0 0;
-      background: #07131e;
-      color: #9ff59f;
-      border-radius: 10px;
+    .sql-page pre {
+      margin: 8px 0 0;
+      background: #0c1721;
+      color: #a7f1a9;
+      border-radius: 8px;
       overflow: auto;
       padding: 14px;
-      box-shadow: inset 0 0 0 1px rgba(124,227,255,.12);
       white-space: pre-wrap;
       word-break: break-word;
     }
 
-    .sqllab code,
-    .sqllab .kbd {
-      background: #edf6ff;
+    .sql-page code {
+      background: #edf5fc;
       color: #17344c;
       padding: 2px 6px;
       border-radius: 4px;
     }
 
-    .sqllab .table-wrap {
-      overflow: auto;
-      border: 1px solid #dde5ec;
-      border-radius: 8px;
-      background: #fff;
-    }
-
-    .sqllab table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 680px;
-      background: #fff;
-      color: #2f3a45;
-    }
-
-    .sqllab th,
-    .sqllab td {
-      text-align: left;
-      padding: 11px 12px;
-      border-bottom: 1px solid #e6edf3;
-      vertical-align: top;
-      color: #2f3a45;
-    }
-
-    .sqllab thead th {
-      background: #f1f6fb;
-      color: #17344c;
-      font-weight: 700;
-    }
-
-    .sqllab tbody tr:nth-child(even) td {
-      background: #fbfdff;
-    }
-
-    .sqllab tbody tr:last-child td {
-      border-bottom: none;
-    }
-
-    .sqllab .sensitive {
-      color: #7f8e9b;
-      letter-spacing: .08em;
-    }
-
-    .sqllab .phase-card.hidden,
-    .sqllab .hidden {
-      display: none;
-    }
-
-    .sqllab .phase-header {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: baseline;
-      flex-wrap: wrap;
-      margin-bottom: 8px;
-    }
-
-    .sqllab .phase-title {
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: #17344c;
-    }
-
-    .sqllab .phase-tag {
-      font-size: 0.9rem;
-      color: #5a6b79;
-    }
-
-    .sqllab .mini-columns {
+    .sql-form-block {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      gap: 12px;
+    }
+
+    .sql-results {
+      min-height: 80px;
+    }
+
+    .sql-compare {
+      display: grid;
+      gap: 12px;
       margin-top: 12px;
     }
 
-    .sqllab .compare-box {
-      border: 1px solid #dde5ec;
+    .sql-compare-box {
+      border: 1px solid #dce6ee;
       border-radius: 8px;
       padding: 14px;
       background: #fff;
     }
 
-    .sqllab .compare-box h4 {
+    .sql-compare-box h4 {
       margin: 0 0 8px;
       color: #17344c;
+      font-size: 1rem;
     }
 
-    .sqllab .callout-list {
-      margin: 10px 0 0;
-      padding-left: 20px;
+    .sql-auth-box {
+      background: #f8fbfe;
+      border-color: #cfe1f3;
     }
 
-    .sqllab .callout-list li { margin-bottom: 6px; }
-
-    .sqllab .modal-backdrop {
+    .sql-modal-backdrop {
       position: fixed;
       inset: 0;
       background: rgba(0,0,0,.6);
@@ -358,46 +333,49 @@
       padding: 20px;
     }
 
-    .sqllab .modal {
+    .sql-modal {
       width: min(360px, 100%);
       background: #fff;
-      color: #2f3a45;
+      color: #1f2d38;
       border-radius: 8px;
       padding: 18px;
       box-shadow: 0 12px 36px rgba(0,0,0,.3);
     }
 
-    .sqllab footer {
-      text-align:center;
-      margin:20px 0;
-      color:#d0deec;
-      font-size:14px;
+    .sql-modal h3 {
+      margin: 0 0 10px;
+      color: #17344c;
     }
 
-    .sqllab-footer {
-      text-align:center;
-      margin:20px 0;
-      color:#d0deec;
-      font-size:14px;
+    .sql-footer {
+      text-align: center;
+      margin: 20px 0;
+      color: #d0deec;
+      font-size: 14px;
     }
 
-    .sqllab-footer a {
-      color:#fff;
-      text-decoration:none;
+    .sql-footer a {
+      color: #fff;
+      text-decoration: none;
     }
 
-    .sqllab-footer a:hover { text-decoration: underline; }
+    .sql-footer a:hover { text-decoration: underline; }
 
-    @media (max-width: 900px) {
-      .sqllab .meta-row,
-      .sqllab .grid,
-      .sqllab .mini-columns {
+    @media (max-width: 920px) {
+      .sql-layout,
+      .sql-grid-2 {
         grid-template-columns: 1fr;
+      }
+
+      .sql-hero,
+      .sql-layout {
+        padding-left: 18px;
+        padding-right: 18px;
       }
     }
   </style>
 </head>
-<body class="sqllab-body">
+<body class="sql-body">
   <header>
     <h1>CyberDefense Lab 🧪</h1>
     <nav>
@@ -409,246 +387,210 @@
     </nav>
   </header>
 
-  <main class="sqllab">
-    <section class="intro">
-      <h2>SQL-Lab – vom normalen Suchen zur manipulierten Abfrage</h2>
-      <p class="lead">
-        Dieses Lab simuliert keine „coole Hacker-Magie“, sondern ein sehr nüchternes Problem: Eine Anwendung übernimmt Eingaben ungeprüft in eine Datenbankabfrage.
-        Genau deshalb ist SQL-Injection didaktisch so wertvoll: Man sieht sofort, wie kleine Eingaben große Wirkung entfalten können.
-      </p>
+  <main class="sql-page">
+    <div class="sql-shell">
+      <section class="sql-hero">
+        <h2>SQL-Lab – was hier eigentlich schiefläuft</h2>
+        <p>
+          Dieses Lab zeigt nur einen Gedankenfehler: Eine Anwendung übernimmt Texteingaben ungeprüft in eine Abfrage.
+          Dadurch wird aus einer normalen Suche plötzlich eine manipulierte Suche. Ziel ist nicht, Tricks auswendig zu lernen,
+          sondern den Unterschied zwischen <strong>Daten</strong> und <strong>Befehl</strong> sauber zu verstehen.
+        </p>
+      </section>
 
-      <div class="meta-row">
-        <div class="panel">
-          <h3>Lernweg</h3>
-          <p>Du gehst hier bewusst in vier klaren Schritten vor:</p>
-          <ol class="callout-list">
-            <li><strong>Beobachten:</strong> Wie funktioniert eine normale Suche?</li>
-            <li><strong>Ausprobieren:</strong> Was passiert, wenn die Eingabe die Logik verändert?</li>
-            <li><strong>Verstehen:</strong> Warum liefert die Abfrage plötzlich alle Datensätze?</li>
-            <li><strong>Absichern:</strong> Warum stoppt Parameterbindung genau diesen Effekt?</li>
-          </ol>
-        </div>
+      <section class="sql-layout">
+        <div class="sql-stack">
+          <section class="sql-card">
+            <span class="sql-pill">1 · Erst schauen</span>
+            <h3>Die Datensätze</h3>
+            <p class="sql-small">Die Tabelle simuliert eine einfache Datenbank mit Schülerdaten. Alles läuft lokal im Browser.</p>
 
-        <div class="sidebox">
-          <h3>Mini-Glossar</h3>
-          <p><strong>Datenbank:</strong> strukturierte Sammlung von Daten.</p>
-          <p><strong>SQL:</strong> Sprache für Datenbankabfragen.</p>
-          <p><strong>WHERE:</strong> legt fest, welche Zeilen ausgewählt werden.</p>
-          <p><strong>Parameterbindung:</strong> Eingaben bleiben Werte und werden nicht Teil der Befehlsstruktur.</p>
-        </div>
-      </div>
+            <div class="sql-auth-box" style="margin: 14px 0;">
+              <h3>Lehrkraft-Ansicht</h3>
+              <p id="teacher-state">Nicht angemeldet. Sensible Felder bleiben verborgen.</p>
+              <div class="sql-auth-actions">
+                <button id="btn-teacher-login" class="sql-btn alt">Lehrkraft: Login</button>
+                <div id="teacher-controls" class="sql-auth-actions sql-hidden">
+                  <button id="btn-show-sensitive" class="sql-btn alt">Sensible Felder zeigen</button>
+                  <button id="btn-hide-sensitive" class="sql-btn alt sql-hidden">Sensible Felder verbergen</button>
+                  <button id="btn-teacher-logout" class="sql-btn danger">Logout</button>
+                </div>
+              </div>
+            </div>
 
-      <div class="teacher-banner">
-        <div>
-          <strong>Lehrkraft-Ansicht</strong>
-          <div class="teacher-state" id="teacher-state">Nicht angemeldet. Sensible Felder bleiben verborgen.</div>
-        </div>
-        <div class="btn-row">
-          <button id="btn-prev" class="btn alt" disabled>Zurück</button>
-          <button id="btn-next" class="btn" disabled>Weiter</button>
-          <button id="btn-teacher-login" class="btn alt">Lehrkraft: Login</button>
-        </div>
-      </div>
+            <div class="sql-table-wrap">
+              <table id="db-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Klasse</th>
+                    <th>Durchschnitt</th>
+                    <th>Kommentar</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </section>
 
-      <div class="stepper" id="stepper">
-        <div class="step active" data-step="1">1 Beobachten</div>
-        <div class="step" data-step="2">2 Manipulieren</div>
-        <div class="step" data-step="3">3 Verstehen</div>
-        <div class="step" data-step="4">4 Absichern</div>
-      </div>
-    </section>
+          <section class="sql-card">
+            <span class="sql-pill">2 · Dann ausprobieren</span>
+            <h3>Eine normale Suche und eine manipulierte Suche</h3>
+            <p>
+              Tippe zuerst einen normalen Namen ein. Danach probierst du eine manipulierte Eingabe aus.
+              So wird direkt sichtbar, wo der Unterschied entsteht.
+            </p>
 
-    <section class="grid">
-      <div>
-        <section class="panel">
-          <h3>Datenbasis (Simulation)</h3>
-          <p class="small">Alles läuft lokal im Browser. Die Tabelle ist keine echte Datenbank, aber ihr Verhalten ist didaktisch an eine typische Webanwendung angelehnt.</p>
+            <div class="sql-grid-2" style="margin-top: 12px;">
+              <div class="sql-demo">
+                <h3>Normale Suche</h3>
+                <div class="sql-form-block">
+                  <div>
+                    <label for="safe-name">Eingabe</label>
+                    <input id="safe-name" type="text" placeholder="alice">
+                  </div>
+                  <div class="sql-example-row">
+                    <button class="sql-btn" id="run-safe-demo">Suche ausführen</button>
+                    <button class="sql-btn alt sample" data-target="safe-name" data-val="alice">alice</button>
+                    <button class="sql-btn alt sample" data-target="safe-name" data-val="bob">bob</button>
+                  </div>
+                  <div class="sql-notice info">
+                    <strong>So baut die Anwendung die Suche zusammen:</strong>
+                    <pre id="sql-normal">SELECT * FROM students WHERE username = 'alice';</pre>
+                  </div>
+                  <div id="out-normal" class="sql-results"></div>
+                </div>
+              </div>
 
-          <div class="btn-row hidden" id="teacher-controls">
-            <button id="btn-show-sensitive" class="btn alt">Sensible Felder zeigen</button>
-            <button id="btn-hide-sensitive" class="btn alt hidden">Sensible Felder verbergen</button>
-            <button id="btn-teacher-logout" class="btn danger">Logout</button>
-          </div>
+              <div class="sql-demo">
+                <h3>Manipulierte Suche</h3>
+                <div class="sql-form-block">
+                  <div>
+                    <label for="unsafe-name">Eingabe</label>
+                    <input id="unsafe-name" type="text" placeholder="' OR '1'='1' --">
+                  </div>
+                  <div class="sql-example-row">
+                    <button class="sql-btn" id="run-unsafe-demo">Unsichere Suche ausführen</button>
+                    <button class="sql-btn alt sample" data-target="unsafe-name" data-val="' OR '1'='1' --">Standardbeispiel</button>
+                  </div>
+                  <div class="sql-notice warn">
+                    <strong>Hier wird die Eingabe ungeprüft eingebaut:</strong>
+                    <pre id="sql-unsafe">SELECT * FROM students WHERE username = '...';</pre>
+                  </div>
+                  <div id="out-unsafe" class="sql-results"></div>
+                </div>
+              </div>
+            </div>
+          </section>
 
-          <div class="table-wrap" style="margin-top: 14px;">
-            <table id="db-table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Username</th>
-                  <th>Klasse</th>
-                  <th>Durchschnitt</th>
-                  <th>Kommentar</th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
-          </div>
-        </section>
-
-        <section class="phase-card" id="phase-1" style="margin-top: 20px;">
-          <div class="phase-header">
-            <div class="phase-title">Phase 1 – Normale Suche</div>
-            <div class="phase-tag">Ziel: normale WHERE-Abfrage lesen und prüfen</div>
-          </div>
-          <p>Wähle einen Namen aus der Tabelle, zum Beispiel <span class="kbd">alice</span>. Die Anwendung soll genau einen Datensatz finden.</p>
-
-          <label for="q1">Eingabe</label>
-          <input id="q1" type="text" placeholder="alice">
-          <div class="btn-row" style="margin-top: 10px;">
-            <button id="run1" class="btn">Suche ausführen</button>
-            <button class="btn alt sample" data-target="q1" data-val="alice">alice</button>
-            <button class="btn alt sample" data-target="q1" data-val="bob">bob</button>
-          </div>
-
-          <div class="notice info">
-            <strong>Gebildete Abfrage</strong>
-            <pre id="sql1">SELECT * FROM students WHERE username = 'alice';</pre>
-          </div>
-
-          <div class="result-card" id="out1" style="margin-top: 12px;"></div>
-          <div id="phase1-ok" class="notice good hidden"><strong>Passt.</strong> Eine normale Suche liefert genau den passenden Datensatz.</div>
-        </section>
-
-        <section class="phase-card hidden" id="phase-2" style="margin-top: 20px;">
-          <div class="phase-header">
-            <div class="phase-title">Phase 2 – Manipulierte Eingabe</div>
-            <div class="phase-tag">Ziel: Wirkung einer unsicheren String-Verkettung sehen</div>
-          </div>
-          <p>Jetzt gibst du bewusst keinen normalen Namen ein, sondern eine Eingabe, die die Logik der Abfrage verändert.</p>
-
-          <label for="q2">Eingabe</label>
-          <input id="q2" type="text" placeholder="' OR '1'='1' --">
-          <div class="btn-row" style="margin-top: 10px;">
-            <button id="run2" class="btn">Unsichere Suche ausführen</button>
-            <button class="btn alt sample" data-target="q2" data-val="' OR '1'='1' --">Standardbeispiel</button>
-            <button class="btn alt sample" data-target="q2" data-val="'; DROP TABLE students; --">gefährliche Variante</button>
-          </div>
-
-          <div class="notice warn">
-            <strong>Gebildete Query</strong>
-            <pre id="sql2">SELECT * FROM students WHERE username = '...';</pre>
-            <p class="small">Hier wird die Eingabe direkt in den SQL-Text eingebaut. Genau das ist der kritische Fehler.</p>
-          </div>
-
-          <div class="result-card" id="out2" style="margin-top: 12px;"></div>
-          <div id="phase2-ok" class="notice good hidden"><strong>Treffer.</strong> Wenn alle Zeilen erscheinen, wurde die Bedingung effektiv ausgehebelt.</div>
-        </section>
-
-        <section class="phase-card hidden" id="phase-3" style="margin-top: 20px;">
-          <div class="phase-header">
-            <div class="phase-title">Phase 3 – Warum funktioniert das?</div>
-            <div class="phase-tag">Ziel: nicht nur Effekt sehen, sondern Ursache benennen</div>
-          </div>
-
-          <div class="mini-columns">
-            <div class="compare-box">
-              <h4>Was die Anwendung wollte</h4>
-              <pre>SELECT * FROM students
+          <section class="sql-card">
+            <span class="sql-pill">3 · Dann verstehen</span>
+            <h3>Was ist hier die eigentliche Ursache?</h3>
+            <div class="sql-compare">
+              <div class="sql-compare-box">
+                <h4>Was die Anwendung wollte</h4>
+                <pre>SELECT * FROM students
 WHERE username = 'alice';</pre>
-              <p class="small">Die WHERE-Bedingung sollte nur einen passenden Datensatz auswählen.</p>
-            </div>
-            <div class="compare-box">
-              <h4>Was tatsächlich passiert</h4>
-              <pre id="viz3">SELECT * FROM students
+                <p class="sql-small">Die Bedingung soll genau einen Namen prüfen.</p>
+              </div>
+              <div class="sql-compare-box">
+                <h4>Was bei der manipulierten Eingabe passiert</h4>
+                <pre id="viz-unsafe">SELECT * FROM students
 WHERE username = '' OR '1'='1' --';</pre>
-              <p class="small">Der eingeschleuste Teil macht die Bedingung immer wahr. Der Rest wird auskommentiert.</p>
+                <p class="sql-small">Die Eingabe wird Teil des Befehls. Dadurch ändert sich die Logik der WHERE-Bedingung.</p>
+              </div>
             </div>
-          </div>
 
-          <div class="notice info">
-            <strong>Didaktischer Kern:</strong>
-            <ul class="callout-list">
-              <li>Das Problem ist nicht „zu viel Technik“, sondern ein Denkfehler im Umgang mit Eingaben.</li>
-              <li>Die Anwendung behandelt Nutzereingaben fälschlich wie Bestandteile eines Befehls.</li>
-              <li>Wer das versteht, versteht auch viele andere Sicherheitsprobleme besser.</li>
-            </ul>
-          </div>
+            <div class="sql-notice info" style="margin-top: 12px;">
+              <strong>Der Kern in ganz einfacher Sprache:</strong><br>
+              Die Anwendung wollte eigentlich nur einen Namen prüfen. Stattdessen übernimmt sie aber den ganzen eingegebenen Text direkt in den Befehl.
+              Dadurch kann ein Nutzer nicht nur <em>Werte</em> liefern, sondern die <em>Abfrage selbst</em> verändern.
+            </div>
+          </section>
 
-          <label class="row" style="margin-top: 12px;">
-            <input type="checkbox" id="chk-why">
-            Ich kann erklären, warum die manipulierte Eingabe alle Zeilen sichtbar machen kann.
-          </label>
-        </section>
+          <section class="sql-card">
+            <span class="sql-pill">4 · Zum Schluss absichern</span>
+            <h3>Die gleiche Eingabe in einer sicheren Variante</h3>
+            <p>
+              Jetzt wird dieselbe manipulierte Eingabe noch einmal benutzt. Diesmal behandelt die Anwendung sie aber nur als Wert.
+              Genau das ist der Schutzgedanke hinter Parameterbindung.
+            </p>
 
-        <section class="phase-card hidden" id="phase-4" style="margin-top: 20px;">
-          <div class="phase-header">
-            <div class="phase-title">Phase 4 – Sichere Variante</div>
-            <div class="phase-tag">Ziel: denselben Input mit Parameterbindung testen</div>
-          </div>
-          <p>Jetzt wird dieselbe Eingabe noch einmal verwendet. Der Unterschied: Die Anwendung trennt SQL-Struktur und Eingabewert.</p>
-
-          <div class="mini-columns">
-            <div class="compare-box">
-              <h4>Unsicher</h4>
-              <pre>SELECT * FROM students
+            <div class="sql-grid-2" style="margin-top: 12px;">
+              <div class="sql-compare-box">
+                <h4>Unsicher</h4>
+                <pre>SELECT * FROM students
 WHERE username = 'EINGABE';</pre>
-              <p class="small">Die Eingabe landet direkt im SQL-Text.</p>
-            </div>
-            <div class="compare-box">
-              <h4>Sicher</h4>
-              <pre>SELECT * FROM students
+                <p class="sql-small">Die Eingabe landet direkt im SQL-Befehl.</p>
+              </div>
+              <div class="sql-compare-box">
+                <h4>Sicher</h4>
+                <pre>SELECT * FROM students
 WHERE username = ?
 -- bind: ['EINGABE']</pre>
-              <p class="small">Die Eingabe bleibt ein Wert. Die Struktur der Abfrage bleibt stabil.</p>
+                <p class="sql-small">Die Eingabe bleibt ein Wert und verändert den Befehl nicht.</p>
+              </div>
             </div>
-          </div>
 
-          <label for="q4" style="margin-top: 12px;">Eingabe</label>
-          <input id="q4" type="text" placeholder="' OR '1'='1' --">
-          <div class="btn-row" style="margin-top: 10px;">
-            <button id="run4" class="btn">Sichere Suche ausführen</button>
-            <button class="btn alt sample" data-target="q4" data-val="' OR '1'='1' --">Standardbeispiel</button>
-          </div>
+            <div class="sql-demo" style="margin-top: 14px;">
+              <div class="sql-form-block">
+                <div>
+                  <label for="secure-name">Eingabe</label>
+                  <input id="secure-name" type="text" placeholder="' OR '1'='1' --">
+                </div>
+                <div class="sql-example-row">
+                  <button class="sql-btn" id="run-secure-demo">Sichere Suche ausführen</button>
+                  <button class="sql-btn alt sample" data-target="secure-name" data-val="' OR '1'='1' --">Standardbeispiel</button>
+                </div>
+                <div class="sql-notice info">
+                  <strong>Sichere Variante:</strong>
+                  <pre id="sql-secure">SELECT * FROM students WHERE username = ?  -- bind: ['...']</pre>
+                </div>
+                <div id="out-secure" class="sql-results"></div>
+              </div>
+            </div>
+          </section>
+        </div>
 
-          <div class="notice info">
-            <strong>Gebildete Query</strong>
-            <pre id="sql4">SELECT * FROM students WHERE username = ?  -- bind: ['...']</pre>
-            <p class="small">Merksatz: Eingaben sind Daten, nicht Befehle.</p>
-          </div>
+        <aside class="sql-stack">
+          <section class="sql-note">
+            <h3>So kann man es sich merken</h3>
+            <ol class="sql-steps">
+              <li><strong>Normale Suche:</strong> Ich gebe einen Namen ein.</li>
+              <li><strong>Unsichere Suche:</strong> Die Anwendung baut meinen Text direkt in den Befehl ein.</li>
+              <li><strong>Problem:</strong> Mein Text verändert plötzlich die Logik der Abfrage.</li>
+              <li><strong>Schutz:</strong> Eingaben müssen als Werte behandelt werden, nicht als Teil des Befehls.</li>
+            </ol>
+          </section>
 
-          <div class="result-card" id="out4" style="margin-top: 12px;"></div>
-          <div id="phase4-ok" class="notice good hidden"><strong>Genau das ist der Punkt.</strong> Die gleiche Eingabe führt hier nicht mehr dazu, dass alle Datensätze erscheinen.</div>
-        </section>
-      </div>
+          <section class="sql-note">
+            <h3>Worauf Lernende achten sollen</h3>
+            <ul class="sql-steps">
+              <li>Welche Eingabe führt zu genau einem Treffer?</li>
+              <li>Welche Eingabe verändert die Abfrage?</li>
+              <li>Wo sieht man in der Query, dass die Logik gekippt ist?</li>
+              <li>Warum funktioniert dieselbe Eingabe in der sicheren Variante nicht mehr?</li>
+            </ul>
+          </section>
 
-      <aside>
-        <section class="sidebox">
-          <h3>Worauf man achten soll</h3>
-          <ul class="callout-list">
-            <li>Welche Eingabe erzeugt einen normalen Treffer?</li>
-            <li>Welche Eingabe verändert plötzlich die Logik?</li>
-            <li>Wann sieht man die eigentliche Ursache in der Query?</li>
-            <li>Warum löst dieselbe Eingabe im sicheren Modus keinen Massen-Treffer mehr aus?</li>
-          </ul>
-        </section>
-
-        <section class="check-card" style="margin-top: 20px;">
-          <h3>Kurz-Check</h3>
-          <p class="small">Der Check bewertet nicht deine Formulierungen, sondern ob du die entscheidenden Schritte praktisch durchgeführt hast.</p>
-          <div class="btn-row">
-            <button id="check" class="btn">Check auswerten</button>
-            <button id="reset-check" class="btn alt">Zurücksetzen</button>
-          </div>
-          <div id="check-out" class="notice info" style="margin-top: 12px;">Noch keine Auswertung.</div>
-        </section>
-
-        <section class="sidebox" style="margin-top: 20px;">
-          <h3>Aufgaben für den Unterricht</h3>
-          <ol class="callout-list">
-            <li>Notiere die Eingabe, die im unsicheren Modus alle Zeilen sichtbar macht.</li>
-            <li>Beschreibe in einem Satz, warum das funktioniert.</li>
-            <li>Vergleiche unsichere und sichere Query sprachlich miteinander.</li>
-            <li>Nenne zwei Schutzmaßnahmen, die über dieses Lab hinaus wichtig sind.</li>
-          </ol>
-        </section>
-      </aside>
-    </section>
+          <section class="sql-note">
+            <h3>Mögliche Unterrichtsfrage</h3>
+            <p>
+              Erkläre mit eigenen Worten den Unterschied zwischen diesen beiden Sätzen:<br><br>
+              <code>Die Anwendung übernimmt einen Wert.</code><br>
+              <code>Die Anwendung übernimmt einen Befehlsteil.</code>
+            </p>
+            <p class="sql-small">Wenn das verstanden ist, sitzt die eigentliche Idee hinter SQL-Injection.</p>
+          </section>
+        </aside>
+      </section>
+    </div>
   </main>
 
   <div id="modal-root" class="hidden"></div>
 
-  <footer class="sqllab-footer">
+  <footer class="sql-footer">
     Lizenziert unter der MIT-Lizenz von Ramon Berghorn, 2025 | Bildungszwecke |
     <a href="impressum.html">Impressum</a> |
     <a href="datenschutz.html">Datenschutzerklärung</a> |
@@ -666,7 +608,6 @@ WHERE username = ?
     ];
 
     const PW = "lehrer";
-    let cur = 1;
 
     const esc = s => String(s)
       .replace(/&/g, "&amp;")
@@ -685,26 +626,26 @@ WHERE username = ?
           <td>${esc(r.id)}</td>
           <td>${esc(r.username)}</td>
           <td>${esc(r.class)}</td>
-          <td>${mask ? '<span class="sensitive">••••</span>' : esc(r.grade)}</td>
-          <td>${mask ? '<span class="sensitive">versteckt</span>' : esc(r.comment)}</td>`;
+          <td>${mask ? '<span class="sql-sensitive">••••</span>' : esc(r.grade)}</td>
+          <td>${mask ? '<span class="sql-sensitive">versteckt</span>' : esc(r.comment)}</td>`;
         tb.appendChild(tr);
       });
     }
 
-    function renderRows(rows, mount) {
+    function renderRows(rows, mount, emptyText = "Keine Ergebnisse.") {
       const el = typeof mount === "string" ? qs(mount) : mount;
       el.innerHTML = "";
 
       if (Array.isArray(rows)) {
         if (rows.length === 0) {
-          el.innerHTML = '<div class="notice info">Keine Ergebnisse.</div>';
+          el.innerHTML = `<div class="sql-notice info">${esc(emptyText)}</div>`;
           return;
         }
 
         const wrap = document.createElement("div");
-        wrap.className = "table-wrap";
-        const t = document.createElement("table");
-        t.innerHTML = `
+        wrap.className = "sql-table-wrap";
+        const table = document.createElement("table");
+        table.innerHTML = `
           <thead>
             <tr>
               <th>ID</th>
@@ -714,44 +655,27 @@ WHERE username = ?
             </tr>
           </thead>`;
 
-        const tb = document.createElement("tbody");
+        const tbody = document.createElement("tbody");
         rows.forEach(r => {
           const tr = document.createElement("tr");
           tr.innerHTML = `<td>${esc(r.id)}</td><td>${esc(r.username)}</td><td>${esc(r.class)}</td><td>${esc(r.grade)}</td>`;
-          tb.appendChild(tr);
+          tbody.appendChild(tr);
         });
 
-        t.appendChild(tb);
-        wrap.appendChild(t);
+        table.appendChild(tbody);
+        wrap.appendChild(table);
         el.appendChild(wrap);
-      } else if (rows && rows.error) {
-        el.innerHTML = `<div class="notice warn">${esc(rows.error)}</div>`;
+        return;
       }
-    }
 
-    function setStep(n) {
-      [1,2,3,4].forEach(s => {
-        const chip = qs(`.step[data-step="${s}"]`);
-        const section = qs(`#phase-${s}`);
-        if (chip) {
-          chip.classList.toggle("active", s === n);
-          chip.classList.toggle("done", s < n);
-        }
-        if (section) {
-          section.classList.toggle("hidden", s !== n);
-        }
-      });
-      qs("#btn-prev").disabled = n === 1;
-      qs("#btn-next").disabled = true;
-    }
-
-    function allowNext() {
-      qs("#btn-next").disabled = false;
+      if (rows && rows.error) {
+        el.innerHTML = `<div class="sql-notice warn">${esc(rows.error)}</div>`;
+      }
     }
 
     function insecureQuery(input) {
       const sql = "SELECT * FROM students WHERE username = '" + input + "';";
-      qs("#sql2").textContent = sql;
+      qs("#sql-unsafe").textContent = sql;
 
       const reAlwaysTrue = /(\bor\b).*?(?:['"]?\s*1\s*['"]?\s*=\s*['"]?\s*1|true)/i;
       if (reAlwaysTrue.test(input)) return DB.slice();
@@ -766,18 +690,18 @@ WHERE username = ?
 
     function secureQuery(input) {
       const sql = "SELECT * FROM students WHERE username = ?  -- bind: ['" + input + "']";
-      qs("#sql4").textContent = sql;
+      qs("#sql-secure").textContent = sql;
       return DB.filter(r => r.username === input);
     }
 
     function setTeacher(on) {
-      qs("#teacher-controls").classList.toggle("hidden", !on);
+      qs("#teacher-controls").classList.toggle("sql-hidden", !on);
       qs("#teacher-state").textContent = on
         ? "Angemeldet. Sensible Felder können eingeblendet werden."
         : "Nicht angemeldet. Sensible Felder bleiben verborgen.";
       renderDB(!on);
-      qs("#btn-show-sensitive").classList.remove("hidden");
-      qs("#btn-hide-sensitive").classList.add("hidden");
+      qs("#btn-show-sensitive").classList.remove("sql-hidden");
+      qs("#btn-hide-sensitive").classList.add("sql-hidden");
     }
 
     function closeModal() {
@@ -790,15 +714,15 @@ WHERE username = ?
       const root = qs("#modal-root");
       root.classList.remove("hidden");
       root.innerHTML = `
-        <div class="modal-backdrop sqllab">
-          <div class="modal">
+        <div class="sql-modal-backdrop">
+          <div class="sql-modal">
             <h3>Lehrkraft-Login</h3>
-            <p class="small">Nur für die Anzeige sensibler Felder innerhalb der Simulation.</p>
+            <p class="sql-small">Nur für die Anzeige sensibler Felder innerhalb der Simulation.</p>
             <label for="pw">Passwort</label>
             <input id="pw" type="password" placeholder="Passwort eingeben">
-            <div class="btn-row" style="margin-top: 14px;">
-              <button id="pw-ok" class="btn">Anmelden</button>
-              <button id="pw-cancel" class="btn alt">Abbrechen</button>
+            <div class="sql-auth-actions" style="margin-top: 14px;">
+              <button id="pw-ok" class="sql-btn">Anmelden</button>
+              <button id="pw-cancel" class="sql-btn alt">Abbrechen</button>
             </div>
           </div>
         </div>`;
@@ -821,7 +745,6 @@ WHERE username = ?
 
     document.addEventListener("DOMContentLoaded", () => {
       renderDB(true);
-      setStep(1);
       setTeacher(sessionStorage.getItem("teacher") === "1");
 
       qsa(".sample").forEach(btn => {
@@ -832,50 +755,24 @@ WHERE username = ?
         });
       });
 
-      qs("#run1").addEventListener("click", () => {
-        const v = qs("#q1").value.trim();
-        qs("#sql1").textContent = `SELECT * FROM students WHERE username = '${v}';`;
+      qs("#run-safe-demo").addEventListener("click", () => {
+        const v = qs("#safe-name").value.trim();
+        qs("#sql-normal").textContent = `SELECT * FROM students WHERE username = '${v}';`;
         const rows = DB.filter(r => r.username === v);
-        renderRows(rows, "#out1");
-        if (rows.length === 1) {
-          qs("#phase1-ok").classList.remove("hidden");
-          allowNext();
-        }
+        renderRows(rows, "#out-normal", "Kein passender Datensatz gefunden.");
       });
 
-      qs("#run2").addEventListener("click", () => {
-        const v = qs("#q2").value.trim();
+      qs("#run-unsafe-demo").addEventListener("click", () => {
+        const v = qs("#unsafe-name").value.trim();
         const rows = insecureQuery(v);
-        renderRows(rows, "#out2");
-        if (Array.isArray(rows) && rows.length === DB.length) {
-          qs("#phase2-ok").classList.remove("hidden");
-          qs("#viz3").textContent = `SELECT * FROM students\nWHERE username = '${v}';`;
-          allowNext();
-        }
+        renderRows(rows, "#out-unsafe", "Kein passender Datensatz gefunden.");
+        qs("#viz-unsafe").textContent = `SELECT * FROM students\nWHERE username = '${v}';`;
       });
 
-      qs("#chk-why").addEventListener("change", () => {
-        if (qs("#chk-why").checked) allowNext();
-      });
-
-      qs("#run4").addEventListener("click", () => {
-        const v = qs("#q4").value.trim();
+      qs("#run-secure-demo").addEventListener("click", () => {
+        const v = qs("#secure-name").value.trim();
         const rows = secureQuery(v);
-        renderRows(rows, "#out4");
-        if (!(Array.isArray(rows) && rows.length === DB.length)) {
-          qs("#phase4-ok").classList.remove("hidden");
-          allowNext();
-        }
-      });
-
-      qs("#btn-next").addEventListener("click", () => {
-        cur = Math.min(4, cur + 1);
-        setStep(cur);
-      });
-
-      qs("#btn-prev").addEventListener("click", () => {
-        cur = Math.max(1, cur - 1);
-        setStep(cur);
+        renderRows(rows, "#out-secure", "Die Eingabe wird hier nur als Wert behandelt. Deshalb erscheinen nicht automatisch alle Datensätze.");
       });
 
       qs("#btn-teacher-login").addEventListener("click", openModal);
@@ -887,57 +784,14 @@ WHERE username = ?
 
       qs("#btn-show-sensitive").addEventListener("click", () => {
         renderDB(false);
-        qs("#btn-show-sensitive").classList.add("hidden");
-        qs("#btn-hide-sensitive").classList.remove("hidden");
+        qs("#btn-show-sensitive").classList.add("sql-hidden");
+        qs("#btn-hide-sensitive").classList.remove("sql-hidden");
       });
 
       qs("#btn-hide-sensitive").addEventListener("click", () => {
         renderDB(true);
-        qs("#btn-hide-sensitive").classList.add("hidden");
-        qs("#btn-show-sensitive").classList.remove("hidden");
-      });
-
-      qs("#check").addEventListener("click", () => {
-        const res = qs("#out2 table");
-        const count = res ? res.querySelectorAll("tbody tr").length : 0;
-        let s = 0;
-        const fb = [];
-
-        if (count === DB.length) {
-          s++;
-          fb.push("Manipulation im unsicheren Modus erfolgreich erkannt.");
-        } else {
-          fb.push("Im unsicheren Modus wurden noch nicht alle Datensätze sichtbar.");
-        }
-
-        if (qs("#chk-why").checked) {
-          s++;
-          fb.push("Die Ursache wurde bewusst bestätigt.");
-        } else {
-          fb.push("Die Ursache wurde noch nicht bestätigt.");
-        }
-
-        const sql4 = qs("#sql4").textContent.toLowerCase();
-        if (sql4.includes("?") || sql4.includes("bind")) {
-          s++;
-          fb.push("Die sichere Variante mit Parameterbindung wurde nachvollzogen.");
-        } else {
-          fb.push("Die sichere Variante sollte noch geprüft werden.");
-        }
-
-        let html = `<strong>Ergebnis: ${Math.round((s / 3) * 100)}% (${s}/3)</strong><ul class="callout-list">`;
-        html += fb.map(item => `<li>${item}</li>`).join("");
-        html += `</ul>`;
-
-        if (s === 3) {
-          html += `<p><strong>Flag:</strong> {YOUDIDWHAT?}</p>`;
-        }
-
-        qs("#check-out").innerHTML = html;
-      });
-
-      qs("#reset-check").addEventListener("click", () => {
-        qs("#check-out").innerHTML = "Noch keine Auswertung.";
+        qs("#btn-hide-sensitive").classList.add("sql-hidden");
+        qs("#btn-show-sensitive").classList.remove("sql-hidden");
       });
     });
   </script>
