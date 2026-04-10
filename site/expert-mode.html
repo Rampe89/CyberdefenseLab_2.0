@@ -16,6 +16,30 @@
     .terminal-input { background: transparent !important; border: none !important; outline: none; color: #9ff59f !important; font-family: Consolas, Monaco, monospace; font-size: 1rem; width: calc(100% - 200px); box-shadow: none !important; padding: 0 !important; }
     .locked-card { width:min(860px, calc(100% - 24px)); margin:40px auto; background:rgba(255,255,255,.95); color:#10202f; padding:24px; border-radius:20px; border:1px solid rgba(19,61,93,.12); box-shadow:0 18px 40px rgba(0,0,0,.22); font-family: Arial, sans-serif; }
     @media (max-width: 640px){ .terminal-input{ width:100% !important; margin-top:6px; } .terminal{ min-height:68vh; } .shell-top{ flex-direction:column; align-items:flex-start; } }
+  
+    header {
+      background: rgba(31, 44, 56, 0.8);
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+    header h1 {
+      margin: 0;
+      color: #f0f0f0;
+    }
+    nav {
+      margin-top: 10px;
+    }
+    nav a {
+      color: #ddd;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+    nav a:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+
   </style>
 
   <style id="static-lab-shell">
@@ -58,9 +82,18 @@
 
 </head>
 <body>
-  <div class="static-topbar">
-    <div class="static-topbar-title">CyberDefense Lab 🧪</div>
-    <div><a href="index.html">Zurück zur Startseite</a></div>
+  <header>
+    <h1>CyberDefense Lab 🧪</h1>
+    <nav>
+      <a href="index.html">Startseite</a>
+      <a href="about.html">Über das Lab</a>
+      <a href="geheim.html">Geheime Flags</a>
+      <a href="linux-lab.html">Linux Grundkurs</a>
+      <a href="expert-mode.html">Expert Mode</a>
+    </nav>
+  </header>
+
+<div><a href="index.html">Zurück zur Startseite</a></div>
   </div>
 
   <div id="locked" class="locked-card" style="display:none;">
