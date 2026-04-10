@@ -196,14 +196,8 @@
   </style>
 
   <link rel="stylesheet" href="assets/cdl-unified.css">
-  <link rel="stylesheet" href="assets/css/lab-shell.css">
 </head>
-<body class="cdl-lab-shell-body">
-  <header class="cdl-lab-header">
-    <h1>CyberDefense Lab 🧪</h1>
-    <nav><a href="index.html">Startseite</a></nav>
-  </header>
-
+<body>
   <div class="quiz-container">
     <h1>Phishing-Quiz</h1>
     <h2>Was ist Phishing?</h2>
@@ -248,7 +242,10 @@
       die offizielle Webseite manuell in deinem Browser eingeben.
     </div>
     <!-- Der Home-Button, der erst nach Abschluss des Quiz angezeigt wird -->
-</div>
+    <div id="home-button" class="home-button">
+      <button onclick="location.href='/index.html'">Zurück zur Startseite</button>
+    </div>
+  </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -478,6 +475,17 @@
       document.getElementById("next-email-btn").addEventListener("click", showNextEmail);
     });
   </script>
+
+
+  <footer class="site-footer">
+    Lizenziert unter der MIT-Lizenz von Ramon Berghorn, 2025 | Bildungszwecke |
+    <a href="impressum.html">Impressum</a> |
+    <a href="datenschutz.html">Datenschutzerklärung</a> |
+    <a href="sources.html">Quellen</a> |
+    <a href="fred.html">🐭</a> |
+    <a href="contact.html">Kontakt</a>
+  </footer>
+
 </body>
 </html>
 

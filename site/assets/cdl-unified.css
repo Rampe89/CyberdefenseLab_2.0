@@ -1104,3 +1104,29 @@ body > .container > .device-note,
   text-decoration:underline !important;
   font-weight:700 !important;
 }
+
+
+.site-footer{
+  width:min(1100px, calc(100% - 24px));
+  margin:24px auto 28px auto;
+  padding:14px 16px;
+  border-radius:16px;
+  background:rgba(7,21,34,.72);
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 12px 24px rgba(0,0,0,.16);
+  color:#d0deec !important;
+  text-align:center;
+  box-sizing:border-box;
+  font-size:14px;
+  line-height:1.6;
+}
+
+.site-footer a{
+  color:#ffffff !important;
+  text-decoration:none;
+}
+
+.site-footer a:hover{
+  color:#ffdd00 !important;
+  text-decoration:underline;
+}

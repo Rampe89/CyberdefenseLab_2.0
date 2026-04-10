@@ -106,15 +106,20 @@
       .layout { grid-template-columns: 1fr; }
     }
   </style>
-  <link rel="stylesheet" href="assets/css/lab-shell.css">
 </head>
-<body class="cdl-lab-shell-body">
-  <header class="cdl-lab-header">
+<body>
+  <header>
     <h1>CyberDefense Lab 🧪</h1>
-    <nav><a href="index.html">Startseite</a></nav>
+    <nav>
+      <a href="index.html">Startseite</a>
+      <a href="about.html">Über das Lab</a>
+      <a href="geheim.html">Geheime Flags</a>
+      <a href="linux-lab.html">Linux Grundkurs</a>
+      <a href="expert-mode.html" id="expert-link" class="hidden-until-linux">Expert Mode</a>
+    </nav>
   </header>
 
-<div class="page-wrap">
+  <div class="page-wrap">
     <div class="intro">
       <h2>Linux Grundkurs – Navigation im Terminal</h2>
       <div class="device-note">
@@ -189,16 +194,7 @@
       </div>
     </div>
   </div>
-
-  <footer>
-    Lizenziert unter der MIT-Lizenz von Ramon Berghorn, 2025 | Bildungszwecke |
-    <a href="impressum.html">Impressum</a> |
-    <a href="datenschutz.html">Datenschutzerklärung</a> |
-    <a href="sources.html">Quellen</a> |
-    <a href="contact.html">Kontakt</a>
-  </footer>
-
-  <script>
+<script>
     let currentPath = "/home/user";
     let history = [];
     let historyIndex = -1;
@@ -479,5 +475,16 @@
     console.log("history, ls -a und find . -name flag.txt sind oft eine gute Kombination.");
   </script>
   <script src="assets/js/lab-state.js"></script>
+
+
+  <footer class="site-footer">
+    Lizenziert unter der MIT-Lizenz von Ramon Berghorn, 2025 | Bildungszwecke |
+    <a href="impressum.html">Impressum</a> |
+    <a href="datenschutz.html">Datenschutzerklärung</a> |
+    <a href="sources.html">Quellen</a> |
+    <a href="fred.html">🐭</a> |
+    <a href="contact.html">Kontakt</a>
+  </footer>
+
 </body>
 </html>

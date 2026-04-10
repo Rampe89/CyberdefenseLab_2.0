@@ -151,14 +151,8 @@
   </style>
 
   <link rel="stylesheet" href="assets/cdl-unified.css">
-  <link rel="stylesheet" href="assets/css/lab-shell.css">
 </head>
-<body class="cdl-lab-shell-body">
-  <header class="cdl-lab-header">
-    <h1>CyberDefense Lab 🧪</h1>
-    <nav><a href="index.html">Startseite</a></nav>
-  </header>
-
+<body>
   <div class="container">
     <h1>Social Engineering Lab</h1>
     <div class="explanation">
@@ -192,8 +186,11 @@
         Diese Simulation hat dir gezeigt, wie Angreifer durch Social Engineering vorgehen können. Indem du dir der Gefahren bewusst bist und Sicherheitsmaßnahmen wie 2FA und Vorsicht im Umgang mit physischen Medien anwendest, kannst du dich besser vor diesen Angriffen schützen.
       </p>
     </div>
-    <div id="back-button-container" style="display:none;"></div>
-</div>
+    <!-- Hier wird der Zurück zur Startseite Button eingeblendet, sobald das Lab beendet ist -->
+    <div id="back-button-container" style="text-align:center; margin-top:20px; display:none;">
+      <button class="back-button" onclick="location.href='/index.html'">Zurück zur Startseite</button>
+    </div>
+  </div>
   <script>
     /* Szenarien:
        1. Bankberater (formell – Sie-Anrede)
@@ -517,6 +514,17 @@
     
     window.onload = loadScenario;
   </script>
+
+
+  <footer class="site-footer">
+    Lizenziert unter der MIT-Lizenz von Ramon Berghorn, 2025 | Bildungszwecke |
+    <a href="impressum.html">Impressum</a> |
+    <a href="datenschutz.html">Datenschutzerklärung</a> |
+    <a href="sources.html">Quellen</a> |
+    <a href="fred.html">🐭</a> |
+    <a href="contact.html">Kontakt</a>
+  </footer>
+
 </body>
 </html>
 

@@ -64,6 +64,24 @@
     @media (max-width: 720px) {
       .static-topbar { flex-direction: column; align-items: flex-start; }
     }
+  
+    .site-footer {
+      width: min(1100px, calc(100% - 24px));
+      margin: 18px auto 22px auto;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.92);
+      border: 1px solid rgba(19,61,93,.12);
+      box-shadow: 0 12px 24px rgba(0,0,0,.10);
+      color: #183149;
+      box-sizing: border-box;
+      text-align: center;
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .site-footer a { color: #0f5f8f; text-decoration: none; }
+    .site-footer a:hover { text-decoration: underline; }
   </style>
 
 </head>
@@ -148,12 +166,15 @@
     };
   </script>
 
-  <div class="static-site-footer">
+
+  <footer class="site-footer">
     Lizenziert unter der MIT-Lizenz von Ramon Berghorn, 2025 | Bildungszwecke |
     <a href="impressum.html">Impressum</a> |
-    <a href="datenschutz.html">Datenschutz</a> |
-    <a href="sources.html">Quellen</a>
-  </div>
+    <a href="datenschutz.html">Datenschutzerklärung</a> |
+    <a href="sources.html">Quellen</a> |
+    <a href="fred.html">🐭</a> |
+    <a href="contact.html">Kontakt</a>
+  </footer>
 
 </body>
 </html>

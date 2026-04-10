@@ -386,15 +386,20 @@
       }
     }
   </style>
-  <link rel="stylesheet" href="assets/css/lab-shell.css">
 </head>
-<body class="sql-body cdl-lab-shell-body">
-  <header class="cdl-lab-header">
+<body class="sql-body">
+  <header>
     <h1>CyberDefense Lab 🧪</h1>
-    <nav><a href="index.html">Startseite</a></nav>
+    <nav>
+      <a href="index.html">Startseite</a>
+      <a href="about.html">Über das Lab</a>
+      <a href="geheim.html">Geheime Flags</a>
+      <a href="linux-lab.html">Linux Grundkurs</a>
+      <a href="expert-mode.html" id="expert-link" class="hidden-until-linux">Expert Mode</a>
+    </nav>
   </header>
 
-<main class="sql-page">
+  <main class="sql-page">
     <div class="sql-shell">
       <section class="sql-hero">
         <h2>SQL-Lab – Eingaben und Abfragen</h2>
@@ -588,16 +593,7 @@ WHERE username = ?
   </main>
 
   <div id="modal-root" class="hidden"></div>
-
-  <footer class="sql-footer">
-    Lizenziert unter der MIT-Lizenz von Ramon Berghorn, 2025 | Bildungszwecke |
-    <a href="impressum.html">Impressum</a> |
-    <a href="datenschutz.html">Datenschutzerklärung</a> |
-    <a href="sources.html">Quellen</a> |
-    <a href="contact.html">Kontakt</a>
-  </footer>
-
-  <script>
+<script>
     const DB = [
       { id:1, username:"alice", class:"7a", grade:2.1, comment:"hilft anderen" },
       { id:2, username:"bob",   class:"8b", grade:3.4, comment:"schreibt gut" },
@@ -802,5 +798,16 @@ WHERE username = ?
     });
   </script>
   <script src="assets/js/lab-state.js"></script>
+
+
+  <footer class="site-footer">
+    Lizenziert unter der MIT-Lizenz von Ramon Berghorn, 2025 | Bildungszwecke |
+    <a href="impressum.html">Impressum</a> |
+    <a href="datenschutz.html">Datenschutzerklärung</a> |
+    <a href="sources.html">Quellen</a> |
+    <a href="fred.html">🐭</a> |
+    <a href="contact.html">Kontakt</a>
+  </footer>
+
 </body>
 </html>
