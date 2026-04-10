@@ -1,0 +1,52 @@
+body.cdl-lab-shell-body {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.cdl-lab-header {
+  background: rgba(31, 44, 56, 0.8);
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.cdl-lab-header h1 {
+  margin: 0;
+  color: #f0f0f0;
+  font-family: Arial, sans-serif;
+  font-size: 2rem;
+}
+
+.cdl-lab-header nav {
+  margin-top: 10px;
+}
+
+.cdl-lab-header nav a {
+  color: #ddd;
+  margin: 0 10px;
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+}
+
+.cdl-lab-header nav a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+body.cdl-lab-shell-body .container,
+body.cdl-lab-shell-body .page-wrap,
+body.cdl-lab-shell-body .quiz-container,
+body.cdl-lab-shell-body .sql-page,
+body.cdl-lab-shell-body .shell-wrap,
+body.cdl-lab-shell-body .locked-card,
+body.cdl-lab-shell-body .expert-stage,
+body.cdl-lab-shell-body .site-shell,
+body.cdl-lab-shell-body main {
+  margin-top: 24px !important;
+}
+
+body.cdl-lab-shell-body .back-button,
+body.cdl-lab-shell-body #back-button-container,
+body.cdl-lab-shell-body #home-button {
+  display: none !important;
+}

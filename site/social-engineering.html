@@ -148,44 +148,15 @@
     .back-button:hover {
       background-color: #218838;
     }
-  
-    header {
-      background: rgba(31, 44, 56, 0.8);
-      padding: 15px;
-      text-align: center;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    }
-    header h1 {
-      margin: 0;
-      color: #f0f0f0;
-    }
-    nav {
-      margin-top: 10px;
-    }
-    nav a {
-      color: #ddd;
-      margin: 0 10px;
-      text-decoration: none;
-    }
-    nav a:hover {
-      color: #fff;
-      text-decoration: underline;
-    }
-
   </style>
 
   <link rel="stylesheet" href="assets/cdl-unified.css">
+  <link rel="stylesheet" href="assets/css/lab-shell.css">
 </head>
-<body>
-  <header>
+<body class="cdl-lab-shell-body">
+  <header class="cdl-lab-header">
     <h1>CyberDefense Lab 🧪</h1>
-    <nav>
-      <a href="index.html">Startseite</a>
-      <a href="about.html">Über das Lab</a>
-      <a href="geheim.html">Geheime Flags</a>
-      <a href="linux-lab.html">Linux Grundkurs</a>
-      <a href="expert-mode.html">Expert Mode</a>
-    </nav>
+    <nav><a href="index.html">Startseite</a></nav>
   </header>
 
   <div class="container">
@@ -221,11 +192,8 @@
         Diese Simulation hat dir gezeigt, wie Angreifer durch Social Engineering vorgehen können. Indem du dir der Gefahren bewusst bist und Sicherheitsmaßnahmen wie 2FA und Vorsicht im Umgang mit physischen Medien anwendest, kannst du dich besser vor diesen Angriffen schützen.
       </p>
     </div>
-    <!-- Hier wird der Zurück zur Startseite Button eingeblendet, sobald das Lab beendet ist -->
-    <div id="back-button-container" style="text-align:center; margin-top:20px; display:none;">
-      <button class="back-button" onclick="location.href='/index.html'">Zurück zur Startseite</button>
-    </div>
-  </div>
+    <div id="back-button-container" style="display:none;"></div>
+</div>
   <script>
     /* Szenarien:
        1. Bankberater (formell – Sie-Anrede)
