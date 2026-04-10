@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HTML-Kommentare lesen</title>
+  <title>Quelltext & Kommentare</title>
   <link rel="stylesheet" href="assets/cdl-unified.css">
   <style>
     body { margin:0; padding:24px; }
@@ -18,152 +18,56 @@
       border:1px solid rgba(124,227,255,.16);
       font-family:"Courier New", monospace;
       white-space:pre-wrap;
-      overflow:auto;
-    }
-    .lab-grid {
-      display:grid;
-      grid-template-columns: minmax(0, 1.3fr) minmax(260px, .7fr);
-      gap:18px;
-      margin-top:22px;
-      align-items:start;
-    }
-    .panel {
-      background:linear-gradient(180deg, #ffffff, #f8fbff);
-      border:1px solid rgba(16,35,58,.08);
-      border-radius:16px;
-      padding:18px;
-      box-shadow:var(--shadow-soft);
-    }
-    .panel h3 { margin-top:0; }
-    .steps { margin:0; padding-left:20px; }
-    .steps li { margin-bottom:8px; }
-    @media (max-width: 820px) {
-      .lab-grid { grid-template-columns: 1fr; }
     }
   </style>
   <!-- Interner Hinweis: staging-note entfernen
   FLAG: {SOURCE_CODE_IS_STILL_CODE}
   -->
-
-  <style id="static-lab-shell">
-    .static-topbar {
-      width: min(1100px, calc(100% - 24px));
-      margin: 20px auto 16px auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
-      border-radius: 16px;
-      background: rgba(7, 19, 30, 0.92);
-      border: 1px solid rgba(124,227,255,.12);
-      box-shadow: 0 14px 30px rgba(0,0,0,.18);
-      color: #e8f4ff;
-      box-sizing: border-box;
-    }
-    .static-topbar a { color: #7ce3ff; text-decoration: none; }
-    .static-topbar a:hover { text-decoration: underline; }
-    .static-topbar-title { font-weight: 700; color: #ffffff; }
-    .static-site-footer {
-      width: min(1100px, calc(100% - 24px));
-      margin: 18px auto 22px auto;
-      padding: 14px 16px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.92);
-      border: 1px solid rgba(19,61,93,.12);
-      box-shadow: 0 12px 24px rgba(0,0,0,.10);
-      color: #183149;
-      box-sizing: border-box;
-      text-align: center;
-    }
-    .static-site-footer a { color: #0f5f8f; text-decoration: none; }
-    .static-site-footer a:hover { text-decoration: underline; }
-    @media (max-width: 720px) {
-      .static-topbar { flex-direction: column; align-items: flex-start; }
-    }
-  </style>
-
 </head>
 <body>
-  <div class="static-topbar">
-    <div class="static-topbar-title">CyberDefense Lab 🧪</div>
-    <div>
-</div>
-  </div>
-
   <div class="container">
-    <h1>HTML-Kommentare lesen</h1>
+    <h1>Quelltext & Kommentare</h1>
     <div class="device-note desktop-required">
-      <p><strong>PC empfohlen:</strong> Den Seitenquelltext öffnest du am bequemsten am Rechner.</p>
+      <p><strong>PC empfohlen:</strong> Dieses Lab lebt davon, den Seitenquelltext bequem anzuschauen. Auf dem Handy ist das oft nur sehr eingeschränkt möglich.</p>
     </div>
 
     <p>
-      Diese Seite sieht erstmal unspektakulär aus. Genau darum geht es: Nicht alles, was ein Browser lädt,
-      wird später auch sichtbar dargestellt.
+      Wenn du eine Website öffnest, zeigt der Browser dir nur die fertige Oberfläche.
+      Im Hintergrund lädt er aber den kompletten HTML-Quelltext. Dazu können auch Dinge gehören,
+      die auf der Seite selbst gar nicht sichtbar sind.
     </p>
 
-    <div class="lab-grid">
-      <section class="panel">
-        <h3>Dein Auftrag</h3>
-        <p>
-          Prüfe, ob im geladenen HTML mehr steckt als in der sichtbaren Oberfläche. Du musst nichts umgehen,
-          nichts eingeben und nichts „hacken“. Du schaust nur genauer hin.
-        </p>
-
-        <div class="section">
-          <strong>Arbeitsauftrag</strong>
-          <ol class="steps">
-            <li>Öffne den Seitenquelltext dieser Seite.</li>
-            <li>Suche nach einer Stelle, die im Browser nicht angezeigt wird.</li>
-            <li>Notiere, warum diese Information trotzdem auf deinem Gerät liegt.</li>
-            <li>Übertrage anschließend die gefundene Flag auf der Startseite.</li>
-          </ol>
-        </div>
-
-        <div class="code-box">Beobachtung vor Bewertung:
-Nicht sichtbar ist nicht dasselbe wie nicht vorhanden.</div>
-      </section>
-
-      <aside class="panel">
-        <h3>Worauf du achten sollst</h3>
-        <p>
-          HTML-Kommentare sind für Menschen gedacht, die am Code arbeiten. Der Browser lädt sie trotzdem mit,
-          auch wenn sie nicht als normaler Seiteninhalt erscheinen.
-        </p>
-        <p>
-          Der Lernpunkt ist deshalb nicht „Kommentar gefunden“, sondern:
-          <strong>Welche Informationen werden an den Client ausgeliefert, obwohl sie dort eigentlich nichts zu suchen haben?</strong>
-        </p>
-      </aside>
+    <div class="info">
+      <strong>Worum geht es hier?</strong><br>
+      In diesem Lab sollst du verstehen, dass „nicht sichtbar“ und „nicht vorhanden“
+      zwei verschiedene Dinge sind.
     </div>
 
-    <div class="section panel">
-      <h3>Warum das sicherheitsrelevant ist</h3>
+    <div class="section">
+      <strong>Warum ist das wichtig?</strong>
       <p>
-        In echten Projekten stehen in Kommentaren manchmal Testdaten, interne Hinweise, alte Pfade oder unfertige Gedanken.
-        Solche Dinge sind nicht automatisch gefährlich. Problematisch wird es dann, wenn daraus Strukturwissen,
-        Zugangshinweise oder unnötige Interna ablesbar werden.
-      </p>
-      <p>
-        Wer Quelltext liest, trainiert deshalb einen grundlegenden Sicherheitsblick: Welche Informationen gibt ein System preis,
-        obwohl sie nicht aktiv angezeigt werden?
+        In HTML-Kommentaren schreiben Entwickler manchmal kurze Notizen, Erinnerungen oder Hinweise.
+        Solche Kommentare werden normalerweise nicht auf der Website angezeigt.
+        Sie liegen aber trotzdem im geladenen Dokument und können deshalb eingesehen werden.
       </p>
     </div>
+
+    <div class="section">
+      <strong>Deine Aufgabe:</strong>
+      <p>
+        Prüfe, ob diese Seite im Quelltext mehr Informationen enthält als in der sichtbaren Ansicht.
+        Du musst nichts „angreifen“. Du schaust dir nur genauer an, was der Browser bereits geladen hat.
+      </p>
+    </div>
+
+    <div class="code-box">Tipp: Öffne den Seitenquelltext
+oder suche in den Entwicklertools nach HTML-Kommentaren.</div>
 
     <p class="note">
-      <strong>Merksatz:</strong> Was der Server ausliefert, kann untersucht werden – auch dann, wenn es auf der Oberfläche nicht direkt auftaucht.
+      <strong>Merksatz:</strong> Was nicht angezeigt wird, kann trotzdem im Browser vorhanden und lesbar sein.
     </p>
-</div>
 
-
-  <footer class="site-footer">
-    Lizenziert unter der MIT-Lizenz von Ramon Berghorn, 2025 | Bildungszwecke |
-    <a href="impressum.html">Impressum</a> |
-    <a href="datenschutz.html">Datenschutzerklärung</a> |
-    <a href="sources.html">Quellen</a> |
-    <a href="fred.html">🐭</a> |
-    <a href="contact.html">Kontakt</a>
-  </footer>
-
+    <a class="btn" href="index.html">Zurück zur Startseite</a>
+  </div>
 </body>
 </html>

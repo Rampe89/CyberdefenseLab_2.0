@@ -197,12 +197,6 @@
       align-items: center;
     }
 
-    .sql-example-row > * ,
-    .sql-action-row > * ,
-    .sql-auth-actions > * {
-      max-width: 100%;
-    }
-
     .sql-btn {
       padding: 9px 12px;
       background: #1f6fb2;
@@ -377,12 +371,6 @@
       .sql-layout {
         padding-left: 18px;
         padding-right: 18px;
-      }
-
-      .sql-example-row .sql-btn,
-      .sql-action-row .sql-btn,
-      .sql-auth-actions .sql-btn {
-        width: 100%;
       }
     }
   </style>
@@ -593,7 +581,16 @@ WHERE username = ?
   </main>
 
   <div id="modal-root" class="hidden"></div>
-<script>
+
+  <footer class="sql-footer">
+    Lizenziert unter der MIT-Lizenz von Ramon Berghorn, 2025 | Bildungszwecke |
+    <a href="impressum.html">Impressum</a> |
+    <a href="datenschutz.html">Datenschutzerklärung</a> |
+    <a href="sources.html">Quellen</a> |
+    <a href="contact.html">Kontakt</a>
+  </footer>
+
+  <script>
     const DB = [
       { id:1, username:"alice", class:"7a", grade:2.1, comment:"hilft anderen" },
       { id:2, username:"bob",   class:"8b", grade:3.4, comment:"schreibt gut" },
@@ -722,8 +719,7 @@ WHERE username = ?
           </div>
         </div>`;
 
-      const pwInput = qs("#pw");
-      pwInput.focus();
+      qs("#pw").focus();
       qs("#pw-cancel").onclick = closeModal;
       qs("#pw-ok").onclick = () => {
         const v = qs("#pw").value || "";
@@ -733,21 +729,15 @@ WHERE username = ?
           setTeacher(true);
         } else {
           alert("Falsches Passwort.");
-          pwInput.value = "";
-          pwInput.focus();
+          qs("#pw").value = "";
+          qs("#pw").focus();
         }
       };
-
-      pwInput.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") qs("#pw-ok").click();
-        if (event.key === "Escape") closeModal();
-      });
     }
 
     document.addEventListener("DOMContentLoaded", () => {
       renderDB(true);
       setTeacher(sessionStorage.getItem("teacher") === "1");
-      if (window.CDLabState) window.CDLabState.syncExpertVisibility(document);
 
       qsa(".sample").forEach(btn => {
         btn.addEventListener("click", () => {
@@ -797,17 +787,5 @@ WHERE username = ?
       });
     });
   </script>
-  <script src="assets/js/lab-state.js"></script>
-
-
-  <footer class="site-footer">
-    Lizenziert unter der MIT-Lizenz von Ramon Berghorn, 2025 | Bildungszwecke |
-    <a href="impressum.html">Impressum</a> |
-    <a href="datenschutz.html">Datenschutzerklärung</a> |
-    <a href="sources.html">Quellen</a> |
-    <a href="fred.html">🐭</a> |
-    <a href="contact.html">Kontakt</a>
-  </footer>
-
 </body>
 </html>

@@ -194,7 +194,16 @@
       </div>
     </div>
   </div>
-<script>
+
+  <footer>
+    Lizenziert unter der MIT-Lizenz von Ramon Berghorn, 2025 | Bildungszwecke |
+    <a href="impressum.html">Impressum</a> |
+    <a href="datenschutz.html">Datenschutzerklärung</a> |
+    <a href="sources.html">Quellen</a> |
+    <a href="contact.html">Kontakt</a>
+  </footer>
+
+  <script>
     let currentPath = "/home/user";
     let history = [];
     let historyIndex = -1;
@@ -447,16 +456,11 @@
       const correct = atob("e0xJTlVYX0VYUExPUkVSfQ==");
       if (input.value.trim() === correct) {
         alert("Richtig! Linux-Flag akzeptiert. Expert Mode wurde freigeschaltet.");
-        if (window.CDLabState) {
-          window.CDLabState.setLinuxSolved(true);
-          window.CDLabState.setFlag(18, true);
-        } else {
-          localStorage.setItem("linuxLabSolved", "true");
-          const flags = JSON.parse(localStorage.getItem("collectedFlags") || "[]");
-          while (flags.length < 18) flags.push(false);
-          flags[17] = true;
-          localStorage.setItem("collectedFlags", JSON.stringify(flags));
-        }
+        localStorage.setItem("linuxLabSolved", "true");
+        const flags = JSON.parse(localStorage.getItem("collectedFlags") || "[]");
+        while (flags.length < 18) flags.push(false);
+        flags[17] = true;
+        localStorage.setItem("collectedFlags", JSON.stringify(flags));
         syncLinuxUnlockState();
       } else {
         alert("Noch nicht richtig. Schau dir Hinweise, History und versteckte Pfade nochmal an.");
@@ -474,17 +478,5 @@
     console.log("Du bist hier nicht zufällig gelandet 👀");
     console.log("history, ls -a und find . -name flag.txt sind oft eine gute Kombination.");
   </script>
-  <script src="assets/js/lab-state.js"></script>
-
-
-  <footer class="site-footer">
-    Lizenziert unter der MIT-Lizenz von Ramon Berghorn, 2025 | Bildungszwecke |
-    <a href="impressum.html">Impressum</a> |
-    <a href="datenschutz.html">Datenschutzerklärung</a> |
-    <a href="sources.html">Quellen</a> |
-    <a href="fred.html">🐭</a> |
-    <a href="contact.html">Kontakt</a>
-  </footer>
-
 </body>
 </html>
