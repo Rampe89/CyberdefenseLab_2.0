@@ -38,7 +38,7 @@
   </div>
 
   <script>
-    const unlocked = localStorage.getItem('linuxLabSolved') === 'true';
+    const unlocked = window.CDLabState ? window.CDLabState.isLinuxSolved() : localStorage.getItem('linuxLabSolved') === 'true';
     const lockedCard = document.getElementById('locked');
     const shell = document.getElementById('shell');
     const terminal = document.getElementById('terminal');
@@ -538,5 +538,6 @@
       addPrompt();
     }
   </script>
+  <script src="assets/js/lab-state.js"></script>
 </body>
 </html>

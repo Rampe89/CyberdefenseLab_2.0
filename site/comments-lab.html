@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quelltext & Kommentare</title>
+  <title>HTML-Kommentare lesen</title>
   <link rel="stylesheet" href="assets/cdl-unified.css">
   <style>
     body { margin:0; padding:24px; }
@@ -18,6 +18,27 @@
       border:1px solid rgba(124,227,255,.16);
       font-family:"Courier New", monospace;
       white-space:pre-wrap;
+      overflow:auto;
+    }
+    .lab-grid {
+      display:grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(260px, .7fr);
+      gap:18px;
+      margin-top:22px;
+      align-items:start;
+    }
+    .panel {
+      background:linear-gradient(180deg, #ffffff, #f8fbff);
+      border:1px solid rgba(16,35,58,.08);
+      border-radius:16px;
+      padding:18px;
+      box-shadow:var(--shadow-soft);
+    }
+    .panel h3 { margin-top:0; }
+    .steps { margin:0; padding-left:20px; }
+    .steps li { margin-bottom:8px; }
+    @media (max-width: 820px) {
+      .lab-grid { grid-template-columns: 1fr; }
     }
   </style>
   <!-- Interner Hinweis: staging-note entfernen
@@ -26,48 +47,71 @@
 </head>
 <body>
   <div class="container">
-    <h1>Quelltext & Kommentare</h1>
+    <h1>HTML-Kommentare lesen</h1>
     <div class="device-note desktop-required">
-      <p><strong>PC empfohlen:</strong> Dieses Lab lebt davon, den Seitenquelltext bequem anzuschauen. Auf dem Handy ist das oft nur sehr eingeschränkt möglich.</p>
+      <p><strong>PC empfohlen:</strong> Den Seitenquelltext öffnest du am bequemsten am Rechner.</p>
     </div>
 
     <p>
-      Wenn du eine Website öffnest, zeigt der Browser dir nur die fertige Oberfläche.
-      Im Hintergrund lädt er aber den kompletten HTML-Quelltext. Dazu können auch Dinge gehören,
-      die auf der Seite selbst gar nicht sichtbar sind.
+      Diese Seite sieht erstmal unspektakulär aus. Genau darum geht es: Nicht alles, was ein Browser lädt,
+      wird später auch sichtbar dargestellt.
     </p>
 
-    <div class="info">
-      <strong>Worum geht es hier?</strong><br>
-      In diesem Lab sollst du verstehen, dass „nicht sichtbar“ und „nicht vorhanden“
-      zwei verschiedene Dinge sind.
+    <div class="lab-grid">
+      <section class="panel">
+        <h3>Dein Auftrag</h3>
+        <p>
+          Prüfe, ob im geladenen HTML mehr steckt als in der sichtbaren Oberfläche. Du musst nichts umgehen,
+          nichts eingeben und nichts „hacken“. Du schaust nur genauer hin.
+        </p>
+
+        <div class="section">
+          <strong>Arbeitsauftrag</strong>
+          <ol class="steps">
+            <li>Öffne den Seitenquelltext dieser Seite.</li>
+            <li>Suche nach einer Stelle, die im Browser nicht angezeigt wird.</li>
+            <li>Notiere, warum diese Information trotzdem auf deinem Gerät liegt.</li>
+            <li>Übertrage anschließend die gefundene Flag auf der Startseite.</li>
+          </ol>
+        </div>
+
+        <div class="code-box">Beobachtung vor Bewertung:
+Nicht sichtbar ist nicht dasselbe wie nicht vorhanden.</div>
+      </section>
+
+      <aside class="panel">
+        <h3>Worauf du achten sollst</h3>
+        <p>
+          HTML-Kommentare sind für Menschen gedacht, die am Code arbeiten. Der Browser lädt sie trotzdem mit,
+          auch wenn sie nicht als normaler Seiteninhalt erscheinen.
+        </p>
+        <p>
+          Der Lernpunkt ist deshalb nicht „Kommentar gefunden“, sondern:
+          <strong>Welche Informationen werden an den Client ausgeliefert, obwohl sie dort eigentlich nichts zu suchen haben?</strong>
+        </p>
+      </aside>
     </div>
 
-    <div class="section">
-      <strong>Warum ist das wichtig?</strong>
+    <div class="section panel">
+      <h3>Warum das sicherheitsrelevant ist</h3>
       <p>
-        In HTML-Kommentaren schreiben Entwickler manchmal kurze Notizen, Erinnerungen oder Hinweise.
-        Solche Kommentare werden normalerweise nicht auf der Website angezeigt.
-        Sie liegen aber trotzdem im geladenen Dokument und können deshalb eingesehen werden.
+        In echten Projekten stehen in Kommentaren manchmal Testdaten, interne Hinweise, alte Pfade oder unfertige Gedanken.
+        Solche Dinge sind nicht automatisch gefährlich. Problematisch wird es dann, wenn daraus Strukturwissen,
+        Zugangshinweise oder unnötige Interna ablesbar werden.
+      </p>
+      <p>
+        Wer Quelltext liest, trainiert deshalb einen grundlegenden Sicherheitsblick: Welche Informationen gibt ein System preis,
+        obwohl sie nicht aktiv angezeigt werden?
       </p>
     </div>
-
-    <div class="section">
-      <strong>Deine Aufgabe:</strong>
-      <p>
-        Prüfe, ob diese Seite im Quelltext mehr Informationen enthält als in der sichtbaren Ansicht.
-        Du musst nichts „angreifen“. Du schaust dir nur genauer an, was der Browser bereits geladen hat.
-      </p>
-    </div>
-
-    <div class="code-box">Tipp: Öffne den Seitenquelltext
-oder suche in den Entwicklertools nach HTML-Kommentaren.</div>
 
     <p class="note">
-      <strong>Merksatz:</strong> Was nicht angezeigt wird, kann trotzdem im Browser vorhanden und lesbar sein.
+      <strong>Merksatz:</strong> Was der Server ausliefert, kann untersucht werden – auch dann, wenn es auf der Oberfläche nicht direkt auftaucht.
     </p>
 
     <a class="btn" href="index.html">Zurück zur Startseite</a>
   </div>
+
+  <script src="assets/js/app.js"></script>
 </body>
 </html>

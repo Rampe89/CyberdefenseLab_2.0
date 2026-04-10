@@ -456,11 +456,16 @@
       const correct = atob("e0xJTlVYX0VYUExPUkVSfQ==");
       if (input.value.trim() === correct) {
         alert("Richtig! Linux-Flag akzeptiert. Expert Mode wurde freigeschaltet.");
-        localStorage.setItem("linuxLabSolved", "true");
-        const flags = JSON.parse(localStorage.getItem("collectedFlags") || "[]");
-        while (flags.length < 18) flags.push(false);
-        flags[17] = true;
-        localStorage.setItem("collectedFlags", JSON.stringify(flags));
+        if (window.CDLabState) {
+          window.CDLabState.setLinuxSolved(true);
+          window.CDLabState.setFlag(18, true);
+        } else {
+          localStorage.setItem("linuxLabSolved", "true");
+          const flags = JSON.parse(localStorage.getItem("collectedFlags") || "[]");
+          while (flags.length < 18) flags.push(false);
+          flags[17] = true;
+          localStorage.setItem("collectedFlags", JSON.stringify(flags));
+        }
         syncLinuxUnlockState();
       } else {
         alert("Noch nicht richtig. Schau dir Hinweise, History und versteckte Pfade nochmal an.");
@@ -478,5 +483,6 @@
     console.log("Du bist hier nicht zufällig gelandet 👀");
     console.log("history, ls -a und find . -name flag.txt sind oft eine gute Kombination.");
   </script>
+  <script src="assets/js/lab-state.js"></script>
 </body>
 </html>

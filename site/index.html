@@ -550,9 +550,7 @@
      * Globale Variablen & Konfiguration
      ***********************************/
     // Insgesamt 18 Flags (Index 0-17)
-    let collectedFlags = JSON.parse(localStorage.getItem("collectedFlags")) || 
-      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
-    while (collectedFlags.length < 18) collectedFlags.push(false);
+    let collectedFlags = window.CDLabState ? window.CDLabState.readFlags() : [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
     // Base64-String für das Cookie {COOKIES_REVEAL_SECRETS}
     const cookieEncoded = "e0NPT0tJRVNfUkVWRUFMX1NFQ1JFVFN9";
     // Konfetti soll nur einmal ausgelöst werden
@@ -759,27 +757,9 @@
      * Fortschritt & UI Updates
      ****************************/
     function syncLinuxUnlockState() {
-      const solved = localStorage.getItem("linuxLabSolved") === "true";
-      const navLink = document.getElementById("expert-nav-link");
-      const openLink = document.getElementById("expert-open-link");
-      const badge = document.getElementById("expert-badge");
-      const note = document.getElementById("expert-mode-note");
-      if (solved) {
-        if (navLink) navLink.classList.add("is-visible");
-        if (openLink) openLink.classList.add("is-visible");
-        if (badge) {
-          badge.classList.remove("locked");
-          badge.textContent = "✅ Freigeschaltet";
-        }
-        if (note) note.textContent = "Status: freigeschaltet. Der Expert Mode kann jetzt geöffnet werden.";
-      } else {
-        if (navLink) navLink.classList.remove("is-visible");
-        if (openLink) openLink.classList.remove("is-visible");
-        if (badge) {
-          badge.classList.add("locked");
-          badge.textContent = "🔒 Gesperrt";
-        }
-        if (note) note.textContent = "Status: aktuell noch gesperrt. Abschluss des Linux-Kurses erforderlich.";
+      if (window.CDLabState) {
+        window.CDLabState.syncExpertVisibility(document);
+        return;
       }
     }
 
@@ -795,7 +775,11 @@
       }
     }
     function saveFlags() {
-      localStorage.setItem("collectedFlags", JSON.stringify(collectedFlags));
+      if (window.CDLabState) {
+        collectedFlags = window.CDLabState.writeFlags(collectedFlags);
+      } else {
+        localStorage.setItem("collectedFlags", JSON.stringify(collectedFlags));
+      }
       renderAchievementsFromStorage();
     }
     function updateUI() {
@@ -840,6 +824,7 @@
       renderAchievementsFromStorage();
     }
   </script>
+  <script src="assets/js/lab-state.js"></script>
   <script src="assets/stability-patch.js"></script>
 </body>
 </html>
