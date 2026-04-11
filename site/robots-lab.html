@@ -6,34 +6,54 @@
   <title>robots.txt Recon</title>
   <link rel="stylesheet" href="assets/cdl-unified.css">
   <style>
-    body { margin:0; padding:24px; }
+    body { margin: 0; padding: 24px; }
     .container { max-width: 920px; margin: 0 auto; padding: 28px; }
+    .lab-actions {
+      margin-top: 32px;
+      display: flex;
+      justify-content: flex-start;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>robots.txt Recon</h1>
+
     <div class="device-note desktop-required">
-      <p><strong>PC empfohlen:</strong> Für dieses Lab ist ein Browser mit gut zugänglicher Adresszeile und einfacher Navigation zwischen mehreren Seiten deutlich angenehmer.</p>
+      <p><strong>PC empfohlen:</strong> Für dieses Lab ist ein Browser mit gut sichtbarer Adresszeile angenehmer, weil du gezielt zwischen Seiten und Pfaden wechselst.</p>
     </div>
 
     <p>
       Viele Websites besitzen eine Datei mit dem Namen <code>robots.txt</code>.
-      Sie liegt im Hauptverzeichnis der Website und richtet sich eigentlich an Suchmaschinen.
+      Sie liegt im Hauptverzeichnis einer Website und enthält Hinweise für Suchmaschinen.
     </p>
 
     <div class="info">
-      <strong>Worum geht es hier?</strong><br>
-      Die <code>robots.txt</code> ist keine Zugangssperre. Sie ist eher eine Bitte an Suchmaschinen,
-      bestimmte Bereiche nicht zu durchsuchen.
+      <strong>Kernidee:</strong><br>
+      Eine <code>robots.txt</code> schützt nichts. Sie kann nur darauf hinweisen,
+      welche Bereiche nicht indexiert werden sollen.
     </div>
 
     <p>
-      <strong>Warum ist das wichtig?</strong> Wenn dort interessante Pfade genannt werden,
-      können Menschen diese oft trotzdem direkt aufrufen. Genau deshalb ist „nicht indexieren“
-      etwas anderes als „wirklich geschützt“.
+      Genau darin liegt das Problem: Wenn dort Pfade genannt werden, können diese oft trotzdem
+      direkt im Browser aufgerufen werden. „Nicht für Suchmaschinen gedacht“ bedeutet also nicht
+      automatisch „vor Zugriff geschützt“.
     </p>
 
     <p>
-      <strong>Deine Aufgabe:</strong> Finde die passende Datei, lies sie und prüfe,
-      ob dort ein Pf
+      <strong>Deine Aufgabe:</strong> Finde die passende Datei, lies ihren Inhalt und prüfe,
+      ob sich daraus ein interessanter Bereich der Website ableiten lässt.
+    </p>
+
+    <p>
+      Arbeite dabei sauber: erst beobachten, dann lesen, dann Schlüsse ziehen.
+      Es geht hier nicht um Zufall, sondern darum, Informationen aus einer offen erreichbaren Datei
+      richtig einzuordnen.
+    </p>
+
+    <div class="lab-actions">
+      <a href="index.html" class="btn btn-primary">← Zurück zur Startseite</a>
+    </div>
+  </div>
+</body>
+</html>
