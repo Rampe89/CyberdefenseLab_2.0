@@ -8,8 +8,6 @@ Diese Version wurde als statische Netlify-Variante aufgeräumt.
 - Inhalte in den Ordner `site/` verschoben
 - Bilddateien in `site/assets/images/` gebündelt
 - alte Render-Links auf relative Links umgestellt
-- fehlende Zielseiten als Platzhalter ergänzt (`unterrichtsbeispiele.html`, `lehrplan.html`, `lernbuddy.html`, `new.html`)
-- fehlende Asset-Datei `hackerman.jpg` als Platzhalter ergänzt
 - `netlify.toml` für direktes Deployment hinzugefügt
 
 ## Deployment mit Netlify
@@ -28,7 +26,6 @@ Du kannst den Inhalt aus `site/` auch direkt mit einem einfachen Static Server t
 
 
 ## Patch-Hinweis (April 2026)
-- Doppelte `site/site`-Struktur entfernt
 - Linux-Lab erweitert
 - Expert Mode wird nach Abschluss des Linux-Kurses freigeschaltet
 - Mobile-/Tablet-Polish in `assets/cdl-unified.css`
