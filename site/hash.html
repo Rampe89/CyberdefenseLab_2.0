@@ -80,18 +80,7 @@
 
   <link rel="stylesheet" href="assets/cdl-unified.css">
 </head>
-<body class="cdl-framed">
-  <!-- CDL shared header -->
-  <header>
-    <h1>CyberDefense Lab 🧪</h1>
-    <nav>
-      <a href="about.html">Über das Lab</a>
-      <a href="geheim.html">Geheime Flags</a>
-      <a href="linux-lab.html">Linux Grundkurs</a> <a href="expert-mode.html" id="expert-nav-link" class="hidden-until-linux">Expert Mode</a> <a href="hidden-button.html" style="opacity:.02;pointer-events:auto;">.</a>
-    </nav>
-  </header>
-  <div class="cdl-back-home"><a href="index.html">← Zurück zur Startseite</a></div>
-
+<body>
   <div class="container">
     <div class="info">
       <h2>Was sind Hashes und wie funktionieren sie?</h2>
@@ -214,26 +203,6 @@ Hashing-Methode: MD5
       }
     }
   </script>
-
-  <footer>
-    Lizenziert unter der MIT-Lizenz von Ramon Berghorn, 2025 | Bildungszwecke |
-    <a href="impressum.html">Impressum</a> |
-    <a href="datenschutz.html">Datenschutzerklärung</a> |
-    <a href="sources.html">Quellen</a> |
-    <a href="fred.html">🐭</a> |
-    <a href="contact.html">Kontakt</a>
-  </footer>
-
-<script>
-(function(){
-  try {
-    var solved = localStorage.getItem('linuxLabSolved') === 'true';
-    var navLink = document.getElementById('expert-nav-link');
-    if (navLink && solved) navLink.classList.add('is-visible');
-  } catch (e) {}
-})();
-</script>
-
 </body>
 </html>
 

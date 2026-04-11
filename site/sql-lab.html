@@ -376,18 +376,18 @@
   </style>
 </head>
 <body class="sql-body">
-  <!-- CDL shared header -->
   <header>
     <h1>CyberDefense Lab 🧪</h1>
     <nav>
+      <a href="index.html">Startseite</a>
       <a href="about.html">Über das Lab</a>
       <a href="geheim.html">Geheime Flags</a>
-      <a href="linux-lab.html">Linux Grundkurs</a> <a href="expert-mode.html" id="expert-nav-link" class="hidden-until-linux">Expert Mode</a> <a href="hidden-button.html" style="opacity:.02;pointer-events:auto;">.</a>
+      <a href="linux-lab.html">Linux Grundkurs</a>
+      <a href="expert-mode.html" id="expert-link" class="hidden-until-linux">Expert Mode</a>
     </nav>
   </header>
-  <div class="cdl-back-home"><a href="index.html">← Zurück zur Startseite</a></div>
 
-<main class="sql-page">
+  <main class="sql-page">
     <div class="sql-shell">
       <section class="sql-hero">
         <h2>SQL-Lab – Eingaben und Abfragen</h2>
@@ -581,7 +581,16 @@ WHERE username = ?
   </main>
 
   <div id="modal-root" class="hidden"></div>
-<script>
+
+  <footer class="sql-footer">
+    Lizenziert unter der MIT-Lizenz von Ramon Berghorn, 2025 | Bildungszwecke |
+    <a href="impressum.html">Impressum</a> |
+    <a href="datenschutz.html">Datenschutzerklärung</a> |
+    <a href="sources.html">Quellen</a> |
+    <a href="contact.html">Kontakt</a>
+  </footer>
+
+  <script>
     const DB = [
       { id:1, username:"alice", class:"7a", grade:2.1, comment:"hilft anderen" },
       { id:2, username:"bob",   class:"8b", grade:3.4, comment:"schreibt gut" },
@@ -779,24 +788,9 @@ WHERE username = ?
     });
   </script>
 
-  <footer>
-    Lizenziert unter der MIT-Lizenz von Ramon Berghorn, 2025 | Bildungszwecke |
-    <a href="impressum.html">Impressum</a> |
-    <a href="datenschutz.html">Datenschutzerklärung</a> |
-    <a href="sources.html">Quellen</a> |
-    <a href="fred.html">🐭</a> |
-    <a href="contact.html">Kontakt</a>
-  </footer>
-
-<script>
-(function(){
-  try {
-    var solved = localStorage.getItem('linuxLabSolved') === 'true';
-    var navLink = document.getElementById('expert-nav-link');
-    if (navLink && solved) navLink.classList.add('is-visible');
-  } catch (e) {}
-})();
-</script>
+  <div class="cdl-back-home" style="text-align:center; margin:28px 0 8px;">
+    <a class="btn" href="index.html" style="display:inline-block; padding:10px 20px; background:#007bff; color:#fff; text-decoration:none; border-radius:6px; font-weight:600;">Zurück zur Startseite</a>
+  </div>
 
 </body>
 </html>

@@ -23,18 +23,7 @@
     }
   </style>
 </head>
-<body class="cdl-framed">
-  <!-- CDL shared header -->
-  <header>
-    <h1>CyberDefense Lab 🧪</h1>
-    <nav>
-      <a href="about.html">Über das Lab</a>
-      <a href="geheim.html">Geheime Flags</a>
-      <a href="linux-lab.html">Linux Grundkurs</a> <a href="expert-mode.html" id="expert-nav-link" class="hidden-until-linux">Expert Mode</a> <a href="hidden-button.html" style="opacity:.02;pointer-events:auto;">.</a>
-    </nav>
-  </header>
-  <div class="cdl-back-home"><a href="index.html">← Zurück zur Startseite</a></div>
-
+<body>
   <div class="container">
     <h1>Versteckte Elemente</h1>
     <p>
@@ -48,18 +37,7 @@
 
     <div class="info">
       <strong>Geheime Aufgabe:</strong> Gibt es auf dieser Seite vielleicht ein verstecktes Element,
-      das im Browser zwar existiert, aber nicht sichtbar ist?
-    </div>
-
-    <button class="btn" id="mysteryButton" onclick="revealFlag()">Geheime Aktion</button>
-    <div id="hiddenFlag"></div>
-
-    <a class="btn" href="index.html">Zurück zur Startseite</a>
-  </div>
-
-  <script>
-    function revealFlag() {
-      const encoded = [123,67,83,83,95,67,65,78,95,72,73,68,69,95,66,85,84,95,78,79,84,95,80,82,79,84,69,67,84,125];
+ 83,83,95,67,65,78,95,72,73,68,69,95,66,85,84,95,78,79,84,95,80,82,79,84,69,67,84,125];
       const flag = encoded.map(code => String.fromCharCode(code)).join('');
       const output = document.getElementById('hiddenFlag');
       output.textContent = flag;
@@ -67,24 +45,9 @@
     }
   </script>
 
-  <footer>
-    Lizenziert unter der MIT-Lizenz von Ramon Berghorn, 2025 | Bildungszwecke |
-    <a href="impressum.html">Impressum</a> |
-    <a href="datenschutz.html">Datenschutzerklärung</a> |
-    <a href="sources.html">Quellen</a> |
-    <a href="fred.html">🐭</a> |
-    <a href="contact.html">Kontakt</a>
-  </footer>
-
-<script>
-(function(){
-  try {
-    var solved = localStorage.getItem('linuxLabSolved') === 'true';
-    var navLink = document.getElementById('expert-nav-link');
-    if (navLink && solved) navLink.classList.add('is-visible');
-  } catch (e) {}
-})();
-</script>
+  <div class="cdl-back-home" style="text-align:center; margin:28px 0 8px;">
+    <a class="btn" href="index.html" style="display:inline-block; padding:10px 20px; background:#007bff; color:#fff; text-decoration:none; border-radius:6px; font-weight:600;">Zurück zur Startseite</a>
+  </div>
 
 </body>
 </html>

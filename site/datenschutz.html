@@ -49,18 +49,7 @@
 
   <link rel="stylesheet" href="assets/cdl-unified.css">
 </head>
-<body class="cdl-framed">
-  <!-- CDL shared header -->
-  <header>
-    <h1>CyberDefense Lab 🧪</h1>
-    <nav>
-      <a href="about.html">Über das Lab</a>
-      <a href="geheim.html">Geheime Flags</a>
-      <a href="linux-lab.html">Linux Grundkurs</a> <a href="expert-mode.html" id="expert-nav-link" class="hidden-until-linux">Expert Mode</a> <a href="hidden-button.html" style="opacity:.02;pointer-events:auto;">.</a>
-    </nav>
-  </header>
-  <div class="cdl-back-home"><a href="index.html">← Zurück zur Startseite</a></div>
-
+<body>
     <div class="container">
         <h1>Datenschutzerklärung</h1>
         <p>Das CyberDefense Lab erhebt, speichert oder verarbeitet keine personenbezogenen Daten der Nutzer. Alle Interaktionen innerhalb des Labs, einschließlich der Eingabe von Flags oder Passwörtern, erfolgen lokal auf dem Gerät des Nutzers und werden weder aufgezeichnet noch weitergeleitet.</p>
@@ -84,27 +73,11 @@
 
         <h2>5. Kontakt</h2>
         <p>Bei Fragen zur Nutzung des Labs oder zu Datenschutzthemen wenden Sie sich bitte an den Administrator des Labs.</p>
-</div>
 
-  <footer>
-    Lizenziert unter der MIT-Lizenz von Ramon Berghorn, 2025 | Bildungszwecke |
-    <a href="impressum.html">Impressum</a> |
-    <a href="datenschutz.html">Datenschutzerklärung</a> |
-    <a href="sources.html">Quellen</a> |
-    <a href="fred.html">🐭</a> |
-    <a href="contact.html">Kontakt</a>
-  </footer>
-
-<script>
-(function(){
-  try {
-    var solved = localStorage.getItem('linuxLabSolved') === 'true';
-    var navLink = document.getElementById('expert-nav-link');
-    if (navLink && solved) navLink.classList.add('is-visible');
-  } catch (e) {}
-})();
-</script>
-
+        <footer>
+            &copy; 2025 CyberDefense Lab | Datenschutzerklärung
+        </footer>
+    </div>
 </body>
 </html>
 
