@@ -376,6 +376,7 @@
   </style>
 </head>
 <body class="sql-body">
+  <!-- CDL shared header -->
   <header>
     <h1>CyberDefense Lab 🧪</h1>
     <nav>
@@ -384,8 +385,8 @@
       <a href="linux-lab.html">Linux Grundkurs</a> <a href="expert-mode.html" id="expert-nav-link" class="hidden-until-linux">Expert Mode</a> <a href="hidden-button.html" style="opacity:.02;pointer-events:auto;">.</a>
     </nav>
   </header>
+  <div class="cdl-back-home"><a href="index.html">← Zurück zur Startseite</a></div>
 
-  <div style="margin:20px 0;"><a href="/index.html">← Zurück zur Startseite</a></div>
 <main class="sql-page">
     <div class="sql-shell">
       <section class="sql-hero">
@@ -580,17 +581,7 @@ WHERE username = ?
   </main>
 
   <div id="modal-root" class="hidden"></div>
-
-  <footer>
-    Lizenziert unter der MIT-Lizenz von Ramon Berghorn, 2025 | Bildungszwecke |
-    <a href="impressum.html">Impressum</a> |
-    <a href="datenschutz.html">Datenschutzerklärung</a> |
-    <a href="sources.html">Quellen</a> |
-    <a href="fred.html">🐭</a> |
-    <a href="contact.html">Kontakt</a>
-  </footer>
-
-  <script>
+<script>
     const DB = [
       { id:1, username:"alice", class:"7a", grade:2.1, comment:"hilft anderen" },
       { id:2, username:"bob",   class:"8b", grade:3.4, comment:"schreibt gut" },
@@ -787,5 +778,25 @@ WHERE username = ?
       });
     });
   </script>
+
+  <footer>
+    Lizenziert unter der MIT-Lizenz von Ramon Berghorn, 2025 | Bildungszwecke |
+    <a href="impressum.html">Impressum</a> |
+    <a href="datenschutz.html">Datenschutzerklärung</a> |
+    <a href="sources.html">Quellen</a> |
+    <a href="fred.html">🐭</a> |
+    <a href="contact.html">Kontakt</a>
+  </footer>
+
+<script>
+(function(){
+  try {
+    var solved = localStorage.getItem('linuxLabSolved') === 'true';
+    var navLink = document.getElementById('expert-nav-link');
+    if (navLink && solved) navLink.classList.add('is-visible');
+  } catch (e) {}
+})();
+</script>
+
 </body>
 </html>

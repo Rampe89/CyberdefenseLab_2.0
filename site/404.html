@@ -201,8 +201,8 @@
 
   <link rel="stylesheet" href="assets/cdl-unified.css">
 </head>
-<body>
-  <!-- Header & Navigation -->
+<body class="cdl-framed">
+  <!-- CDL shared header -->
   <header>
     <h1>CyberDefense Lab 🧪</h1>
     <nav>
@@ -211,8 +211,10 @@
       <a href="linux-lab.html">Linux Grundkurs</a> <a href="expert-mode.html" id="expert-nav-link" class="hidden-until-linux">Expert Mode</a> <a href="hidden-button.html" style="opacity:.02;pointer-events:auto;">.</a>
     </nav>
   </header>
+  <div class="cdl-back-home"><a href="index.html">← Zurück zur Startseite</a></div>
 
-  <!-- Hauptinhalt -->
+  <!-- Header & Navigation -->
+<!-- Hauptinhalt -->
   <div class="container">
     <p class="top-info">
       Dieses Lab dient ausschließlich Bildungszwecken. Der Einsatz der hier erlernten Techniken für illegale Zwecke ist strengstens untersagt. Es handelt sich um Simulationen, keine echten Angriffe.
@@ -383,17 +385,7 @@
   </div>
 
   <!-- Footer -->
-  <footer>
-    Lizenziert unter der MIT-Lizenz von Ramon Berghorn, 2025 | Bildungszwecke |
-    <a href="impressum.html">Impressum</a> |
-    <a href="datenschutz.html">Datenschutzerklärung</a> |
-    <a href="sources.html">Quellen</a> |
-    <a href="fred.html">🐭</a> |
-    <a href="contact.html">Kontakt</a>
-  </footer>
-
-
-  <!-- Cookie-Banner -->
+<!-- Cookie-Banner -->
   <div class="cookie-banner" id="cookie-banner">
     🍪 Diese Website verwendet kaum Cookies – außer vielleicht ein paar Versteckte...  
     <button onclick="acceptCookies()">Akzeptieren</button>
@@ -631,6 +623,26 @@
       renderAchievementsFromStorage();
     }
   </script>
+
+  <footer>
+    Lizenziert unter der MIT-Lizenz von Ramon Berghorn, 2025 | Bildungszwecke |
+    <a href="impressum.html">Impressum</a> |
+    <a href="datenschutz.html">Datenschutzerklärung</a> |
+    <a href="sources.html">Quellen</a> |
+    <a href="fred.html">🐭</a> |
+    <a href="contact.html">Kontakt</a>
+  </footer>
+
+<script>
+(function(){
+  try {
+    var solved = localStorage.getItem('linuxLabSolved') === 'true';
+    var navLink = document.getElementById('expert-nav-link');
+    if (navLink && solved) navLink.classList.add('is-visible');
+  } catch (e) {}
+})();
+</script>
+
 </body>
 </html>
 
