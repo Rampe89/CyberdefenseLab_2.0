@@ -369,7 +369,8 @@
         <p><span class="label">Warum das relevant ist:</span> Hashing ist für viele Schülerinnen und Schüler zunächst ein sperriger Begriff. Gleichzeitig ist es ein sehr guter Zugang, um zu zeigen, wie Passwortspeicherung sinnvoll abgesichert werden kann und wo die Grenzen dieser Absicherung liegen.</p>
         <p><span class="label">Was dabei gelernt werden soll:</span> Die Lernenden sollen verstehen, dass Hashes nicht einfach „verschlüsselte Passwörter“ sind, sondern Prüfsummen mit eigener Logik. Außerdem wird deutlich, warum schwache oder bekannte Passwörter trotz Hashing problematisch bleiben und weshalb Salt ein wichtiger zusätzlicher Schutz ist.</p>
         <p><span class="label">Didaktischer Fokus:</span> Fachlich wichtig ist hier die Einsicht, dass Hashing kein Rückweg zur ursprünglichen Eingabe sein soll. Gerade der Unterschied zu „Entschlüsselung“ ist hier zentral und sollte bewusst geklärt werden.</p>
-        <p><span class="label">Weg zur Flag:</span> Die im Lab angegebenen Hashes werden mit einem geeigneten Tool oder einer geeigneten Datenbank, zum Beispiel Crackstation, aufgelöst. Beide Ergebnisse müssen korrekt eingegeben werden, damit die Flag erscheint.</p>
+        <p><span class="label">Weg zur Flag:</span> Die im Lab angegebenen MD5-Hashes werden mit dem lokalen Passwortcracker direkt auf der Seite geprüft. Die Lernenden kopieren die Hashes in das Eingabefeld und starten den lokalen Abgleich gegen eine kleine Wörterliste. Für den ersten Hash ergibt sich <code>password</code>; dieses Passwort wird eingegeben, damit die Flag erscheint. Für den Bonus wird <code>password1232023</code> lokal zu MD5 gehasht.</p>
+        <p><span class="label">Hinweis für Lehrkräfte:</span> Externe Dienste wie Crackstation werden nicht mehr benötigt. Das ist bewusst so umgesetzt, weil solche Seiten in Schulnetzen häufig gesperrt sind und weil die Aufgabe im Unterricht besser kontrollierbar bleibt.</p>
       </div>
     </details>
 
@@ -472,7 +473,8 @@
         <p><span class="label">Warum das relevant ist:</span> Diese Aufgabe zeigt sehr anschaulich, dass „nicht sichtbar“ nicht dasselbe ist wie „nicht vorhanden“. Elemente können im Frontend ausgeblendet sein, aber trotzdem vollständig im DOM existieren.</p>
         <p><span class="label">Was dabei gelernt werden soll:</span> Die Schülerinnen und Schüler sollen die Entwicklertools gezielt nutzen und verstehen, dass CSS nur die Darstellung verändert, nicht aber den grundsätzlichen Seiteninhalt entfernt.</p>
         <p><span class="label">Didaktischer Fokus:</span> Das Lab eignet sich sehr gut, um die Grenze zwischen Design und Funktion zu thematisieren. Wer nur auf das sichtbare Layout schaut, versteht viele Sicherheitsprobleme nicht vollständig.</p>
-        <p><span class="label">Weg zur Flag:</span> Über Rechtsklick und „Untersuchen“ wird im Elements-Bereich das versteckte Element gesucht. Im Style-Bereich wird beim <code>mysteryButton</code> die Einstellung <code>display: none</code> so verändert, dass der Button sichtbar wird. Nach dem Klick erscheint die Flag.</p>
+        <p><span class="label">Weg zur Flag:</span> Ziel ist ausdrücklich nur, ein per CSS verstecktes Element wieder sichtbar zu machen. Die Lernenden öffnen mit Rechtsklick → „Untersuchen“ oder mit F12 die Entwicklertools, suchen im Elements-Bereich nach <code>mysteryButton</code> und entfernen oder deaktivieren im Styles-Bereich die CSS-Regel <code>display: none</code>. Danach erscheint der Button auf der Seite und kann angeklickt werden. Es muss nichts im JavaScript verändert und nichts „gehackt“ werden.</p>
+        <p><span class="label">Zusatzhinweis:</span> Falls Gruppen feststecken, kann als gestufter Tipp gegeben werden: „Sucht nach einem Button im HTML“ → „Achtet auf CSS-Regeln“ → „Welche Eigenschaft sorgt dafür, dass ein Element nicht angezeigt wird?“</p>
       </div>
     </details>
 
