@@ -48,7 +48,7 @@
 
   <script>
     function showFlag() {
-      const encoded = [123,67,83,83,95,67,65,78,95,72,73,68,69,95,66,85,84,95,78,79,84,95,80,82,79,84,69,67,84,125];
+      const encoded = [83,83,95,67,65,78,95,72,73,68,69,95,66,85,84,95,78,79,84,95,80,82,79,84,69,67,84,125];
       const flag = encoded.map(code => String.fromCharCode(code)).join('');
       const output = document.getElementById('hiddenFlag');
       output.textContent = flag;

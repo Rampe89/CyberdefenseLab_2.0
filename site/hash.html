@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hashing und lokaler Passwortcracker</title>
+  <title>Hash Lookup</title>
   <link rel="stylesheet" href="assets/cdl-unified.css">
   <style>
     body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #2c3e50, #4ca1af); margin: 0; padding: 20px; }
@@ -17,7 +17,14 @@
     .btn { display: inline-block; padding: 10px 15px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; margin-top: 10px; text-align: center; border: 0; cursor: pointer; font-weight: 600; }
     .btn:hover { background: #0056b3; }
     .hidden { display: none; }
-    .result { margin-top: 12px; padding: 12px; border-radius: 8px; background: #fff; border: 1px solid #ddd; font-family: "Courier New", monospace; white-space: pre-wrap; }
+    .result { margin-top: 12px; padding: 0; border-radius: 8px; background: #fff; border: 1px solid #ddd; overflow: hidden; }
+    .lookup-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .lookup-table th { text-align: left; background: #2f4050; color: #fff; padding: 10px; }
+    .lookup-table td { padding: 10px; border-top: 1px solid #e3e3e3; font-family: "Courier New", monospace; word-break: break-all; }
+    .lookup-table tr:nth-child(even) { background: #f7f9fb; }
+    .status-ok { font-weight: 700; color: #198754; }
+    .status-miss { font-weight: 700; color: #b02a37; }
+    .small-note { font-size: 13px; color: #555; margin-top: 8px; }
     .back-button { display: inline-block; padding: 10px 20px; background: linear-gradient(45deg, #28a745, #32CD32); color: #fff; text-align: center; border: none; border-radius: 5px; margin-top: 20px; cursor: pointer; text-decoration: none; font-size: 16px; transition: transform .2s, background .2s; }
     .back-button:hover { transform: scale(1.05); background: linear-gradient(45deg, #218838, #1e7e34); }
   </style>
@@ -43,13 +50,14 @@
     </div>
 
     <div class="cracker-box">
-      <h3>Lokaler Passwortcracker</h3>
-      <p>Der Cracker testet eine kleine Wörterliste direkt im Browser. Er ist bewusst begrenzt und nur für diese Unterrichtsaufgabe gedacht.</p>
-      <label for="hashInput"><strong>MD5-Hash oder mehrere MD5-Hashes:</strong></label>
-      <textarea id="hashInput">5f4dcc3b5aa765d61d8327deb882cf99
-098f6bcd4621d373cade4e832627b4f6</textarea>
+      <h3>Lokaler Hash-Lookup</h3>
+      <p>Kopiere einen oder mehrere MD5-Hashes aus der Aufgabe in das Feld. Der Lookup gleicht die Eingabe direkt im Browser mit einer kleinen lokalen Wörterliste ab. Es werden keine Daten an externe Webseiten gesendet.</p>
+      <label for="hashInput"><strong>Hash einfügen:</strong></label>
+      <textarea id="hashInput" placeholder="MD5-Hash hier einfügen, z. B. 5f4dcc3b5aa765d61d8327deb882cf99"></textarea>
       <br>
-      <button class="btn" type="button" onclick="crackHashes()">Hashes lokal knacken</button>
+      <button class="btn" type="button" onclick="crackHashes()">Lookup starten</button>
+      <button class="btn" type="button" onclick="clearLookup()" style="background:#6c757d;">Eingabe leeren</button>
+      <p class="small-note">Hinweis: Dieser lokale Lookup funktioniert nur mit den bewusst einfachen Hashes aus der Übung.</p>
       <div id="crackResult" class="result hidden"></div>
     </div>
 
@@ -121,20 +129,47 @@ Hashing-Methode: MD5</pre>
       return hex(md51(input));
     }
 
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
     function crackHashes() {
       const hashes = document.getElementById('hashInput').value.toLowerCase().match(/[a-f0-9]{32}/g) || [];
       const result = document.getElementById('crackResult');
       if (!hashes.length) {
-        result.textContent = 'Keine gültigen MD5-Hashes gefunden.';
+        result.innerHTML = '<table class="lookup-table"><thead><tr><th>Hash</th><th>Result</th><th>Type</th></tr></thead><tbody><tr><td colspan="3">Keine gültigen MD5-Hashes gefunden.</td></tr></tbody></table>';
         result.classList.remove('hidden');
         return;
       }
-      const lines = hashes.map(hash => {
+
+      const uniqueHashes = [...new Set(hashes)];
+      const rows = uniqueHashes.map(hash => {
         const found = WORDLIST.find(word => md5(word) === hash);
-        return found ? `${hash}  ->  ${found}` : `${hash}  ->  nicht in der lokalen Wörterliste gefunden`;
-      });
-      result.textContent = lines.join('\n');
+        const resultText = found
+          ? `<span class="status-ok">${escapeHtml(found)}</span>`
+          : '<span class="status-miss">Not found in local wordlist</span>';
+        return `<tr><td>${escapeHtml(hash)}</td><td>${resultText}</td><td>md5</td></tr>`;
+      }).join('');
+
+      result.innerHTML = `
+        <table class="lookup-table">
+          <thead>
+            <tr><th>Hash</th><th>Result</th><th>Type</th></tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>`;
       result.classList.remove('hidden');
+    }
+
+    function clearLookup() {
+      document.getElementById('hashInput').value = '';
+      document.getElementById('crackResult').classList.add('hidden');
+      document.getElementById('hashInput').focus();
     }
 
     function makeMd5() {
