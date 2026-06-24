@@ -1104,31 +1104,33 @@ body > .container > .device-note,
   text-decoration:underline !important;
   font-weight:700 !important;
 }
+/* CDL challenge navigation */
+.cdl-challenge-nav {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  align-items: center;
+  max-width: 900px;
+  margin: 32px auto 8px;
+  padding: 0 4px;
+}
 
-/* Challenge navigation: consistent previous / overview / next controls */
-.cdl-challenge-nav{
-  display:grid;
-  grid-template-columns:repeat(3, minmax(0, 1fr));
-  gap:12px;
-  max-width:900px;
-  margin:32px auto 8px;
-  padding:0 4px;
-}
 .cdl-challenge-nav .btn,
-.cdl-challenge-nav-disabled{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  min-height:42px;
-  text-align:center;
+.cdl-challenge-nav-disabled {
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
 }
-.cdl-challenge-nav-disabled{
-  opacity:.45;
-  cursor:not-allowed;
-  filter:grayscale(1);
+
+.cdl-challenge-nav-disabled {
+  opacity: .45;
+  cursor: not-allowed;
+  pointer-events: none;
 }
-@media (max-width: 640px){
-  .cdl-challenge-nav{
-    grid-template-columns:1fr;
+
+@media (max-width: 640px) {
+  .cdl-challenge-nav {
+    grid-template-columns: 1fr;
   }
 }
+
