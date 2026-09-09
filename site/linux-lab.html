@@ -106,8 +106,8 @@
       .layout { grid-template-columns: 1fr; }
     }
   </style>
-    <script data-goatcounter="https://cyberdef.goatcounter.com/count"
-            async src="https://gc.zgo.at/count.js"></script>
+  <script src="assets/js/lab-state.js"></script>
+  <script src="assets/js/lab-ui.js" defer></script>
 </head>
 <body>
   <header>
@@ -441,7 +441,7 @@
     }
 
     function syncLinuxUnlockState() {
-      const solved = localStorage.getItem("linuxLabSolved") === "true";
+      const solved = CDLabState.isLinuxSolved();
       const link = document.getElementById("expert-link");
       const state = document.getElementById("course-state");
       if (solved) {
@@ -458,11 +458,7 @@
       const correct = atob("e0xJTlVYX0VYUExPUkVSfQ==");
       if (input.value.trim() === correct) {
         alert("Richtig! Linux-Flag akzeptiert. Expert Mode wurde freigeschaltet.");
-        localStorage.setItem("linuxLabSolved", "true");
-        const flags = JSON.parse(localStorage.getItem("collectedFlags") || "[]");
-        while (flags.length < 18) flags.push(false);
-        flags[17] = true;
-        localStorage.setItem("collectedFlags", JSON.stringify(flags));
+        CDLabState.setFlag(18);
         syncLinuxUnlockState();
       } else {
         alert("Noch nicht richtig. Schau dir Hinweise, History und versteckte Pfade nochmal an.");
@@ -476,6 +472,8 @@
     print("");
     addPrompt();
     syncLinuxUnlockState();
+    window.addEventListener('pageshow', syncLinuxUnlockState);
+    window.addEventListener('storage', syncLinuxUnlockState);
 
     console.log("Du bist hier nicht zufällig gelandet 👀");
     console.log("history, ls -a und find . -name flag.txt sind oft eine gute Kombination.");

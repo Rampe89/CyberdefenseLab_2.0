@@ -82,8 +82,8 @@
   </style>
 
   <link rel="stylesheet" href="assets/cdl-unified.css">
-    <script data-goatcounter="https://cyberdef.goatcounter.com/count"
-            async src="https://gc.zgo.at/count.js"></script>
+  <script src="assets/js/lab-state.js"></script>
+  <script src="assets/js/lab-ui.js" defer></script>
 </head>
 <body>
   <div class="container">
@@ -131,8 +131,8 @@
       </p>
       <p>
         Um dies zu verhindern, wird ein <strong>Salt</strong> eingesetzt. Dabei wird vor dem Hashing eine zufällige Zeichenkette an das Passwort angehängt.
-        Selbst wenn zwei Benutzer dasselbe Passwort haben, ergibt sich durch das Salt ein unterschiedlicher Hashwert.
-        Dadurch werden Rainbow Tables wirkungslos.
+        Erhält jedes Konto ein eigenes Salt, ergeben gleiche Passwörter unterschiedliche Hashwerte.
+        Ein individuelles, zufälliges Salt verhindert die Wiederverwendung vorberechneter Tabellen für viele Konten. Schwache Passwörter können trotzdem durch Ausprobieren gefunden werden.
       </p>
       <p>
         Eine weitere potenzielle Schwäche sind <strong>Hash-Kollisionen</strong>.
@@ -142,7 +142,7 @@
     </div>
 
     <div class="steps">
-      <h2>Aufgabe</h2>
+      <h2>Aufgabe</h2><p class="note">MD5 dient hier nur zur Veranschaulichung. Für echte Passwortspeicherung werden langsame Passwort-Hashverfahren wie Argon2id mit individuellem Salt verwendet.</p>
       <p>Finde die ursprünglichen Passwörter der folgenden MD5-Hashes und erhalte die Flag:</p>
 
       <h3>Schritt 1: Lokalen Hash-Lookup verwenden</h3>
@@ -161,7 +161,7 @@
         <pre id="lookupOutput"></pre>
       </div>
 
-      <p>Gib eines der gefundenen Passwörter als Flag ein:</p>
+      <p>Gib eines der gefundenen Passwörter ein, um deine Flag zu erhalten:</p>
       <input type="text" id="flag1" placeholder="Flag eingeben">
       <button class="btn" onclick="checkFlag('password', '{LET_HIM_COOK}')">Prüfen</button>
     </div>
@@ -236,7 +236,7 @@ Hashing-Methode: MD5</pre>
 
     function checkFlag(correctPassword, flag) {
       const input = document.getElementById('flag1').value.trim();
-      if (input === correctPassword) {
+      if (['password', 'test'].includes(input)) {
         alert(`Richtig! Hier ist deine Flag: ${flag}`);
         document.getElementById('bonus-task').classList.remove('hidden');
       } else {

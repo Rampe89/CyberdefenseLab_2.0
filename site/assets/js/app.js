@@ -5,7 +5,7 @@
     ['index.html', 'Start'],
     ['about.html', 'Über'],
     ['geheim.html', 'Flags'],
-    ['unterrichtsbeispiele.html', 'Unterricht'],
+    ['teachers-commentary.html', 'Unterricht'],
     ['contact.html', 'Kontakt']
   ];
   document.addEventListener('DOMContentLoaded', () => {

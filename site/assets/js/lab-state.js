@@ -1,87 +1,64 @@
 (function () {
-  const KEY_FLAGS = 'collectedFlags';
-  const KEY_LINUX = 'linuxLabSolved';
+  'use strict';
   const TOTAL_FLAGS = 18;
-
-  function normalizeFlags(flags) {
-    const out = Array.isArray(flags) ? flags.slice(0, TOTAL_FLAGS) : [];
-    while (out.length < TOTAL_FLAGS) out.push(false);
-    return out.map(Boolean);
+  const memory = { local: new Map(), session: new Map() };
+  let storageUnavailable = false;
+  function get(key, fallback = null, session = false) {
+    const cache = memory[session ? 'session' : 'local'];
+    if (cache.has(key)) return cache.get(key);
+    try { return (session ? window.sessionStorage : window.localStorage).getItem(key) ?? fallback; }
+    catch (_) { storageUnavailable = true; return fallback; }
   }
-
-  function readFlags() {
+  function put(key, value, session = false) {
+    const cache = memory[session ? 'session' : 'local'];
     try {
-      return normalizeFlags(JSON.parse(localStorage.getItem(KEY_FLAGS) || '[]'));
-    } catch (e) {
-      return normalizeFlags([]);
-    }
+      (session ? window.sessionStorage : window.localStorage).setItem(key, String(value));
+      cache.delete(key);
+    } catch (_) { storageUnavailable = true; cache.set(key, String(value)); }
   }
-
-  function writeFlags(flags) {
-    const normalized = normalizeFlags(flags);
-    localStorage.setItem(KEY_FLAGS, JSON.stringify(normalized));
-    return normalized;
+  function normalizeFlags(value) {
+    return Array.from({ length: TOTAL_FLAGS }, (_, i) => Array.isArray(value) && value[i] === true);
   }
-
-  function setFlag(taskNumber, value) {
+  function readFlags() {
+    let flags;
+    try { flags = normalizeFlags(JSON.parse(get('collectedFlags', '[]'))); }
+    catch (_) { flags = normalizeFlags([]); }
+    // Preserve older Linux completions in either of the two legacy keys.
+    flags[17] = flags[17] || get('linuxLabSolved') === 'true';
+    return flags;
+  }
+  function writeFlags(value) {
+    const flags = normalizeFlags(value);
+    put('collectedFlags', JSON.stringify(flags));
+    put('linuxLabSolved', String(flags[17]));
+    window.dispatchEvent(new Event('cdl-state-change'));
+    return flags;
+  }
+  function setFlag(task, value = true) {
     const flags = readFlags();
-    if (taskNumber >= 1 && taskNumber <= TOTAL_FLAGS) {
-      flags[taskNumber - 1] = value !== false;
-      writeFlags(flags);
+    if (Number.isInteger(task) && task >= 1 && task <= TOTAL_FLAGS) {
+      flags[task - 1] = value === true;
+      return writeFlags(flags);
     }
     return flags;
   }
-
-  function hasFlag(taskNumber) {
-    const flags = readFlags();
-    return Boolean(flags[taskNumber - 1]);
-  }
-
-  function countFlags() {
-    return readFlags().filter(Boolean).length;
-  }
-
-  function isLinuxSolved() {
-    return localStorage.getItem(KEY_LINUX) === 'true';
-  }
-
-  function setLinuxSolved(value) {
-    localStorage.setItem(KEY_LINUX, value ? 'true' : 'false');
-  }
-
-  function syncExpertVisibility(root) {
-    const scope = root || document;
+  function isLinuxSolved() { return readFlags()[17]; }
+  function syncExpertVisibility(root = document) {
     const solved = isLinuxSolved();
-    scope.querySelectorAll('.hidden-until-linux').forEach((el) => {
+    root.querySelectorAll('.hidden-until-linux').forEach(el => {
       el.classList.toggle('is-visible', solved);
-      if (el.tagName === 'A') {
-        el.setAttribute('aria-hidden', solved ? 'false' : 'true');
-        el.tabIndex = solved ? 0 : -1;
-      }
+      el.setAttribute('aria-hidden', String(!solved));
+      if (el.tagName === 'A') el.tabIndex = solved ? 0 : -1;
     });
-
-    const badge = scope.querySelector('#expert-badge');
-    const note = scope.querySelector('#expert-mode-note');
-    if (badge) {
-      badge.classList.toggle('locked', !solved);
-      badge.textContent = solved ? '✅ Freigeschaltet' : '🔒 Gesperrt';
-    }
-    if (note) {
-      note.textContent = solved
-        ? 'Status: freigeschaltet. Der Expert Mode kann jetzt geöffnet werden.'
-        : 'Status: aktuell noch gesperrt. Abschluss des Linux-Kurses erforderlich.';
-    }
+    const badge = root.querySelector('#expert-badge');
+    const note = root.querySelector('#expert-mode-note');
+    if (badge) { badge.classList.toggle('locked', !solved); badge.textContent = solved ? '✅ Freigeschaltet' : '🔒 Gesperrt'; }
+    if (note) note.textContent = solved ? 'Linux abgeschlossen – der Expert Mode ist freigeschaltet.' : 'Schließe den Linux-Grundkurs ab, um den Expert Mode freizuschalten.';
   }
-
   window.CDLabState = {
-    TOTAL_FLAGS,
-    readFlags,
-    writeFlags,
-    setFlag,
-    hasFlag,
-    countFlags,
-    isLinuxSolved,
-    setLinuxSolved,
-    syncExpertVisibility,
+    TOTAL_FLAGS, get, put, readFlags, writeFlags, setFlag,
+    hasFlag: n => Boolean(readFlags()[n - 1]), countFlags: () => readFlags().filter(Boolean).length,
+    isLinuxSolved, setLinuxSolved: value => setFlag(18, value), syncExpertVisibility,
+    storageUnavailable: () => storageUnavailable
   };
 })();

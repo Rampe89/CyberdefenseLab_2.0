@@ -90,8 +90,8 @@
   </style>
 
   <link rel="stylesheet" href="assets/cdl-unified.css">
-    <script data-goatcounter="https://cyberdef.goatcounter.com/count"
-            async src="https://gc.zgo.at/count.js"></script>
+  <script src="assets/js/lab-state.js"></script>
+  <script src="assets/js/lab-ui.js" defer></script>
 </head>
 <body>
   <div class="container">
@@ -148,22 +148,25 @@
       "dragon123", "hackme", "password2023", "mysecurepass", "letmein1", "admin123", "user123", "rockyou123"
     ];
 
+    let activeSimulation = null;
+    window.addEventListener('pagehide', () => clearInterval(activeSimulation));
     function startSimulation() {
+      if (activeSimulation !== null) clearInterval(activeSimulation);
       const targetUsername = document.getElementById("targetUsername").value.trim();
       const simulation = document.getElementById("simulation");
-      const isKnownUser = correctPasswords.hasOwnProperty(targetUsername);
+      const isKnownUser = Object.prototype.hasOwnProperty.call(correctPasswords, targetUsername);
 
       simulation.textContent = `Hydra v9.4-dev (c) 2023 by THC & Maciejak
 Dieses Tool dient zu Demonstrationszwecken.
 
 [DATA] Ziel: www.example.com http-post-form "/login:username=^USER^&password=^PASS^:F=Login fehlgeschlagen"
-[DATA] Wordlist: rockyou.txt (70 Einträge)
+[DATA] Wordlist: rockyou.txt (${rockyouSample.length} Einträge)
 [DATA] Benutzer: ${targetUsername}
 [STATUS] Starte Brute-Force-Angriff...\n\n`;
 
       let index = 0, attemptCount = 0, passwordFound = false;
       const delay = 150;
-      const interval = setInterval(() => {
+      activeSimulation = setInterval(() => {
         if (index < rockyouSample.length) {
           const pass = rockyouSample[index];
           simulation.textContent += `[ATTEMPT] Versuche Passwort: ${pass}\n`;
@@ -175,12 +178,14 @@ Dieses Tool dient zu Demonstrationszwecken.
 ✅ [SUCCESS] Login erfolgreich für ${targetUsername} mit Passwort: ${pass}
 [INFO] Angriff nach ${attemptCount} Versuchen abgeschlossen.
 [STATS] Dauer: ${(attemptCount * delay) / 1000}s\n`;
-            clearInterval(interval);
+            clearInterval(activeSimulation);
+            activeSimulation = null;
           }
           simulation.scrollTop = simulation.scrollHeight;
           index++;
         } else {
-          clearInterval(interval);
+          clearInterval(activeSimulation);
+            activeSimulation = null;
           if (!passwordFound) {
             simulation.textContent += `
 ❌ [FAILURE] Kein gültiges Passwort für ${targetUsername} gefunden.
@@ -206,6 +211,7 @@ Dieses Tool dient zu Demonstrationszwecken.
           flag.textContent = "Hinweis: Diese Zugangsdaten könnten für einen anderen Teil des Labs benötigt werden.";
         }
       } else {
+        flag.style.display = "none";
         alert("Ungültiger Benutzername oder Passwort!");
       }
     }

@@ -374,8 +374,8 @@
       }
     }
   </style>
-    <script data-goatcounter="https://cyberdef.goatcounter.com/count"
-            async src="https://gc.zgo.at/count.js"></script>
+  <script src="assets/js/lab-state.js"></script>
+  <script src="assets/js/lab-ui.js" defer></script>
 </head>
 <body class="sql-body">
   <header>
@@ -395,7 +395,7 @@
         <h2>SQL-Lab – Eingaben und Abfragen</h2>
         <p>
           In diesem Lab wird eine Suche in einer Datenbank simuliert. Die Anwendung übernimmt eine Eingabe direkt in eine SQL-Abfrage.
-          Dadurch kann sich die Bedeutung der Abfrage verändern.
+          Dadurch kann sich die Bedeutung der Abfrage verändern. Die Simulation erkennt ausgewählte Beispielmuster; sie führt kein echtes SQL aus.
         </p>
         <p>
           Im Mittelpunkt steht die Frage, was passiert, wenn Eingaben nicht nur als Wert behandelt werden,
@@ -570,6 +570,10 @@ WHERE username = ?
         </div>
 
         <section class="sql-note">
+          <h3>Deine Mission</h3>
+          <p>1. Finde einen Namen mit der normalen Suche. 2. Zeige mit der veränderten Eingabe alle Datensätze. 3. Teste genau dieselbe Eingabe in der sicheren Suche.</p>
+          <p id="sql-mission-status" role="status">Vergleiche die drei Suchvarianten, um die Flag zu erhalten.</p>
+          <div id="sql-earned-flag" class="sql-hidden flag" role="status"></div>
           <h3>Zusammenfassung</h3>
           <ul class="sql-steps">
             <li>Eine normale Suche verarbeitet einen eingegebenen Wert.</li>
@@ -602,6 +606,16 @@ WHERE username = ?
     ];
 
     const PW = "lehrer";
+    let sensitiveShown = false;
+    const mission = { normal: false, injection: null, secured: false };
+    function updateMission() {
+      const done = [mission.normal, mission.injection !== null, mission.secured].filter(Boolean).length;
+      qs('#sql-mission-status').textContent = `${done}/3 Schritte erledigt.`;
+      if (done === 3) {
+        qs('#sql-earned-flag').textContent = 'Du hast den Unterschied geprüft! Flag: {YOUDIDWHAT?}';
+        qs('#sql-earned-flag').classList.remove('sql-hidden');
+      }
+    }
 
     const esc = s => String(s)
       .replace(/&/g, "&amp;")
@@ -626,7 +640,7 @@ WHERE username = ?
       });
     }
 
-    function renderRows(rows, mount, emptyText = "Keine Ergebnisse.") {
+    function renderRows(rows, mount, emptyText = "Keine Ergebnisse.", reveal = false) {
       const el = typeof mount === "string" ? qs(mount) : mount;
       el.innerHTML = "";
 
@@ -652,7 +666,7 @@ WHERE username = ?
         const tbody = document.createElement("tbody");
         rows.forEach(r => {
           const tr = document.createElement("tr");
-          tr.innerHTML = `<td>${esc(r.id)}</td><td>${esc(r.username)}</td><td>${esc(r.class)}</td><td>${esc(r.grade)}</td>`;
+          tr.innerHTML = `<td>${esc(r.id)}</td><td>${esc(r.username)}</td><td>${esc(r.class)}</td><td>${reveal || sensitiveShown ? esc(r.grade) : '••••'}</td>`;
           tbody.appendChild(tr);
         });
 
@@ -671,7 +685,7 @@ WHERE username = ?
       const sql = "SELECT * FROM students WHERE username = '" + input + "';";
       qs("#sql-unsafe").textContent = sql;
 
-      const reAlwaysTrue = /(\bor\b).*?(?:['"]?\s*1\s*['"]?\s*=\s*['"]?\s*1|true)/i;
+      const reAlwaysTrue = /^'\s+or\s+(?:'1'\s*=\s*'1'|1\s*=\s*1|true)\s*(?:--.*)?$/i;
       if (reAlwaysTrue.test(input)) return DB.slice();
 
       const reDanger = /(drop\s+table|;|--|\/\*)/i;
@@ -693,7 +707,8 @@ WHERE username = ?
       qs("#teacher-state").textContent = on
         ? "Angemeldet. Sensible Felder können eingeblendet werden."
         : "Nicht angemeldet. Sensible Felder bleiben verborgen.";
-      renderDB(!on);
+      sensitiveShown = false;
+      renderDB(true);
       qs("#btn-show-sensitive").classList.remove("sql-hidden");
       qs("#btn-hide-sensitive").classList.add("sql-hidden");
     }
@@ -726,7 +741,7 @@ WHERE username = ?
       qs("#pw-ok").onclick = () => {
         const v = qs("#pw").value || "";
         if (v === PW) {
-          sessionStorage.setItem("teacher", "1");
+          CDLabState.put("teacher", "1", true);
           closeModal();
           setTeacher(true);
         } else {
@@ -739,7 +754,7 @@ WHERE username = ?
 
     document.addEventListener("DOMContentLoaded", () => {
       renderDB(true);
-      setTeacher(sessionStorage.getItem("teacher") === "1");
+      setTeacher(CDLabState.get("teacher", null, true) === "1");
 
       qsa(".sample").forEach(btn => {
         btn.addEventListener("click", () => {
@@ -754,12 +769,17 @@ WHERE username = ?
         qs("#sql-normal").textContent = `SELECT * FROM students WHERE username = '${v}';`;
         const rows = DB.filter(r => r.username === v);
         renderRows(rows, "#out-normal", "Kein passender Datensatz gefunden.");
+        if (rows.length) mission.normal = true;
+        updateMission();
       });
 
       qs("#run-unsafe-demo").addEventListener("click", () => {
         const v = qs("#unsafe-name").value.trim();
         const rows = insecureQuery(v);
-        renderRows(rows, "#out-unsafe", "Kein passender Datensatz gefunden.");
+        const injected = Array.isArray(rows) && rows.length === DB.length;
+        renderRows(rows, "#out-unsafe", "Kein passender Datensatz gefunden.", injected);
+        if (injected) { if (mission.injection !== v) mission.secured = false; mission.injection = v; }
+        updateMission();
         qs("#viz-unsafe").textContent = `SELECT * FROM students\nWHERE username = '${v}';`;
       });
 
@@ -767,22 +787,26 @@ WHERE username = ?
         const v = qs("#secure-name").value.trim();
         const rows = secureQuery(v);
         renderRows(rows, "#out-secure", "Die Eingabe wird hier nur als Wert behandelt. Deshalb erscheinen nicht automatisch alle Datensätze.");
+        if (v === mission.injection && rows.length === 0) mission.secured = true;
+        updateMission();
       });
 
       qs("#btn-teacher-login").addEventListener("click", openModal);
 
       qs("#btn-teacher-logout").addEventListener("click", () => {
-        sessionStorage.removeItem("teacher");
+        CDLabState.put("teacher", "0", true);
         setTeacher(false);
       });
 
       qs("#btn-show-sensitive").addEventListener("click", () => {
+        sensitiveShown = true;
         renderDB(false);
         qs("#btn-show-sensitive").classList.add("sql-hidden");
         qs("#btn-hide-sensitive").classList.remove("sql-hidden");
       });
 
       qs("#btn-hide-sensitive").addEventListener("click", () => {
+        sensitiveShown = false;
         renderDB(true);
         qs("#btn-hide-sensitive").classList.add("sql-hidden");
         qs("#btn-show-sensitive").classList.remove("sql-hidden");

@@ -196,12 +196,13 @@
   </style>
 
   <link rel="stylesheet" href="assets/cdl-unified.css">
-    <script data-goatcounter="https://cyberdef.goatcounter.com/count"
-            async src="https://gc.zgo.at/count.js"></script>
+  <script src="assets/js/lab-state.js"></script>
+  <script src="assets/js/lab-ui.js" defer></script>
 </head>
 <body>
   <div class="quiz-container">
     <h1>Phishing-Quiz</h1>
+    <p class="note">Alle Mails sind erfundene Übungsfälle. Eine angezeigte Absenderadresse allein beweist keine Echtheit. Die Linkziele werden hier als Text angezeigt und können nicht geöffnet werden.</p>
     <h2>Was ist Phishing?</h2>
     <p>
       Phishing ist ein Betrugsversuch, bei dem Angreifer versuchen, persönliche Informationen wie Passwörter, 
@@ -216,10 +217,11 @@
       <li>Achte auf Rechtschreibfehler und ungewöhnliche Formulierungen.</li>
       <li>Sei misstrauisch bei Aufforderungen, vertrauliche Daten einzugeben.</li>
       <li>Achte auf Zeitdruck: Phishing-Mails fordern oft eine schnelle Reaktion durch künstliche Fristen.</li>
-      <li>Seriöse Anbieter verschicken häufig keine direkten Links – im Zweifel lieber die offizielle Website manuell aufrufen.</li>
+      <li>Auch seriöse Anbieter verschicken Links. Rufe bei Zweifeln die bekannte Website oder App selbst auf und prüfe die Nachricht dort.</li>
     </ul>
-    <div class="progress-bar-container">
-      <div id="progress-bar" class="progress-bar">0%</div>
+    <p id="quiz-position" role="status"></p>
+    <div id="quiz-progress" class="progress-bar-container" role="progressbar" aria-label="Beantwortete Mails" aria-valuemin="0" aria-valuemax="13" aria-valuenow="0">
+      <div id="quiz-progress-fill" class="progress-bar">0%</div>
     </div>
     <div id="quiz-content">
       <div id="email" class="email">
@@ -228,13 +230,13 @@
       </div>
       <div class="controls">
         <button id="phishing-btn">Phishing</button>
-        <button id="not-phishing-btn">Kein Phishing</button>
+        <button id="not-phishing-btn">Im Beispiel unverdächtig</button>
       </div>
       <div class="nav-controls">
         <button id="prev-email-btn">&larr; Zurück</button>
         <button id="next-email-btn">Weiter &rarr;</button>
       </div>
-      <div id="explanation" class="explanation"></div>
+      <div id="explanation" class="explanation" role="status"></div>
     </div>
     <div id="result" class="result hidden"></div>
     <div id="info-text">
@@ -264,14 +266,14 @@
           subject: "Ihr Konto wurde eingeschränkt – Aktion innerhalb 24 Stunden erforderlich",
           body: "Sehr geehrter PayPal-Nutzer,<br><br>aufgrund ungewöhnlicher Aktivitäten wurde Ihr Konto vorübergehend eingeschränkt. Bitte bestätigen Sie Ihre Identität <strong>innerhalb der nächsten 24 Stunden</strong>, um den uneingeschränkten Zugriff wiederherzustellen. Klicken Sie dazu bitte auf den folgenden Link: <a href='http://paypal-verification.fake'>Hier klicken</a>.<br><br>Falls Sie diese Anfrage nicht veranlasst haben, kontaktieren Sie bitte umgehend unseren Kundensupport.",
           isPhishing: true,
-          explanation: "Phishing: Die echte PayPal-Domain endet auf 'paypal.com', nicht auf 'paypal-verification.fake'. Außerdem wird hier durch die 24-Stunden-Frist unnötiger Zeitdruck aufgebaut, was eine typische Phishing-Taktik ist."
+          explanation: "Phishing: Der Link führt zu 'paypal-verification.fake' und damit nicht zur Domain 'paypal.com' oder einer ihrer Subdomains. Außerdem wird hier durch die 24-Stunden-Frist unnötiger Zeitdruck aufgebaut, was eine typische Phishing-Taktik ist."
         },
         {
           sender: "support@amazon.de",
           subject: "Ungewöhnliche Anmeldeaktivitäten",
           body: "Lieber Kunde,<br><br>wir haben ungewöhnliche Anmeldeaktivitäten auf Ihrem Konto festgestellt. Bitte überprüfen Sie umgehend Ihr Konto, indem Sie auf den folgenden Link klicken: <a href='https://amazon.de/account-security'>Hier klicken</a>.<br><br>Falls Sie diese Aktivität nicht autorisiert haben, ändern Sie bitte Ihr Passwort und kontaktieren Sie unseren Kundenservice.<br><br>Ihr Amazon-Sicherheitsteam",
           isPhishing: false,
-          explanation: "Echt: Die E-Mail stammt von der offiziellen Domain 'amazon.de'."
+          explanation: "In diesem Übungsfall als legitime Nachricht vorgesehen: Die Angaben passen zum genannten Anbieter. Das allein ist jedoch kein Echtheitsbeweis, da Absender gefälscht werden können. Prüfe unerwartete Aufforderungen unabhängig über die bekannte Website oder App."
         },
         {
           sender: "security@appleid.com",
@@ -285,7 +287,7 @@
           subject: "Ihre Rechnung ist verfügbar",
           body: "Sehr geehrte Kundin, sehr geehrter Kunde,<br><br>Ihre aktuelle Telekom-Rechnung steht jetzt online zur Einsicht bereit. Bitte loggen Sie sich manuell über Ihren Browser in Ihr Kundenkonto ein, indem Sie die offizielle Adresse <strong>www.telekom.de</strong> in die Adresszeile eingeben.<br><br>Bei Fragen steht Ihnen unser Kundenservice gerne zur Verfügung.<br><br>Mit freundlichen Grüßen,<br>Ihr Telekom-Team",
           isPhishing: false,
-          explanation: "Echt: Seriöse Anbieter versenden in der Regel keine direkten Links, sondern empfehlen, die offizielle Adresse manuell in den Browser einzugeben, um Phishing zu vermeiden."
+          explanation: "In diesem Übungsfall als legitime Nachricht vorgesehen: Die Angaben passen zum genannten Anbieter. Das allein ist jedoch kein Echtheitsbeweis, da Absender gefälscht werden können. Prüfe unerwartete Aufforderungen unabhängig über die bekannte Website oder App."
         },
         {
           sender: "lottery@bigwin.org",
@@ -299,7 +301,7 @@
           subject: "Ihr Paket ist unterwegs",
           body: "Liebe Kundin, lieber Kunde,<br><br>Ihr Paket befindet sich bereits auf dem Weg zu Ihnen. Sie können den aktuellen Status Ihrer Lieferung jederzeit online verfolgen. Folgen Sie hierzu bitte diesem Link: <a href='https://www.dhl.de/sendungsverfolgung'>hier</a>.<br><br>Wir wünschen Ihnen viel Freude mit Ihrem Einkauf.<br><br>Ihr DHL-Team",
           isPhishing: false,
-          explanation: "Echt: Die E-Mail stammt von der offiziellen Domain 'dhl.de'."
+          explanation: "In diesem Übungsfall als legitime Nachricht vorgesehen: Die Angaben passen zum genannten Anbieter. Das allein ist jedoch kein Echtheitsbeweis, da Absender gefälscht werden können. Prüfe unerwartete Aufforderungen unabhängig über die bekannte Website oder App."
         },
         {
           sender: "helpdesk@university.edu",
@@ -313,14 +315,14 @@
           subject: "Ungewöhnliche Anmeldung erkannt",
           body: "Hallo,<br><br>wir haben einen neuen Login-Versuch in Ihrem Facebook-Konto festgestellt. Falls Sie diese Anmeldung nicht selbst vorgenommen haben, überprüfen Sie bitte umgehend die Sicherheit Ihres Kontos. Nutzen Sie dazu folgenden Link: <a href='https://facebook.com/security'>Sicherheitsüberprüfung starten</a>.<br><br>Vielen Dank für Ihre Aufmerksamkeit,<br>Ihr Facebook-Sicherheitsteam",
           isPhishing: false,
-          explanation: "Echt: Die E-Mail stammt von der offiziellen Domain 'facebook.com'."
+          explanation: "In diesem Übungsfall als legitime Nachricht vorgesehen: Die Angaben passen zum genannten Anbieter. Das allein ist jedoch kein Echtheitsbeweis, da Absender gefälscht werden können. Prüfe unerwartete Aufforderungen unabhängig über die bekannte Website oder App."
         },
         {
           sender: "newsletter@zalando.de",
           subject: "10% Willkommensrabatt",
           body: "Willkommen bei Zalando!<br><br>Als Dankeschön für Ihre Anmeldung erhalten Sie einen exklusiven 10% Willkommensrabatt auf Ihren nächsten Einkauf. Nutzen Sie diesen Rabatt, indem Sie auf folgenden Link klicken: <a href='https://zalando.de/welcome'>hier</a>.<br><br>Wir wünschen Ihnen viel Freude beim Shoppen!<br><br>Ihr Zalando-Team",
           isPhishing: false,
-          explanation: "Echt: Die E-Mail stammt von der offiziellen Domain 'zalando.de'."
+          explanation: "In diesem Übungsfall als legitime Nachricht vorgesehen: Die Angaben passen zum genannten Anbieter. Das allein ist jedoch kein Echtheitsbeweis, da Absender gefälscht werden können. Prüfe unerwartete Aufforderungen unabhängig über die bekannte Website oder App."
         },
         {
           sender: "info@banking-alerts.com",
@@ -334,7 +336,7 @@
           subject: "Anmeldung aus einem neuen Gerät erkannt",
           body: "Hallo,<br><br>es wurde ein Login von einem neuen Gerät in Ihrem Microsoft-Konto festgestellt – in diesem Fall aus Berlin. Wenn diese Anmeldung von Ihnen autorisiert wurde, ist keine weitere Aktion erforderlich. Falls nicht, überprüfen Sie bitte umgehend Ihr Konto über folgenden Link: <a href='https://microsoft.com/security'>Überprüfung durchführen</a>.<br><br>Vielen Dank,<br>Ihr Microsoft-Sicherheitsteam",
           isPhishing: false,
-          explanation: "Echt: Die E-Mail stammt von der offiziellen Domain 'microsoft.com'."
+          explanation: "In diesem Übungsfall als legitime Nachricht vorgesehen: Die Angaben passen zum genannten Anbieter. Das allein ist jedoch kein Echtheitsbeweis, da Absender gefälscht werden können. Prüfe unerwartete Aufforderungen unabhängig über die bekannte Website oder App."
         },
         {
           sender: "fraud@bank.de",
@@ -346,135 +348,80 @@
       ];
       
       let currentEmailIndex = 0;
-      let correctAnswers = 0;
-      let userAnswers = [];
-
-      function shuffle(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [array[i], array[j]] = [array[j], array[i]];
-        }
+      let userAnswers = new Array(emailPool.length).fill(null);
+      let round = emailPool.map((_, i) => i);
+      let position = 0;
+      for (let i = round.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1)); [round[i], round[j]] = [round[j], round[i]];
       }
-      
-      function setupQuiz() {
-        shuffle(emailPool);
-        userAnswers = new Array(emailPool.length).fill(null);
+      function updateProgressBar() {
+        const answered = userAnswers.filter(Boolean).length;
+        const bar = document.getElementById('quiz-progress-fill');
+        bar.style.width = (answered / emailPool.length * 100) + '%';
+        bar.textContent = `${answered}/${emailPool.length}`;
+        document.getElementById('quiz-progress').setAttribute('aria-valuenow', String(answered));
+        document.getElementById('quiz-position').textContent = `Mail ${position + 1} von ${round.length} in dieser Runde`;
+      }
+      function loadEmail() {
+        currentEmailIndex = round[position];
+        const email = emailPool[currentEmailIndex];
+        document.getElementById('email-header').textContent = `Von: ${email.sender} | Betreff: ${email.subject}`;
+        const body = document.getElementById('email-body');
+        body.innerHTML = email.body;
+        // Preserve visible destinations for analysis without leaving the exercise.
+        body.querySelectorAll('a').forEach(link => {
+          const sample = document.createElement('span');
+          sample.className = 'sample-link';
+          sample.textContent = link.textContent + ' [Linkziel: ' + link.getAttribute('href') + ']';
+          link.replaceWith(sample);
+        });
+        const answer = userAnswers[currentEmailIndex];
+        const explanation = document.getElementById('explanation');
+        explanation.style.display = answer ? 'block' : 'none';
+        explanation.textContent = answer ? (answer.correct ? 'Richtig. ' : 'Noch nicht richtig. ') + email.explanation : '';
+        document.getElementById('phishing-btn').disabled = Boolean(answer);
+        document.getElementById('not-phishing-btn').disabled = Boolean(answer);
+        document.getElementById('prev-email-btn').disabled = position === 0;
+        document.getElementById('next-email-btn').disabled = !answer;
+        document.getElementById('next-email-btn').textContent = position === round.length - 1 ? 'Runde auswerten' : 'Weiter →';
+        updateProgressBar();
+      }
+      function checkAnswer(isPhishing) {
+        if (userAnswers[currentEmailIndex]) return;
+        userAnswers[currentEmailIndex] = { chosen: isPhishing, correct: emailPool[currentEmailIndex].isPhishing === isPhishing };
         loadEmail();
       }
-      
-      function updateProgressBar() {
-        const answeredCount = userAnswers.filter(a => a !== null).length;
-        const progress = ((answeredCount / emailPool.length) * 100).toFixed(0);
-        const bar = document.getElementById("progress-bar");
-        bar.style.width = `${progress}%`;
-        bar.textContent = `${progress}%`;
-      }
-      
-      function loadEmail() {
-        if (currentEmailIndex >= emailPool.length) {
-          endQuiz();
-          return;
-        }
-        const email = emailPool[currentEmailIndex];
-        const header = document.getElementById("email-header");
-        const body = document.getElementById("email-body");
-        const explanationDiv = document.getElementById("explanation");
-        const phishingBtn = document.getElementById("phishing-btn");
-        const notPhishingBtn = document.getElementById("not-phishing-btn");
-
-        header.textContent = `Von: ${email.sender} | Betreff: ${email.subject}`;
-        body.innerHTML = email.body;
-
-        if (userAnswers[currentEmailIndex] !== null) {
-          explanationDiv.textContent = email.explanation;
-          explanationDiv.style.display = "block";
-          phishingBtn.disabled = true;
-          notPhishingBtn.disabled = true;
-        } else {
-          explanationDiv.style.display = "none";
-          phishingBtn.disabled = false;
-          notPhishingBtn.disabled = false;
-        }
-
-        updateProgressBar();
-      }
-      
-      function checkAnswer(isPhishing) {
-        const phishingBtn = document.getElementById("phishing-btn");
-        const notPhishingBtn = document.getElementById("not-phishing-btn");
-        const explanationDiv = document.getElementById("explanation");
-
-        if (userAnswers[currentEmailIndex] !== null) {
-          return;
-        }
-
-        phishingBtn.disabled = true;
-        notPhishingBtn.disabled = true;
-        
-        const email = emailPool[currentEmailIndex];
-        const isCorrect = email.isPhishing === isPhishing;
-
-        userAnswers[currentEmailIndex] = {
-          chosen: isPhishing,
-          correct: isCorrect
-        };
-
-        if (isCorrect) correctAnswers++;
-        
-        explanationDiv.textContent = email.explanation;
-        explanationDiv.style.display = "block";
-
-        const questionIndex = currentEmailIndex;
-        
-        setTimeout(() => {
-          if (currentEmailIndex !== questionIndex) {
-            return;
-          }
-
-          explanationDiv.style.display = "none";
-          currentEmailIndex++;
-          if (currentEmailIndex < emailPool.length) {
-            loadEmail();
-          } else {
-            endQuiz();
-          }
-          phishingBtn.disabled = false;
-          notPhishingBtn.disabled = false;
-        }, 4000);
-      }
-
-      function showPreviousEmail() {
-        if (currentEmailIndex > 0) {
-          currentEmailIndex--;
-          loadEmail();
-        }
-      }
-
-      function showNextEmail() {
-        if (currentEmailIndex < emailPool.length - 1) {
-          currentEmailIndex++;
-          loadEmail();
-        }
-      }
-      
       function endQuiz() {
-        updateProgressBar();
-        document.getElementById("quiz-content").style.display = "none";
-        const result = document.getElementById("result");
-        result.textContent = correctAnswers === emailPool.length 
-          ? "Herzlichen Glückwunsch! Du hast alle richtig beantwortet. 🎉 Flag: {CAUGHT_ALL_THE_PHISH}" 
-          : `Du hast ${correctAnswers} von ${emailPool.length} richtig beantwortet.`;
-        result.classList.remove("hidden");
-        document.getElementById("info-text").style.display = "block";
-        document.getElementById("home-button").style.display = "block";
+        const pending = userAnswers.map((a, i) => !a || !a.correct ? i : -1).filter(i => i !== -1);
+        const correct = userAnswers.filter(a => a && a.correct).length;
+        document.getElementById('quiz-content').style.display = 'none';
+        const result = document.getElementById('result');
+        result.textContent = pending.length ? `${correct} von ${emailPool.length} richtig. Wiederhole die ${pending.length} noch offenen Fälle.` : 'Alle Fälle richtig eingeordnet! Flag: {CAUGHT_ALL_THE_PHISH}';
+        result.classList.remove('hidden');
+        document.getElementById('info-text').style.display = 'block';
+        document.getElementById('home-button').style.display = 'block';
+        if (pending.length) {
+          const retry = document.createElement('button');
+          retry.className = 'btn'; retry.textContent = 'Offene Fälle wiederholen';
+          retry.onclick = () => {
+            pending.forEach(i => { userAnswers[i] = null; });
+            round = pending; position = 0;
+            result.classList.add('hidden');
+            document.getElementById('quiz-content').style.display = 'block';
+            loadEmail();
+          };
+          result.appendChild(retry);
+        }
       }
-      
-      setupQuiz();
-      
-      document.getElementById("phishing-btn").addEventListener("click", () => checkAnswer(true));
-      document.getElementById("not-phishing-btn").addEventListener("click", () => checkAnswer(false));
-      document.getElementById("prev-email-btn").addEventListener("click", showPreviousEmail);
-      document.getElementById("next-email-btn").addEventListener("click", showNextEmail);
+      document.getElementById('phishing-btn').addEventListener('click', () => checkAnswer(true));
+      document.getElementById('not-phishing-btn').addEventListener('click', () => checkAnswer(false));
+      document.getElementById('prev-email-btn').addEventListener('click', () => { if (position > 0) { position--; loadEmail(); } });
+      document.getElementById('next-email-btn').addEventListener('click', () => {
+        if (!userAnswers[currentEmailIndex]) return;
+        if (position < round.length - 1) { position++; loadEmail(); } else endQuiz();
+      });
+      document.getElementById('quiz-progress').setAttribute('aria-valuemax', String(emailPool.length));
+      loadEmail();
     });
   </script>
 

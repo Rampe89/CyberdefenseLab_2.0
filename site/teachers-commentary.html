@@ -190,8 +190,8 @@
       }
     }
   </style>
-    <script data-goatcounter="https://cyberdef.goatcounter.com/count"
-            async src="https://gc.zgo.at/count.js"></script>
+  <script src="assets/js/lab-state.js"></script>
+  <script src="assets/js/lab-ui.js" defer></script>
 </head>
 <body>
   <div class="container">
@@ -309,7 +309,7 @@
       <summary>Passwort-Manager / Passwortspeicherung</summary>
       <div class="lab-content">
         <p><span class="label">Warum das relevant ist:</span> Passwörter spielen im digitalen Alltag eine zentrale Rolle. Gleichzeitig wissen viele Lernende kaum, wie Passwörter in Anwendungen überhaupt gespeichert werden und warum Klartextspeicherung ein massives Problem wäre. Dieses Lab führt in die Logik sicherer Passwortspeicherung ein.</p>
-        <p><span class="label">Was dabei gelernt werden soll:</span> Die Schülerinnen und Schüler sollen nachvollziehen, dass Passwörter nicht einfach „irgendwo gespeichert“, sondern idealerweise gehasht und zusätzlich abgesichert werden. Das Lab schafft damit die Grundlage für ein tieferes Verständnis von Passwortsicherheit.</p>
+        <p><span class="label">Was dabei gelernt werden soll:</span> Die Schülerinnen und Schüler unterscheiden den verschlüsselten Passworttresor eines Passwortmanagers von Passwort-Hashes auf einem Anmeldeserver. Die Tresoransicht ist hier nur eine Simulation; die eigentliche Hash-Verarbeitung folgt im Hashing-Lab. Das Lab schafft damit die Grundlage für ein tieferes Verständnis von Passwortsicherheit.</p>
         <p><span class="label">Didaktischer Fokus:</span> Hilfreich ist hier die Abgrenzung zwischen Speichern, Verschlüsseln und Hashing. Viele Lernende werfen diese Dinge zunächst durcheinander. Wenn dieser Unterschied klar wird, ist bereits viel gewonnen.</p>
         <p><span class="label">Weg zur Flag:</span> Die Lernenden folgen dem Lab und arbeiten sich durch die vorgesehenen Schritte, bis die Flag freigeschaltet wird.</p>
       </div>
@@ -381,7 +381,7 @@
         <p><span class="label">Warum das relevant ist:</span> Cookies sind für die meisten Schülerinnen und Schüler ein vertrauter Begriff, aber oft eher im Zusammenhang mit Einwilligungsbannern als mit Sicherheit. Das Lab macht sichtbar, dass im Browser tatsächlich Informationen gespeichert werden, die für Angriffe interessant sein können.</p>
         <p><span class="label">Was dabei gelernt werden soll:</span> Die Lernenden sollen verstehen, dass lokale Browserdaten nicht harmlos sind und dass man mit Entwicklertools deutlich mehr über eine Webseite herausfinden kann, als auf den ersten Blick sichtbar ist.</p>
         <p><span class="label">Didaktischer Fokus:</span> Hier bietet sich die Frage an, welche Daten ein Browser über uns speichert und weshalb Session-Cookies, Rolleninformationen oder Tracking-Daten aus Sicherheitssicht relevant sein können.</p>
-        <p><span class="label">Weg zur Flag:</span> Über Rechtsklick und „Untersuchen“ werden die Entwicklertools geöffnet. Anschließend wird im Bereich „Application“ bzw. „Cookies“ die gespeicherte Flag gesucht.</p>
+        <p><span class="label">Weg zur Flag:</span> Über Rechtsklick und „Untersuchen“ werden die Entwicklertools geöffnet. Zuerst wird mit „Übungscookie anlegen“ das Übungscookie erstellt. Anschließend wird im Bereich „Application“ bzw. „Cookies“ dessen Wert gesucht.</p>
       </div>
     </details>
 
@@ -391,7 +391,7 @@
         <p><span class="label">Warum das relevant ist:</span> SQL-Injection ist ein klassisches Beispiel dafür, wie unsaubere Eingabeverarbeitung zu gravierenden Sicherheitsproblemen führen kann. Für Lernende ist das ein guter Zugang, um zu erkennen, dass Eingaben nicht einfach „Text“ sind, sondern in Datenbanksystemen eine besondere Wirkung haben können.</p>
         <p><span class="label">Was dabei gelernt werden soll:</span> Die Schülerinnen und Schüler sollen ein erstes Gefühl dafür bekommen, warum Eingaben gefiltert und korrekt verarbeitet werden müssen. Gleichzeitig lernen sie, dass hinter einer scheinbar einfachen Login- oder Suchmaske oft komplexe Prozesse stehen.</p>
         <p><span class="label">Didaktischer Fokus:</span> SQL-Injection sollte hier nicht als Zaubertrick, sondern als Folge schlechter Eingabeverarbeitung verstanden werden. Die zentrale Frage lautet: Warum darf Nutzereingabe nie ungeprüft Teil einer Datenbankabfrage werden?</p>
-        <p><span class="label">Weg zur Flag:</span> Das Lab wird gemäß Aufgabenstellung bearbeitet. Die Flag ergibt sich aus der vorgesehenen Eingabemanipulation innerhalb des geschützten Lab-Rahmens.</p>
+        <p><span class="label">Weg zur Flag:</span> Das Lab wird gemäß Aufgabenstellung bearbeitet. Die Flag erscheint nach normaler Suche, erfolgreicher Eingabemanipulation und dem Vergleich derselben Eingabe mit der parametergebundenen Suche. Die Daten sind erfunden; die lokale Freischaltung ist kein echter Zugriffsschutz.</p>
       </div>
     </details>
 
@@ -444,7 +444,7 @@
         <p><span class="label">Warum das relevant ist:</span> Diese Aufgabe verbindet Webrecherche mit Decodierung und zeigt, dass Dateien auf einem Server nicht nur existieren, sondern manchmal auch zusätzliche Informationen in kodierter Form enthalten.</p>
         <p><span class="label">Was dabei gelernt werden soll:</span> Die Schülerinnen und Schüler üben genaues Hinsehen, den Umgang mit Dateiinhalt und den Gedanken, dass Informationen nicht immer direkt lesbar präsentiert werden.</p>
         <p><span class="label">Didaktischer Fokus:</span> Gerade stärkere Lernende können hier zeigen, dass Sicherheitsarbeit oft aus mehreren kleinen Schritten besteht: finden, lesen, erkennen, umwandeln, verstehen.</p>
-        <p><span class="label">Weg zur Flag:</span> Über <code>/assets</code> wird die Datei <code>fsociety.dat</code> gefunden. Der enthaltene Binärcode wird decodiert.</p>
+        <p><span class="label">Weg zur Flag:</span> Über <code>/assets.html</code> wird die Datei <code>fsociety.dat</code> gefunden. Der enthaltene Binärcode wird decodiert.</p>
       </div>
     </details>
 

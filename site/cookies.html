@@ -62,13 +62,18 @@
     </style>
 
   <link rel="stylesheet" href="assets/cdl-unified.css">
-    <script data-goatcounter="https://cyberdef.goatcounter.com/count"
-            async src="https://gc.zgo.at/count.js"></script>
+  <script src="assets/js/lab-state.js"></script>
+  <script src="assets/js/lab-ui.js" defer></script>
 </head>
 <body>
 
 <div class="container">
     <h1>Cookies und ihre Sicherheitsrisiken</h1>
+<section class="task"><h2>Deine Cookie-Mission</h2>
+<p>Lege ein Übungscookie an. Suche seinen Wert anschließend in den Entwicklertools und trage die gefundene Flag auf der Übersicht ein. Es enthält nur einen festen Übungswert und läuft nach einer Stunde ab.</p>
+<button type="button" class="btn" onclick="createExerciseCookie()">Übungscookie anlegen</button>
+<button type="button" class="btn" onclick="deleteExerciseCookie()">Übungscookie entfernen</button>
+<p class="cookie-status" role="status">Das Cookie wird erst auf deinen Klick angelegt.</p></section>
 
 <div class="device-note desktop-required">
         <p><strong>PC empfohlen:</strong> Für dieses Lab brauchst du meist die Browser-Entwicklertools oder zumindest einen gut zugänglichen Cookie-Speicher. Auf Mobilgeräten ist das oft versteckt oder nur sehr eingeschränkt möglich.</p>

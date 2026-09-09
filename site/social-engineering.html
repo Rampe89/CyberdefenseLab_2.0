@@ -151,8 +151,8 @@
   </style>
 
   <link rel="stylesheet" href="assets/cdl-unified.css">
-    <script data-goatcounter="https://cyberdef.goatcounter.com/count"
-            async src="https://gc.zgo.at/count.js"></script>
+  <script src="assets/js/lab-state.js"></script>
+  <script src="assets/js/lab-ui.js" defer></script>
 </head>
 <body>
   <div class="container">
@@ -170,6 +170,7 @@
       </p>
     </div>
 
+    <p id="scenario-progress" role="status"></p>
     <div class="chat-window" id="chat-window"></div>
     <div class="choices-container" id="choices-container"></div>
     <div id="flag-container"></div>
@@ -182,7 +183,7 @@
         Um dich gegen solche Angriffe zu schützen, solltest du keine unbekannten USB-Sticks oder Kabel verwenden und diese auch nicht ausprobieren. Gib solche Gegenstände an deine IT-Abteilung weiter oder entsorge sie sicher.
       </p>
       <p>
-        Eine der effektivsten Schutzmaßnahmen ist die Verwendung von Zwei-Faktor-Authentifizierung (2FA). Diese sorgt dafür, dass selbst bei gestohlenen Zugangsdaten kein unberechtigter Zugriff möglich ist, da ein zweiter Verifizierungsschritt wie ein Einmal-Code erforderlich ist. Außerdem solltest du starke, einzigartige Passwörter nutzen und auf Passwortmanager zurückgreifen, um diese sicher zu verwalten.
+        Eine der effektivsten Schutzmaßnahmen ist die Verwendung von Zwei-Faktor-Authentifizierung (2FA). Sie erschwert unberechtigten Zugriff durch einen zusätzlichen Verifizierungsschritt. Einmal-Codes können aber ebenfalls abgephisht werden: Gib sie nie im Chat weiter und bestätige keine unerwarteten Anmeldeanfragen. Phishing-resistente Verfahren bieten zusätzlichen Schutz. Außerdem solltest du starke, einzigartige Passwörter nutzen und auf Passwortmanager zurückgreifen, um diese sicher zu verwalten.
       </p>
       <p>
         Diese Simulation hat dir gezeigt, wie Angreifer durch Social Engineering vorgehen können. Indem du dir der Gefahren bewusst bist und Sicherheitsmaßnahmen wie 2FA und Vorsicht im Umgang mit physischen Medien anwendest, kannst du dich besser vor diesen Angriffen schützen.
@@ -426,95 +427,76 @@
     
     let currentScenarioIndex = 0;
     let currentStepIndex = 0;
-    
-    const chatWindow = document.getElementById("chat-window");
-    const choicesContainer = document.getElementById("choices-container");
-    const flagContainer = document.getElementById("flag-container");
-    const additionalInfo = document.getElementById("additional-info");
-    const backButtonContainer = document.getElementById("back-button-container");
-    
-    function clearChat() {
-      chatWindow.innerHTML = "";
-      choicesContainer.innerHTML = "";
+    let round = scenarios.map((_, i) => i);
+    let position = 0;
+    const answers = new Array(scenarios.length).fill(null);
+    let choiceLocked = false;
+    const chatWindow = document.getElementById('chat-window');
+    const choicesContainer = document.getElementById('choices-container');
+    const flagContainer = document.getElementById('flag-container');
+    const additionalInfo = document.getElementById('additional-info');
+    const backButtonContainer = document.getElementById('back-button-container');
+    function appendMessage(sender, text, className = 'message') {
+      const msg = document.createElement('div'); msg.className = className;
+      const label = document.createElement('strong'); label.textContent = sender + ': ';
+      msg.appendChild(label); msg.appendChild(document.createTextNode(text));
+      chatWindow.appendChild(msg);
     }
-    
-    // Fügt eine Chatnachricht hinzu.
-    function appendMessage(sender, text, className = "message") {
-      const msgDiv = document.createElement("div");
-      msgDiv.className = className;
-      msgDiv.innerHTML = '<span class="sender">' + sender + ':</span> ' + text;
-      chatWindow.appendChild(msgDiv);
-      chatWindow.scrollTop = chatWindow.scrollHeight;
-    }
-    
-    // Zeigt Antwortmöglichkeiten an und mischt diese zufällig.
     function displayChoices(choices) {
-      choicesContainer.innerHTML = "";
-      let shuffledChoices = choices.slice();
-      for (let i = shuffledChoices.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffledChoices[i], shuffledChoices[j]] = [shuffledChoices[j], shuffledChoices[i]];
+      const shuffled = choices.slice();
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1)); [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
       }
-      shuffledChoices.forEach(choice => {
-        const btn = document.createElement("button");
-        btn.className = "choice-button";
-        btn.textContent = choice.text;
-        btn.onclick = () => handleChoice(choice);
-        choicesContainer.appendChild(btn);
+      shuffled.forEach(choice => {
+        const button = document.createElement('button'); button.className = 'choice-button'; button.textContent = choice.text;
+        button.onclick = () => handleChoice(choice); choicesContainer.appendChild(button);
       });
     }
-    
-    // Verarbeitung für Standard-Szenarien.
     function handleChoice(choice) {
-      appendMessage("Du", choice.text, "message du");
-      choicesContainer.innerHTML = "";
-      appendMessage("System", choice.feedback, "message system-message");
-      setTimeout(() => {
-        const scenario = scenarios[currentScenarioIndex];
-        const sender = scenario.conversation[0].sender;
-        appendMessage(sender, choice.finalMessage, "message other");
-        setTimeout(nextScenario, 5000);
-      }, 3000);
+      if (choiceLocked) return;
+      choiceLocked = true;
+      answers[currentScenarioIndex] = { correct: choice.correct, feedback: choice.feedback };
+      appendMessage('Du', choice.text, 'message du');
+      choicesContainer.innerHTML = '';
+      appendMessage('Auswertung', choice.feedback, 'message system-message');
+      const button = document.createElement('button'); button.className = 'btn';
+      button.textContent = position === round.length - 1 ? 'Auswertung ansehen' : 'Nächstes Szenario →';
+      button.onclick = nextScenario; choicesContainer.appendChild(button);
     }
-    
-    // Verarbeitet die nächsten Schritte im aktuellen Szenario.
-    function processStep() {
-      const scenario = scenarios[currentScenarioIndex];
-      if (currentStepIndex >= scenario.conversation.length) return;
-      const step = scenario.conversation[currentStepIndex];
-      if (step.type === "message") {
-        appendMessage(step.sender, step.text, (step.sender === "Du") ? "message du" : "message other");
-        currentStepIndex++;
-        setTimeout(processStep, 3000);
-      } else if (step.type === "choice") {
-        displayChoices(step.choices);
-        currentStepIndex++;
-      }
-    }
-    
-    // Wechselt zum nächsten Szenario oder zeigt am Ende die Flag und den Back-Button.
-    function nextScenario() {
-      currentScenarioIndex++;
-      currentStepIndex = 0;
-      if (currentScenarioIndex < scenarios.length) {
-        clearChat();
-        processStep();
-      } else {
-        chatWindow.innerHTML = "";
-        flagContainer.innerHTML = '<div class="flag">Flag: {DEFENDER_OF_TRUST}</div>';
-        additionalInfo.style.display = "block";
-        choicesContainer.innerHTML = "";
-        // Zeige den "Zurück zur Startseite"-Button
-        backButtonContainer.style.display = "block";
-      }
-    }
-    
     function loadScenario() {
-      clearChat();
-      processStep();
+      currentScenarioIndex = round[position]; currentStepIndex = 0; choiceLocked = false;
+      chatWindow.innerHTML = ''; choicesContainer.innerHTML = ''; flagContainer.innerHTML = '';
+      document.getElementById('scenario-progress').textContent = `Szenario ${position + 1} von ${round.length}: ${scenarios[currentScenarioIndex].name}`;
+      const conversation = scenarios[currentScenarioIndex].conversation;
+      while (currentStepIndex < conversation.length) {
+        const step = conversation[currentStepIndex++];
+        if (step.type === 'choice') { displayChoices(step.choices); break; }
+        appendMessage(step.sender, step.text, 'message other');
+      }
     }
-    
-    window.onload = loadScenario;
+    function nextScenario() {
+      position++;
+      if (position < round.length) { loadScenario(); return; }
+      chatWindow.innerHTML = ''; choicesContainer.innerHTML = '';
+      const pending = answers.map((a, i) => !a || !a.correct ? i : -1).filter(i => i !== -1);
+      const summary = document.createElement('p');
+      summary.textContent = `${scenarios.length - pending.length}/${scenarios.length} Situationen sicher eingeordnet.`;
+      flagContainer.appendChild(summary);
+      const list = document.createElement('ul');
+      answers.forEach((answer, i) => {
+        const item = document.createElement('li'); item.textContent = `${answer && answer.correct ? '✓' : '↻'} ${scenarios[i].name}: ${answer ? answer.feedback : 'Noch offen'}`; list.appendChild(item);
+      });
+      flagContainer.appendChild(list);
+      if (pending.length) {
+        const retry = document.createElement('button'); retry.className = 'btn'; retry.textContent = 'Unsichere Entscheidungen wiederholen';
+        retry.onclick = () => { round = pending; position = 0; pending.forEach(i => { answers[i] = null; }); loadScenario(); };
+        choicesContainer.appendChild(retry);
+      } else {
+        const flag = document.createElement('div'); flag.className = 'flag'; flag.textContent = 'Flag: {DEFENDER_OF_TRUST}'; flagContainer.appendChild(flag);
+      }
+      additionalInfo.style.display = 'block'; backButtonContainer.style.display = 'block';
+    }
+    document.addEventListener('DOMContentLoaded', loadScenario);
   </script>
 
 <nav class="cdl-challenge-nav" aria-label="Challenge-Navigation">
