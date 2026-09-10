@@ -35,7 +35,7 @@ function environment(local = {}, blocked = false, session = {}) {
   const doc = {body:new Element('body'),cookie:'',getElementById:get,querySelector:s=>s.startsWith('#')?get(s.slice(1)):null,querySelectorAll:()=>[],createElement:t=>new Element(t),createTextNode:t=>({textContent:t}),addEventListener:(n,f)=>{if(n==='DOMContentLoaded')ready.push(f);}};
   const ctx = {document:doc,localStorage:storage(local),sessionStorage:storage(session),Event:class{constructor(type){this.type=type;}},crypto,Uint32Array,URLSearchParams,
     location:{protocol:'http:',pathname:'/index.html',search:'',reload(){}},console:{log(){}},atob:s=>Buffer.from(s,'base64').toString('binary'),alert:m=>alerts.push(m),confirm:()=>true,
-    setTimeout:f=>{timers.set(++timerId,f);return timerId;},setInterval:f=>{timers.set(++timerId,f);return timerId;},clearInterval:id=>timers.delete(id),matchMedia:()=>({matches:true}),
+    setTimeout:f=>{timers.set(++timerId,f);return timerId;},setInterval:f=>{timers.set(++timerId,f);return timerId;},clearInterval:id=>timers.delete(id),clearTimeout:id=>timers.delete(id),matchMedia:()=>({matches:true}),
     addEventListener:(n,f)=>(events[n] ||= []).push(f),dispatchEvent:e=>(events[e.type]||[]).forEach(f=>f(e))};
   ctx.window=ctx; vm.createContext(ctx);
   const run = (s,name='test') => vm.runInContext(s,ctx,{filename:name});
@@ -105,13 +105,29 @@ for (const local of [{linuxLabSolved:'true'},{collectedFlags:JSON.stringify(Arra
  const retry=e.get('result').children.find(c=>c.tagName==='BUTTON');check(Boolean(retry),'targeted retry offered');retry.click();
  const mail=e.ctx.testPool.find(m=>e.get('email-header').textContent.includes(m.sender));e.get(mail.isPhishing?'phishing-btn':'not-phishing-btn').click();e.get('next-email-btn').click();check(e.get('result').textContent.includes('{CAUGHT_ALL_THE_PHISH}'),'corrected quiz awards flag');
 }
-// Social engineering: wrong choice gets feedback and must be revisited.
+// Social engineering: timed chat, answer gating, delayed reply, and retry.
 {
  const e=environment();e.page('social-engineering.html');e.start();const count=e.run('scenarios.length');
- for(let i=0;i<count;i++){e.run('handleChoice(scenarios[currentScenarioIndex].conversation.find(s=>s.type==="choice").choices.find(c=>c.correct==='+String(i!==0)+'))');e.get('choices-container').children[0].click();}
+ function tick(){const [id,fn]=[...e.timers.entries()][0];e.timers.delete(id);fn();}
+ function drain(){let limit=50;while(e.timers.size&&limit-->0)tick();assert.ok(limit>0);}
+ check(e.get('chat-window').children.length===1,'chat starts with a single message');
+ check(e.get('choices-container').children.length===0,'answers wait for the conversation');
+ check(e.timers.size===1,'one timer for the next message');
+ tick();check(e.get('chat-window').children.length===2,'second message arrives on the next tick');
+ e.run('loadScenario(); loadScenario()');check(e.timers.size===1,'scenario restart cancels stale timers');
+ for(let i=0;i<count;i++){
+  drain();
+  check(e.get('choices-container').children.length>0,'choices appear after the chat');
+  e.run('handleChoice(scenarios[currentScenarioIndex].conversation.find(s=>s.type==="choice").choices.find(c=>c.correct==='+String(i!==0)+'))');
+  check(e.get('choices-container').children.length===0,'next button waits for final reply');
+  drain();e.get('choices-container').children[0].click();
+ }
  check(!e.get('flag-container').children.some(c=>c.textContent.includes('{DEFENDER_OF_TRUST}')),'social wrong choice does not earn flag');
- e.get('choices-container').children[0].click();e.run('handleChoice(scenarios[currentScenarioIndex].conversation.find(s=>s.type==="choice").choices.find(c=>c.correct))');e.get('choices-container').children[0].click();check(e.get('flag-container').children.some(c=>c.textContent.includes('{DEFENDER_OF_TRUST}')),'social correction earns flag');
- check(e.timers.size===0,'social reading is self paced');
+ e.get('choices-container').children[0].click();
+ check(e.get('chat-window').children.length===1,'retry also starts one message at a time');
+ drain();e.run('handleChoice(scenarios[currentScenarioIndex].conversation.find(s=>s.type==="choice").choices.find(c=>c.correct))');drain();e.get('choices-container').children[0].click();
+ check(e.get('flag-container').children.some(c=>c.textContent.includes('{DEFENDER_OF_TRUST}')),'social correction earns flag');
+ check(e.timers.size===0,'no pending chat timers after completion');
 }
 // Repeated brute-force clicks cancel the previous run.
 {

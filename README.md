@@ -22,7 +22,7 @@ Der veröffentlichte Inhalt liegt unverändert unter `site/`.
 - Hash-Lab akzeptiert beide laut Aufgabe gültigen Passwörter; Salt-Prüfsumme unabhängig nachgerechnet.
 - Passwort-Lab: Erkennung einfacher Muster, keine pauschale Sicherheitsgarantie oder scheinpräzise Knackdauer; Zufallsgenerator verwendet Web Crypto. Leerer Demo-Tresor bleibt geschlossen.
 - Phishing: kein Zeitdruck, kein Überspringen, gezielte Wiederholung; Beispiel-Linkziele sind Text und lösen keine Navigation aus.
-- Social Engineering: selbst gesteuertes Tempo, Auswertung und Wiederholung unsicherer Entscheidungen.
+- Social Engineering: Nachrichten erscheinen wie ursprünglich nacheinander im Abstand von drei Sekunden. Antwortmöglichkeiten folgen nach den Nachrichten; Auswertung und Wiederholung bleiben erhalten.
 - Brute-Force, Gobuster und Updates gegen überlappende Starts abgesichert; Scanbeispiele und Zielpfade vereinheitlicht.
 - URL-Rolle wird als Text ausgegeben statt als HTML interpretiert.
 - Cookie-Übung unabhängig von einem Einwilligungsbanner startbar und beendbar.
@@ -36,6 +36,8 @@ Der veröffentlichte Inhalt liegt unverändert unter `site/`.
 
 Isolierte Regressionstests mit simuliertem DOM prüfen die Geschäftslogik: Fortschritt/Migration, Freischaltungen, Abschluss, Passwortprüfung, Hashes, SQL-Mission, Quizwiederholung, Social Engineering und Mehrfachstarts. Zusätzlich wurden JavaScript-Syntax, lokale Dateiziele, eindeutige HTML-IDs und externe Ressourcen geprüft. Bilder und PDFs bleiben bytegleich.
 
+Eine visuelle Prüfung in einem echten Browser war in der Bearbeitungsumgebung blockiert. Die Tests ersetzen keine Prüfung des gerenderten Layouts auf Desktop, Tablet und Smartphone.
+
 ## Technische Quellen der Korrekturen
 
 - https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
@@ -44,4 +46,10 @@ Isolierte Regressionstests mit simuliertem DOM prüfen die Geschäftslogik: Fort
 - https://www.gesetze-im-internet.de/ddg/__5.html
 - https://eur-lex.europa.eu/legal-content/DE/ALL/?uri=celex%3A32016R0679
 
+## Gestaltungskorrektur
 
+Nicht abgesprochene visuelle Ergänzungen wurden entfernt: Mobil-/Desktop-Pills, zusätzliche Abschluss-Badges und Kartenränder, Nächster-Schritt-Leiste mit Reset-Button sowie automatisch ergänzte Fußzeilen. Kategorien starten wieder wie im Original aufgeklappt. Funktionale Rückmeldungen und Fehlerkorrekturen bleiben enthalten.
+
+## Korrektur vom 10. September 2026
+
+URL-Parameter: Startseitenbutton steht in einer eigenen Zeile mit Abstand zur Flag. Social Engineering: zeitversetzter Chat und verzögerte Antwort des Gegenübers wiederhergestellt. Weitere Gestaltung unverändert.

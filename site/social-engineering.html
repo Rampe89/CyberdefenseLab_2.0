@@ -430,7 +430,9 @@
     let round = scenarios.map((_, i) => i);
     let position = 0;
     const answers = new Array(scenarios.length).fill(null);
-    let choiceLocked = false;
+    let choiceLocked = true;
+    let chatTimer = null;
+    const messageDelay = 3000;
     const chatWindow = document.getElementById('chat-window');
     const choicesContainer = document.getElementById('choices-container');
     const flagContainer = document.getElementById('flag-container');
@@ -441,6 +443,7 @@
       const label = document.createElement('strong'); label.textContent = sender + ': ';
       msg.appendChild(label); msg.appendChild(document.createTextNode(text));
       chatWindow.appendChild(msg);
+      chatWindow.scrollTop = chatWindow.scrollHeight;
     }
     function displayChoices(choices) {
       const shuffled = choices.slice();
@@ -459,20 +462,35 @@
       appendMessage('Du', choice.text, 'message du');
       choicesContainer.innerHTML = '';
       appendMessage('Auswertung', choice.feedback, 'message system-message');
-      const button = document.createElement('button'); button.className = 'btn';
-      button.textContent = position === round.length - 1 ? 'Auswertung ansehen' : 'Nächstes Szenario →';
-      button.onclick = nextScenario; choicesContainer.appendChild(button);
+      chatTimer = setTimeout(() => {
+        chatTimer = null;
+        const scenario = scenarios[currentScenarioIndex];
+        appendMessage(scenario.conversation[0].sender, choice.finalMessage, 'message other');
+        const button = document.createElement('button'); button.className = 'btn';
+        button.textContent = position === round.length - 1 ? 'Auswertung ansehen' : 'Nächstes Szenario →';
+        button.onclick = nextScenario; choicesContainer.appendChild(button);
+      }, messageDelay);
+    }
+    function processStep() {
+      chatTimer = null;
+      const conversation = scenarios[currentScenarioIndex].conversation;
+      if (currentStepIndex >= conversation.length) return;
+      const step = conversation[currentStepIndex++];
+      if (step.type === 'choice') {
+        choiceLocked = false;
+        displayChoices(step.choices);
+      } else {
+        appendMessage(step.sender, step.text, 'message other');
+        chatTimer = setTimeout(processStep, messageDelay);
+      }
     }
     function loadScenario() {
-      currentScenarioIndex = round[position]; currentStepIndex = 0; choiceLocked = false;
+      if (chatTimer !== null) clearTimeout(chatTimer);
+      chatTimer = null;
+      currentScenarioIndex = round[position]; currentStepIndex = 0; choiceLocked = true;
       chatWindow.innerHTML = ''; choicesContainer.innerHTML = ''; flagContainer.innerHTML = '';
       document.getElementById('scenario-progress').textContent = `Szenario ${position + 1} von ${round.length}: ${scenarios[currentScenarioIndex].name}`;
-      const conversation = scenarios[currentScenarioIndex].conversation;
-      while (currentStepIndex < conversation.length) {
-        const step = conversation[currentStepIndex++];
-        if (step.type === 'choice') { displayChoices(step.choices); break; }
-        appendMessage(step.sender, step.text, 'message other');
-      }
+      processStep();
     }
     function nextScenario() {
       position++;
