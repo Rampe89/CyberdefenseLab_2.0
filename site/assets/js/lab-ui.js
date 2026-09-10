@@ -23,13 +23,6 @@
         el.setAttribute('aria-label', (heading ? heading.textContent + ': ' : '') + el.getAttribute('placeholder'));
       }
     });
-    // The fake attachment lives one directory deeper than the other labs.
-    const prefix = location.pathname.includes('/assets/') ? '../' : '';
-    if (!document.querySelector('footer')) {
-      const footer = document.createElement('footer');
-      footer.innerHTML = '<a href="' + prefix + 'index.html">Übersicht</a> · <a href="' + prefix + 'impressum.html">Impressum</a> · <a href="' + prefix + 'datenschutz.html">Datenschutz</a>';
-      document.body.appendChild(footer);
-    }
     if (window.CDLabState) {
       CDLabState.syncExpertVisibility();
       // Probe once so an unavailable store is explained before leaving the page.

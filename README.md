@@ -17,7 +17,7 @@ Der veröffentlichte Inhalt liegt unverändert unter `site/`.
 - Analyse und erweiterte Labs bleiben lokal freigeschaltet; Lehrkräfte-Freischaltung bleibt im Tab erhalten.
 - Fortschritt toleriert defekte oder blockierte Browserspeicher. Bei blockiertem Speicher funktioniert die Seite mit vorübergehendem Zustand; nach Seitenwechsel kann dieser nicht erhalten bleiben.
 - Abschlussflag erscheint dauerhaft auf der Übersicht, unabhängig von der lokalen optionalen Animation.
-- Abgeschlossene Karten, Eingabe per Enter, zugänglicher Geheim-Bereich und explizites Zurücksetzen des Lernstands.
+- Eingabe per Enter und zugänglicher Geheim-Bereich; ursprüngliche Darstellung der Karten und geöffneten Kategorien wiederhergestellt.
 - SQL-Flag nach drei Vergleichsschritten; Maskierung der Demo-Daten und Lehrkräfte-Steuerung berichtigt.
 - Hash-Lab akzeptiert beide laut Aufgabe gültigen Passwörter; Salt-Prüfsumme unabhängig nachgerechnet.
 - Passwort-Lab: Erkennung einfacher Muster, keine pauschale Sicherheitsgarantie oder scheinpräzise Knackdauer; Zufallsgenerator verwendet Web Crypto. Leerer Demo-Tresor bleibt geschlossen.
@@ -27,7 +27,7 @@ Der veröffentlichte Inhalt liegt unverändert unter `site/`.
 - URL-Rolle wird als Text ausgegeben statt als HTML interpretiert.
 - Cookie-Übung unabhängig von einem Einwilligungsbanner startbar und beendbar.
 - Echte 404-Seite, korrigierte Verlinkungen, Systemschriften, lokale Skripte und Animation; keine automatisch eingebundenen externen Ressourcen.
-- Mobile Tabellen behalten ihre Überschriften; Quiz-Fortschrittsbalken ist separat; Gerätehinweise, Tastaturfokus und reduzierte Bewegung berücksichtigt.
+- Mobile Tabellen behalten ihre Überschriften; Quiz-Fortschrittsbalken ist separat; Mobil-/Desktop-Pills vollständig entfernt; Tastaturfokus und reduzierte Bewegung berücksichtigt.
 - Datenschutzhinweise beschreiben Cookies, localStorage, sessionStorage und Hosting getrennt. Hostingkonfiguration, Aufbewahrung und Betreiberangaben sind anhand des ZIP nicht verifizierbar und müssen zum tatsächlich eingesetzten Betrieb passen.
 
 ## Prüfung
@@ -45,3 +45,7 @@ Eine visuelle Prüfung in einem echten Browser war in der Bearbeitungsumgebung b
 - https://www.netlify.com/privacy/
 - https://www.gesetze-im-internet.de/ddg/__5.html
 - https://eur-lex.europa.eu/legal-content/DE/ALL/?uri=celex%3A32016R0679
+
+## Gestaltungskorrektur
+
+Nicht abgesprochene visuelle Ergänzungen wurden entfernt: Mobil-/Desktop-Pills, zusätzliche Abschluss-Badges und Kartenränder, Nächster-Schritt-Leiste mit Reset-Button sowie automatisch ergänzte Fußzeilen. Kategorien starten wieder wie im Original aufgeklappt. Funktionale Rückmeldungen und Fehlerkorrekturen bleiben enthalten.

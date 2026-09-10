@@ -263,10 +263,6 @@
 
     <div class="device-note desktop-required">
       <p><strong>Geräte-Hinweis:</strong> Einige Labs setzen bewusst auf Browserfunktionen, Quelltextansicht oder eine komfortable Tastatureingabe. Am <strong>PC oder Laptop</strong> funktioniert das deutlich angenehmer als auf dem Handy.</p>
-      <div class="device-chip-row">
-        <span class="device-chip mixed">Mobil eingeschränkt</span>
-        <span class="device-chip desktop">PC empfohlen</span>
-      </div>
     </div>
 
     <!-- Fortschrittsanzeige & Fortschrittsbalken -->
@@ -274,9 +270,7 @@
     <div id="progress-bar" role="progressbar" aria-label="Abgeschlossene Flag-Aufgaben" aria-valuemin="0" aria-valuemax="18" aria-valuenow="0">
       <div id="progress-fill"></div>
     </div>
-    <div class="learning-status"><p id="next-step" aria-live="polite"></p>
-      <button type="button" class="btn" id="reset-progress">Lernstand zurücksetzen</button></div>
-    <div id="completion" class="hidden completion" role="status"></div>
+    <p id="completion" class="hidden" role="status"></p>
     <!-- Aufgabenbereiche -->
     <div class="flex-container category-columns">
       <details class="column category-panel" id="grundlagen-panel" open>
@@ -308,7 +302,6 @@
           <h3>Quelltext & Kommentare</h3>
           <p>Ein geführter Einstieg in HTML-Kommentare: Verstehe den Unterschied zwischen sichtbar im Browser und trotzdem im Quelltext vorhanden.</p>
           <a href="comments-lab.html" class="btn">Aufgabe öffnen</a>
-          <div class="device-chip-row"><span class="device-chip desktop">PC empfohlen</span></div>
           <input type="text" id="flag15" placeholder="{Flag eingeben}"/>
           <button class="btn" onclick="checkFlag(15, 'e1NPVVJDRV9DT0RFX0lTX1NUSUxMX0NPREV9', '📝 Kommentar-Leser')">Prüfen</button>
         </div>
@@ -323,13 +316,12 @@
           <h3>robots.txt Recon</h3>
           <p>Finde heraus, warum „Disallow“ kein echter Schutz ist, und folge der Spur zu einer versteckten Seite.</p>
           <a href="robots-lab.html" class="btn">Aufgabe öffnen</a>
-          <div class="device-chip-row"><span class="device-chip desktop">PC empfohlen</span></div>
           <input type="text" id="flag14" placeholder="{Flag eingeben}"/>
           <button class="btn" onclick="checkFlag(14, 'e1JPQk9UU19BUkVfSElOVFNfTk9UX1NISUVMRFN9', '🤖 robots.txt Scout')">Prüfen</button>
         </div>
       </details>
 
-      <details class="column category-panel" id="analysis-panel">
+      <details class="column category-panel" id="analysis-panel" open>
         <summary>🟡 Analyse & Angriffe 🔒</summary>
         <p class="top-info">Dieser Bereich wird per Passwort freigeschaltet. Das Passwort soll über das Brute-Force-Lab erschlossen werden.</p>
 
@@ -361,7 +353,6 @@
             <h3>Gobuster-Simulation</h3>
             <p>Finde versteckte Verzeichnisse auf einem Server durch einen Directory Busting Scan.</p>
             <a href="dirbuster.html" class="btn">Aufgabe öffnen</a>
-            <div class="device-chip-row"><span class="device-chip desktop">PC empfohlen</span></div>
             <input type="text" id="flag6" placeholder="{Flag eingeben}"/>
             <button class="btn" onclick="checkFlag(6, 'e0ZPVU5EX1NFQ1JFVF9GTEFHfQ==', '🔍 Directory Detective')">Prüfen</button>
           </div>
@@ -383,7 +374,6 @@
             <button class="btn" type="button" onclick="createExerciseCookie()">Übungscookie anlegen</button>
             <button class="btn" type="button" onclick="deleteExerciseCookie()">Übungscookie entfernen</button>
             <p class="cookie-status" role="status">Ein Übungscookie wird erst auf deinen Klick angelegt.</p>
-            <div class="device-chip-row"><span class="device-chip desktop">PC empfohlen</span></div>
             <input type="text" id="flag8" placeholder="{Flag eingeben}"/>
             <button class="btn" onclick="checkCookie()">Prüfen</button>
           </div>
@@ -391,7 +381,7 @@
       </details>
     </div>
 
-    <details class="category-panel category-full" id="advanced-panel">
+    <details class="category-panel category-full" id="advanced-panel" open>
       <summary>🔒 Erweiterte Labs</summary>
       <p class="top-info">Hier liegt das angeleitete SQL-Injection-Lab. Der Zugangshinweis liegt nicht direkt auf dieser Startseite.</p>
 
@@ -414,7 +404,7 @@
     </details>
 
 
-    <details class="category-panel category-full" id="linux-panel">
+    <details class="category-panel category-full" id="linux-panel" open>
       <summary>🖥️ Linux Grundkurs</summary>
       <p class="top-info">Ein zusätzliches Terminal-Lab für grundlegende Linux-Kommandos. Hier geht es weniger um einen einzelnen Angriff als um Werkzeugverständnis und Orientierung im Dateisystem.</p>
 
@@ -424,13 +414,12 @@
         <p>Der Mehrwert liegt hier vor allem darin, dass Cybersecurity fast immer auch etwas mit Linux, Servern, Dateistrukturen und Terminalarbeit zu tun hat. Das Lab schafft dafür einen niedrigschwelligen Einstieg.</p>
         <p class="note-soft">Nach erfolgreichem Abschluss wird der Expert Mode freigeschaltet.</p>
         <a href="linux-lab.html" class="btn">Lab öffnen</a>
-        <div class="device-chip-row"><span class="device-chip mixed">Mobil eingeschränkt</span></div>
         <input type="text" id="flag18" placeholder="{Flag eingeben}"/>
         <button class="btn" onclick="checkFlag(18, 'e0xJTlVYX0VYUExPUkVSfQ==', '🐧 Linux-Navigator')">Prüfen</button>
       </div>
     </details>
 
-    <details class="category-panel category-full" id="expert-panel">
+    <details class="category-panel category-full" id="expert-panel" open>
       <summary>⌨️ Expert Mode</summary>
       <div class="task expert-card">
         <div>
@@ -441,12 +430,11 @@
         <div>
           <div id="expert-badge" class="expert-badge locked">🔒 Gesperrt</div>
           <p><a href="expert-mode.html" id="expert-open-link" class="btn hidden-until-linux">Expert Mode öffnen</a></p>
-          <div class="device-chip-row"><span class="device-chip desktop">PC empfohlen</span></div>
         </div>
       </div>
     </details>
 
-    <details class="category-panel category-full" id="teacher-panel">
+    <details class="category-panel category-full" id="teacher-panel" open>
       <summary>🔒 Didaktischer Kommentar für Lehrkräfte</summary>
       <p class="top-info">Dieser Bereich ist für Lehrkräfte vorgesehen. Die lokale Freischaltung dient der Unterrichtssteuerung; sie ist kein Zugriffsschutz.</p>
 
@@ -469,7 +457,7 @@
     <!-- Ausklappbarer Bereich für geheime Flags -->
 
     <div id="secret-flags-container">
-      <h2><button type="button" id="secret-header" aria-expanded="false" aria-controls="secret-flags">Geheime Flags <span id="secret-toggle">[+]</span></button></h2>
+      <h2 id="secret-header" role="button" tabindex="0" aria-expanded="false" aria-controls="secret-flags">Geheime Flags <span id="secret-toggle">[+]</span></h2>
       <div id="secret-flags" hidden>
         <!-- SYS_ADMIN -->
         <div class="task">

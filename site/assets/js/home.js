@@ -115,13 +115,9 @@ function renderHome() {
     inputs.filter(Boolean).forEach(input => {
       input.disabled = flags[n - 1];
       const task = input.closest('.task');
-      task.classList.toggle('is-complete', flags[n - 1]);
       const check = task.querySelector('button[onclick^="check"]');
       if (check) check.disabled = flags[n - 1];
-      let badge = task.querySelector('.complete-badge');
-      if (flags[n - 1] && !badge) {
-        badge = document.createElement('span'); badge.className = 'complete-badge'; badge.textContent = '✓ Abgeschlossen'; task.prepend(badge);
-      } else if (!flags[n - 1] && badge) badge.remove();
+
     });
   }
   const achievements = document.getElementById('achievements');
@@ -140,14 +136,11 @@ function renderHome() {
     // Completion is visible before the optional decoration runs.
     try { celebrate(); } catch (_) {}
   }
-  const next = document.getElementById('next-step');
-  next.textContent = count === 18 ? 'Geschafft – alle Flag-Aufgaben sind abgeschlossen.' :
-    !flags[0] ? 'Dein Einstieg: Starte mit dem Brute-Force-Lab. Finde dort auch den Hinweis für „Analyse & Angriffe“.' :
-    state.get('cdl-unlock-analysis') !== 'true' ? 'Nächster Schritt: Öffne „Analyse & Angriffe“ mit dem im Brute-Force-Lab gefundenen User-Passwort.' :
-    'Arbeite an einer noch offenen Karte weiter. Für zusätzliche Herausforderungen öffne die erweiterten Labs oder den Linux-Grundkurs.';
+
 }
 document.addEventListener('DOMContentLoaded', () => {
   const secretButton = document.getElementById('secret-header');
+  secretButton.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); secretButton.click(); } });
   secretButton.addEventListener('click', () => {
     const area = document.getElementById('secret-flags');
     area.hidden = !area.hidden;
@@ -167,16 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.key === 'Enter') { e.preventDefault(); unlock(name); }
     });
   });
-  document.getElementById('reset-progress').addEventListener('click', () => {
-    if (!confirm('Lernstand und Freischaltungen in diesem Browser zurücksetzen? Andere Website-Daten bleiben erhalten.')) return;
-    Object.keys(gates).forEach(name => state.put('cdl-unlock-' + name, 'false', gates[name].session));
-    state.put('teacher', '0', true);
-    deleteExerciseCookie();
-    state.writeFlags([]);
-    document.querySelectorAll('.task input').forEach(input => { input.value = ''; });
-    document.querySelectorAll('.task-feedback').forEach(el => el.remove());
-    celebrated = false;
-  });
+
   renderHome();
 });
 window.addEventListener('storage', renderHome);
