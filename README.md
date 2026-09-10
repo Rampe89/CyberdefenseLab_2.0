@@ -36,8 +36,6 @@ Der veröffentlichte Inhalt liegt unverändert unter `site/`.
 
 Isolierte Regressionstests mit simuliertem DOM prüfen die Geschäftslogik: Fortschritt/Migration, Freischaltungen, Abschluss, Passwortprüfung, Hashes, SQL-Mission, Quizwiederholung, Social Engineering und Mehrfachstarts. Zusätzlich wurden JavaScript-Syntax, lokale Dateiziele, eindeutige HTML-IDs und externe Ressourcen geprüft. Bilder und PDFs bleiben bytegleich.
 
-Eine visuelle Prüfung in einem echten Browser war in der Bearbeitungsumgebung blockiert. Die Tests ersetzen keine Prüfung des gerenderten Layouts auf Desktop, Tablet und Smartphone.
-
 ## Technische Quellen der Korrekturen
 
 - https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
@@ -46,6 +44,4 @@ Eine visuelle Prüfung in einem echten Browser war in der Bearbeitungsumgebung b
 - https://www.gesetze-im-internet.de/ddg/__5.html
 - https://eur-lex.europa.eu/legal-content/DE/ALL/?uri=celex%3A32016R0679
 
-## Gestaltungskorrektur
 
-Nicht abgesprochene visuelle Ergänzungen wurden entfernt: Mobil-/Desktop-Pills, zusätzliche Abschluss-Badges und Kartenränder, Nächster-Schritt-Leiste mit Reset-Button sowie automatisch ergänzte Fußzeilen. Kategorien starten wieder wie im Original aufgeklappt. Funktionale Rückmeldungen und Fehlerkorrekturen bleiben enthalten.
