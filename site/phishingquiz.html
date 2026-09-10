@@ -202,7 +202,7 @@
 <body>
   <div class="quiz-container">
     <h1>Phishing-Quiz</h1>
-    <p class="note">Alle Mails sind erfundene Übungsfälle. Eine angezeigte Absenderadresse allein beweist keine Echtheit. Die Linkziele werden hier als Text angezeigt und können nicht geöffnet werden.</p>
+    <p class="note">Alle Mails sind erfundene Übungsfälle. Eine angezeigte Absenderadresse allein beweist keine Echtheit. Prüfe die Linkziele, indem du mit dem Mauszeiger über die Links fährst. Die Links lassen sich in dieser Übung nicht öffnen.</p>
     <h2>Was ist Phishing?</h2>
     <p>
       Phishing ist ein Betrugsversuch, bei dem Angreifer versuchen, persönliche Informationen wie Passwörter, 
@@ -368,12 +368,13 @@
         document.getElementById('email-header').textContent = `Von: ${email.sender} | Betreff: ${email.subject}`;
         const body = document.getElementById('email-body');
         body.innerHTML = email.body;
-        // Preserve visible destinations for analysis without leaving the exercise.
+        // Keep real href values for the browser's native mouseover preview.
+        // These links are inspection targets inside the exercise, not navigation.
         body.querySelectorAll('a').forEach(link => {
-          const sample = document.createElement('span');
-          sample.className = 'sample-link';
-          sample.textContent = link.textContent + ' [Linkziel: ' + link.getAttribute('href') + ']';
-          link.replaceWith(sample);
+          link.title = link.getAttribute('href');
+          ['click', 'auxclick', 'contextmenu', 'dragstart'].forEach(eventName => {
+            link.addEventListener(eventName, event => event.preventDefault());
+          });
         });
         const answer = userAnswers[currentEmailIndex];
         const explanation = document.getElementById('explanation');

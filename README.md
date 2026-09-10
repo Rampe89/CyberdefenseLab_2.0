@@ -1,97 +1,55 @@
-# CyberDefense Lab 🧪
+# CyberDefense Lab 2.0 – Reparaturstand September 2026
 
-Das **CyberDefense Lab** ist eine interaktive Lernumgebung für IT-Sicherheit. In browserbasierten Simulationen untersuchen Lernende typische Angriffsmethoden, entdecken Schwachstellen und lernen passende Schutzmaßnahmen kennen.
+Alle 31 vorhandenen HTML-Seiten, Labs, Bilder, PDFs und Easter Eggs sind enthalten.
+Der veröffentlichte Inhalt liegt unverändert unter `site/`.
 
-Im Mittelpunkt steht das eigene Ausprobieren: Passwörter untersuchen, verdächtige Nachrichten erkennen, Quelltext analysieren und mit einem simulierten Terminal arbeiten. Erfolgreich bearbeitete Aufgaben liefern **Flags**, die auf der Startseite gesammelt werden und den Lernfortschritt sichtbar machen.
+## Starten und veröffentlichen
 
-## Für wen ist das Lab gedacht?
+- Lokal: `python -m http.server 8000 --directory site`, dann `http://localhost:8000` öffnen.
+- Netlify über Git: den Projektinhalt einschließlich `netlify.toml` übernehmen. Publish-Verzeichnis: `site`.
+- Für einen manuellen Upload den Inhalt von `site/` als Website verwenden.
+- Das Cookie-Lab braucht einen Webserver. Das direkte Öffnen mit `file://` ist dafür ungeeignet.
 
-Das CyberDefense Lab richtet sich insbesondere an Schülerinnen und Schüler der Sekundarstufe I sowie an Lehrkräfte und interessierte Einsteigerinnen und Einsteiger.
+## Reparaturen
 
-Die Module eignen sich für den Informatikunterricht, Projekttage, Workshops und selbstständige Lernphasen. Sie lassen sich einzeln einsetzen oder zu einer größeren Unterrichtseinheit verbinden.
+- Eine gemeinsame Fortschrittslogik für alle 18 Flag-Aufgaben. Bestehende gespeicherte Flags bleiben lesbar.
+- Linux-Flag schaltet den Expert Mode sowohl im Linux-Lab als auch auf der Übersicht frei.
+- Analyse und erweiterte Labs bleiben lokal freigeschaltet; Lehrkräfte-Freischaltung bleibt im Tab erhalten.
+- Fortschritt toleriert defekte oder blockierte Browserspeicher. Bei blockiertem Speicher funktioniert die Seite mit vorübergehendem Zustand; nach Seitenwechsel kann dieser nicht erhalten bleiben.
+- Abschlussflag erscheint dauerhaft auf der Übersicht, unabhängig von der lokalen optionalen Animation.
+- Eingabe per Enter und zugänglicher Geheim-Bereich; ursprüngliche Darstellung der Karten und geöffneten Kategorien wiederhergestellt.
+- SQL-Flag nach drei Vergleichsschritten; Maskierung der Demo-Daten und Lehrkräfte-Steuerung berichtigt.
+- Hash-Lab akzeptiert beide laut Aufgabe gültigen Passwörter; Salt-Prüfsumme unabhängig nachgerechnet.
+- Passwort-Lab: Erkennung einfacher Muster, keine pauschale Sicherheitsgarantie oder scheinpräzise Knackdauer; Zufallsgenerator verwendet Web Crypto. Leerer Demo-Tresor bleibt geschlossen.
+- Phishing: kein Zeitdruck, kein Überspringen, gezielte Wiederholung; Beispiel-Links zeigen ihr Ziel beim Mouseover in der Browser-Statusleiste und als Tooltip. Klicks auf die Übungslinks öffnen keine fremden Seiten.
+- Social Engineering: Nachrichten erscheinen wie ursprünglich nacheinander im Abstand von drei Sekunden. Antwortmöglichkeiten folgen nach den Nachrichten; Auswertung und Wiederholung bleiben erhalten.
+- Brute-Force, Gobuster und Updates gegen überlappende Starts abgesichert; Scanbeispiele und Zielpfade vereinheitlicht.
+- URL-Rolle wird als Text ausgegeben statt als HTML interpretiert.
+- Cookie-Übung unabhängig von einem Einwilligungsbanner startbar und beendbar.
+- Echte 404-Seite, korrigierte Verlinkungen, Systemschriften, lokale Skripte und Animation; keine automatisch eingebundenen externen Ressourcen.
+- Mobile Tabellen behalten ihre Überschriften; Quiz-Fortschrittsbalken ist separat; Mobil-/Desktop-Pills vollständig entfernt; Tastaturfokus und reduzierte Bewegung berücksichtigt.
+- Datenschutzhinweise beschreiben Cookies, localStorage, sessionStorage und Hosting getrennt. Hostingkonfiguration, Aufbewahrung und Betreiberangaben sind anhand des ZIP nicht verifizierbar und müssen zum tatsächlich eingesetzten Betrieb passen.
 
-## Themen und Module
+## Prüfung
 
-### Passwörter und Authentifizierung
+`node tests/regression.cjs`
 
-- **Brute-Force-Simulation:** Beobachten, wie ein automatisierter Wörterbuchangriff schwache Passwörter findet.
-- **Passwortmanager-Lab:** Einen simulierten Passworttresor öffnen, Demo-Passwörter erzeugen und einfache Passwortschwächen untersuchen.
-- **Hashing und Salt:** Passwörter zu vorgegebenen Hashwerten finden und die Wirkung eines Salts nachvollziehen.
+Isolierte Regressionstests mit simuliertem DOM prüfen die Geschäftslogik: Fortschritt/Migration, Freischaltungen, Abschluss, Passwortprüfung, Hashes, SQL-Mission, Quizwiederholung, Social Engineering und Mehrfachstarts. Zusätzlich wurden JavaScript-Syntax, lokale Dateiziele, eindeutige HTML-IDs und externe Ressourcen geprüft. Bilder und PDFs bleiben bytegleich.
 
-### Täuschung und Manipulation
+Eine visuelle Prüfung in einem echten Browser war in der Bearbeitungsumgebung blockiert. Die Tests ersetzen keine Prüfung des gerenderten Layouts auf Desktop, Tablet und Smartphone.
 
-- **Phishing-Quiz:** Beispielnachrichten anhand von Absendern, Linkzielen und Inhalt beurteilen.
-- **Social Engineering:** In simulierten Chats auf manipulative Anfragen reagieren und die eigenen Entscheidungen auswerten.
-- **Verdächtige Dateien:** Dateinamen und Endungen aufmerksam prüfen.
+## Technische Quellen der Korrekturen
 
-### Web-Sicherheit
+- https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
+- https://nmap.org/nsedoc/scripts/smb-vuln-ms17-010.html
+- https://www.netlify.com/privacy/
+- https://www.gesetze-im-internet.de/ddg/__5.html
+- https://eur-lex.europa.eu/legal-content/DE/ALL/?uri=celex%3A32016R0679
 
-- **Quelltext und Kommentare:** Informationen entdecken, die im Browser zunächst unsichtbar bleiben.
-- **URL-Parameter:** Untersuchen, wie Eingaben in der Adresszeile die Darstellung einer Seite beeinflussen.
-- **robots.txt:** Verstehen, warum Hinweise für Suchmaschinen keinen Zugriffsschutz ersetzen.
-- **Gobuster-Simulation:** Versteckte Seiten und Dateipfade aufspüren.
-- **Cookies:** Einen Übungswert im Cookiespeicher des Browsers finden.
-- **SQL Injection:** Normale, manipulierte und parametergebundene Datenbankabfragen miteinander vergleichen.
-- **Versteckte Elemente:** Erkennen, dass per CSS ausgeblendete Inhalte weiterhin vorhanden sind.
+## Gestaltungskorrektur
 
-### Systeme und Werkzeuge
+Nicht abgesprochene visuelle Ergänzungen wurden entfernt: Mobil-/Desktop-Pills, zusätzliche Abschluss-Badges und Kartenränder, Nächster-Schritt-Leiste mit Reset-Button sowie automatisch ergänzte Fußzeilen. Kategorien starten wieder wie im Original aufgeklappt. Funktionale Rückmeldungen und Fehlerkorrekturen bleiben enthalten.
 
-- **Updates und Patches:** An einer simulierten EternalBlue-Schwachstelle die Bedeutung von Sicherheitsupdates nachvollziehen.
-- **Linux-Grundkurs:** Mit grundlegenden Terminalbefehlen durch ein simuliertes Dateisystem navigieren.
-- **Expert Mode:** Nach Abschluss des Linux-Grundkurses eine erweiterte Terminalumgebung erkunden.
-- **Zusatzaufgaben und Easter Eggs:** Weitere Spuren in Metadaten, Dateien und der Browserkonsole entdecken.
+## Korrektur vom 10. September 2026
 
-## Lernen mit Flags
-
-Die Übersicht umfasst **18 Flag-Aufgaben**. Gefundene Flags werden auf der Startseite eingetragen und geprüft. Der Fortschrittsbalken und freigeschaltete Titel zeigen den bisherigen Lernstand.
-
-Einige Bereiche werden durch Hinweise und Passwörter aus anderen Übungen zugänglich. Dadurch entstehen Verbindungen zwischen den Modulen, die zum systematischen Erkunden anregen.
-
-Der Lernstand wird lokal im verwendeten Browser gespeichert.
-
-## Didaktischer Ansatz
-
-Das Lab verbindet praktische Erkundung mit verständlichen Erklärungen und unmittelbarer Rückmeldung. Fehler werden als Lerngelegenheiten genutzt: Im Phishing-Quiz und in den Social-Engineering-Szenarien können unsichere Entscheidungen gezielt überarbeitet werden.
-
-Dabei stehen drei Fragen im Mittelpunkt:
-
-1. **Was passiert hier?**
-2. **Warum funktioniert der Angriff oder die Manipulation?**
-3. **Wie lässt sich die Schwachstelle vermeiden?**
-
-Ein eigener Bereich für Lehrkräfte ergänzt die Übungen um Lernziele, didaktische Einordnungen und Hinweise zu den Lösungswegen.
-
-## Technische Umsetzung
-
-Das CyberDefense Lab besteht aus **HTML, CSS und JavaScript**. Die Übungen laufen als Simulationen im Browser. Eine Datenbank, Benutzerkonten oder ein Anwendungsserver sind nicht erforderlich.
-
-Die Website verwendet lokale Skripte und vorhandene Systemschriften. Die Übungseingaben werden im Browser verarbeitet.
-
-Für Aufgaben mit Quelltextansicht, Entwicklertools und Terminaleingaben empfiehlt sich ein Computer mit Tastatur.
-
-## Lokal starten
-
-Im Projektverzeichnis einen lokalen Webserver starten:
-
-```bash
-python -m http.server 8000 --directory site
-```
-
-Anschließend im Browser öffnen:
-
-```text
-http://localhost:8000
-```
-
-## Veröffentlichung
-
-Die Website-Dateien liegen im Ordner `site/` und können auf einem statischen Webhost veröffentlicht werden.
-
-Für die Veröffentlichung über Netlify ist eine `netlify.toml` enthalten. Das Veröffentlichungsverzeichnis ist `site`.
-
-## Autor und Lizenz
-
-**Ramon Berghorn**
-
-Das CyberDefense Lab steht unter der **MIT-Lizenz** und kann entsprechend den Lizenzbedingungen genutzt, verändert und weitergegeben werden.
-
+URL-Parameter: Startseitenbutton steht in einer eigenen Zeile mit Abstand zur Flag. Social Engineering: zeitversetzter Chat und verzögerte Antwort des Gegenübers wiederhergestellt. Weitere Gestaltung unverändert.
