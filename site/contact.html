@@ -57,6 +57,12 @@
             margin-top: 10px;
             display: none;
         }
+        .testdata-note {
+            margin: -2px 0 14px;
+            color: #64748b;
+            font-size: 0.86rem;
+            line-height: 1.4;
+        }
         .hint-container {
             margin-top: 15px;
             text-align: left;
@@ -91,13 +97,14 @@
     <div class="container">
         <h2>(Kein echtes) Kontaktformular</h2>
         <p>Gib eine Nachricht ein und sende sie ab.</p>
+        <p class="testdata-note">Kleine Sicherheitsregel: Verwende hier nur erfundene Testdaten.</p>
         <form id="contactForm">
             <input type="text" id="name" placeholder="Dein Name" required>
             <input type="email" id="email" placeholder="Deine E-Mail" required>
             <textarea id="message" placeholder="Deine Nachricht" required></textarea>
             <button type="submit">Senden</button>
         </form>
-        <p id="responseMessage" class="message">Nachricht erfolgreich gesendet!</p>
+        <p id="responseMessage" class="message">Demo verarbeitet – es wurde nichts versendet.</p>
 
         <div class="hint-container">
         <button class="hint-button" onclick="toggleHint()">💡 Was gibt es hier zu tun?</button>
@@ -144,5 +151,4 @@
     </script>
 </body>
 </html>
-
 
