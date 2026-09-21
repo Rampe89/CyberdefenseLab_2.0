@@ -115,6 +115,7 @@ function renderHome() {
     inputs.filter(Boolean).forEach(input => {
       input.disabled = flags[n - 1];
       const task = input.closest('.task');
+      if (task) task.classList.toggle('is-complete', flags[n - 1]);
       const check = task.querySelector('button[onclick^="check"]');
       if (check) check.disabled = flags[n - 1];
 
@@ -159,6 +160,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById(name + '-password').addEventListener('keydown', e => {
       if (e.key === 'Enter') { e.preventDefault(); unlock(name); }
     });
+  });
+
+  // Keep the first learning path visible and reduce the initial page length.
+  ['advanced-panel', 'linux-panel', 'expert-panel', 'teacher-panel'].forEach(id => {
+    const panel = document.getElementById(id);
+    if (panel) panel.open = false;
   });
 
   renderHome();

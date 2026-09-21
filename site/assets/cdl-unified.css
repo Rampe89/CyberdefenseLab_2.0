@@ -1128,3 +1128,116 @@ button:disabled, .btn[aria-disabled="true"] { opacity:.55; cursor:default; trans
   html { scroll-behavior:auto; }
   *, *::before, *::after { animation:none !important; transition:none !important; }
 }
+
+/* --- 2026 consistency pass: completed tasks, utility pages and navigation --- */
+.task.is-complete{
+  position:relative;
+  border-color:rgba(31,170,99,.55) !important;
+  box-shadow:0 10px 26px rgba(20,126,74,.12) !important;
+  background:linear-gradient(180deg, #fbfffd, #f1fbf5) !important;
+}
+
+.task.is-complete::after{
+  content:"✓ Erledigt";
+  position:absolute;
+  top:12px;
+  right:12px;
+  padding:4px 9px;
+  border-radius:999px;
+  background:#dff7e9;
+  color:#176438;
+  border:1px solid rgba(31,170,99,.24);
+  font-size:.78rem;
+  font-weight:800;
+}
+
+.task.is-complete h3{
+  padding-right:86px;
+}
+
+.cdl-simple-nav{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:0 0 24px;
+  padding-bottom:18px;
+  border-bottom:1px solid rgba(19,61,93,.12);
+}
+
+.cdl-simple-nav a{
+  display:inline-flex;
+  align-items:center;
+  min-height:40px;
+  padding:8px 13px;
+  border-radius:10px;
+  background:#edf6ff;
+  color:#176fd6 !important;
+  text-decoration:none !important;
+  font-weight:700;
+}
+
+.cdl-simple-nav a:hover{
+  background:#dceeff;
+}
+
+body.utility-page{
+  margin:0;
+  padding:28px 16px;
+  display:block;
+  min-height:100vh;
+}
+
+.utility-page .container{
+  width:min(100%, 860px) !important;
+  margin:0 auto !important;
+  padding:30px 32px !important;
+  text-align:left;
+}
+
+.utility-page .container > h1{
+  text-align:center;
+  margin:0 0 10px;
+}
+
+.utility-page .page-intro{
+  max-width:660px;
+  margin:0 auto 20px;
+  text-align:center;
+  color:#587089;
+}
+
+.utility-page form{
+  display:grid;
+  gap:12px;
+}
+
+.utility-page form label{
+  font-weight:700;
+  color:#17324c;
+}
+
+.utility-page form input,
+.utility-page form textarea{
+  width:100% !important;
+  margin:0 !important;
+  padding:11px 13px !important;
+}
+
+.utility-page form textarea{
+  min-height:130px;
+  resize:vertical;
+}
+
+.utility-page form button{
+  width:max-content;
+  min-width:150px;
+}
+
+@media (max-width:640px){
+  body.utility-page{ padding:12px 8px; }
+  .utility-page .container{ padding:20px 16px !important; }
+  .utility-page form button{ width:100%; }
+  .task.is-complete::after{ position:static; margin-bottom:10px; order:-1; }
+  .task.is-complete h3{ padding-right:0; }
+}

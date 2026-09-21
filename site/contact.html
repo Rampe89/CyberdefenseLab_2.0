@@ -93,15 +93,24 @@
   <script src="assets/js/lab-state.js"></script>
   <script src="assets/js/lab-ui.js" defer></script>
 </head>
-<body>
+<body class="utility-page">
     <div class="container">
-        <h2>(Kein echtes) Kontaktformular</h2>
-        <p>Gib eine Nachricht ein und sende sie ab.</p>
+        <nav class="cdl-simple-nav" aria-label="Seitennavigation">
+            <a href="index.html">Startseite</a>
+            <a href="about.html">Über das Lab</a>
+            <a href="geheim.html">Geheime Flags</a>
+            <a href="teachers-commentary.html">Unterricht</a>
+        </nav>
+        <h1>(Kein echtes) Kontaktformular</h1>
+        <p class="page-intro">Sende eine Demo-Nachricht und untersuche anschließend, was die Seite in der Browserkonsole preisgibt.</p>
         <p class="testdata-note">Kleine Sicherheitsregel: Verwende hier nur erfundene Testdaten.</p>
         <form id="contactForm">
-            <input type="text" id="name" placeholder="Dein Name" required>
-            <input type="email" id="email" placeholder="Deine E-Mail" required>
-            <textarea id="message" placeholder="Deine Nachricht" required></textarea>
+            <label for="name">Testname</label>
+            <input type="text" id="name" placeholder="z. B. Alex Test" required>
+            <label for="email">Test-E-Mail-Adresse</label>
+            <input type="email" id="email" placeholder="alex@example.org" required>
+            <label for="message">Demo-Nachricht</label>
+            <textarea id="message" placeholder="Eine erfundene Nachricht …" required></textarea>
             <button type="submit">Senden</button>
         </form>
         <p id="responseMessage" class="message">Demo verarbeitet – es wurde nichts versendet.</p>
@@ -151,4 +160,3 @@
     </script>
 </body>
 </html>
-
